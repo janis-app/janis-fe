@@ -5,10 +5,28 @@ import GoogleIcon from "../public/assets/google_icon.png";
 import AppleIcon from "../public/assets/apple_icon.png";
 import { useState } from "react";
 import Head from "next/head";
+import { loginUser } from "@/utils/loginUser";
+import Spinner from "@/lib/spinner";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    loginUser({ identifier: email, password: password })
+      .then((res) => {
+        console.log("res", res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("err", err);
+        setLoading(false);
+      });
+  };
+
   return (
     <>
       <Head>
@@ -20,7 +38,7 @@ function LoginPage() {
           <Image src={Keen} alt="Keen Logo" className="block" />
         </div>
         <div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="bg-[#D9F1F9] w-full h-[60px] relative rounded-[50px] px-[29px] py-[14px] flex items-center mb-[16px]">
               <input
                 className={`w-full h-full bg-transparent relative outline-none ${
@@ -29,6 +47,7 @@ function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="off"
+                required
               />
               <label
                 className={`absolute top-3 ${
@@ -50,6 +69,7 @@ function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 autoComplete="new-password"
+                required
               />
               <label
                 className={`absolute top-3 ${
@@ -62,8 +82,11 @@ function LoginPage() {
                 Password
               </label>
             </div>
-            <button className="w-full outline-none bg-[#9FDBED] text-white h-[60px] rounded-[50px] text-[16px] font-semibold tracking-[2%] leading-[24px]">
-              Login
+            <button
+              className="w-full outline-none bg-[#9FDBED] text-white h-[60px] rounded-[50px] text-[16px] font-semibold tracking-[2%] leading-[24px]"
+              disabled={loading}
+            >
+              {loading ? <Spinner /> : "Login"}
             </button>
           </form>
           <p className="mx-auto text-center my-[24px] text-[12px] font-normal leading-[14.52px] tracking-[3%]">
