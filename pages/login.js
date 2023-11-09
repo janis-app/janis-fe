@@ -7,6 +7,7 @@ import { useState } from "react";
 import Head from "next/head";
 import { loginUser } from "@/utils/loginUser";
 import Spinner from "@/lib/spinner";
+import { toast } from "react-toastify";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -20,9 +21,11 @@ function LoginPage() {
       .then((res) => {
         console.log("res", res);
         setLoading(false);
+        setEmail("");
+        setPassword("");
       })
       .catch((err) => {
-        console.log("err", err);
+        toast.error(`${err?.response?.data?.error?.message}`);
         setLoading(false);
       });
   };
