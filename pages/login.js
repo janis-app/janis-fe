@@ -41,19 +41,20 @@ function LoginPage() {
           <form onSubmit={handleSubmit}>
             <div className="bg-[#D9F1F9] w-full h-[60px] relative rounded-[50px] px-[29px] py-[14px] flex items-center mb-[16px]">
               <input
-                className={`w-full h-full bg-transparent relative outline-none ${
+                className={`w-full h-full bg-transparent relative outline-none placeholder:text-[#15224F] text-[#15224F] ${
                   email ? "pt-3" : "pt-0"
                 }`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="off"
                 required
+                placeholder="Email/ Phone number"
               />
               <label
-                className={`absolute top-3 ${
+                className={`absolute top-3 text-[#7A7676] ${
                   email
-                    ? "-translate-y-1 text-sm text-gray-500"
-                    : "transform translate-y-1.5 text-base text-gray-600"
+                    ? "-translate-y-1 text-sm  visible"
+                    : "transform translate-y-1.5 text-base invisible"
                 }`}
                 style={{ transition: "all 0.2s" }}
               >
@@ -62,20 +63,21 @@ function LoginPage() {
             </div>
             <div className="bg-[#D9F1F9] w-full h-[60px] relative rounded-[50px] px-[29px] py-[14px] flex items-center mb-[24px]">
               <input
-                className={`w-full h-full bg-transparent relative outline-none ${
-                  password ? "pt-3" : "pt-0"
+                className={`w-full h-full bg-transparent relative outline-none placeholder:text-[#15224F] text-[#15224F] ${
+                  password ? "pt-3" : "pt-0 z-30"
                 }`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 autoComplete="new-password"
                 required
+                placeholder="Password"
               />
               <label
-                className={`absolute top-3 ${
+                className={`absolute top-3 z-20 text-[#7A7676]  ${
                   password
-                    ? "-translate-y-1 text-sm text-gray-500"
-                    : "transform translate-y-1.5 text-base text-gray-600"
+                    ? "-translate-y-1 text-sm "
+                    : "transform translate-y-1.5 text-base "
                 }`}
                 style={{ transition: "all 0.2s" }}
               >
