@@ -8,11 +8,15 @@ import Head from "next/head";
 import { loginUser } from "@/utils/loginUser";
 import Spinner from "@/lib/spinner";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -99,7 +103,14 @@ function LoginPage() {
           </p>
 
           <div className="mb-[32px]">
-            <div className="w-full outline-none bg-transparent border border-[#134140] text-[#134140] h-[60px] rounded-[50px] text-[16px] font-normal tracking-[2%] leading-[24px] mb-[16px] flex justify-center items-center gap-[7px]">
+            <div
+              className="w-full outline-none bg-transparent border border-[#134140] text-[#134140] h-[60px] rounded-[50px] text-[16px] font-normal tracking-[2%] leading-[24px] mb-[16px] flex justify-center items-center gap-[7px]"
+              onClick={() =>
+                router.push(
+                  process.env.NEXT_PUBLIC_STRAPI_URL + "/api/connect/google"
+                )
+              }
+            >
               <Image src={GoogleIcon} alt="Google Icon" />
               Sign in with Google
             </div>
@@ -110,7 +121,7 @@ function LoginPage() {
           </div>
           <p className="text-[#3B4C68] text-center mx-auto font-normal text-[12px]">
             Don’t have an account ?{" "}
-            <span className="text-[#21899C] font-bold">Sign up</span>
+            <Link href="/register" className="text-[#21899C] font-bold">Sign up</Link>
           </p>
         </div>
       </div>
