@@ -2,11 +2,11 @@ import PageHeader from "@/components/Common/PageHeader";
 import Image from "next/image";
 import logo from "../public/assets/logo.png";
 import { LiaEditSolid } from "react-icons/lia";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 export default function Home() {
   return (
-    <main className="overflow-x-hidden">
-      <PageHeader />
+    <main className="overflow-x-hidden pt-[30px]">
       <div className="mx-auto w-full flex justify-center mb-[37px]">
         <Image src={logo} alt="logo" />
       </div>
@@ -22,12 +22,11 @@ export default function Home() {
         Let’s <br />
         make memories!
       </h3>
-      <div className="w-[407px] bg-white h-[72px] absolute right-0 left-[20px] rounded-tl-[32px] rounded-bl-[32px] before:rounded-tr-[.5%]">
-        f
-      </div>
-      <div className="text-center mt-[150px] text-[#AFB3BC] text-[14px] font-[500] leading-[16.94px] flex justify-center items-center gap-[5px]">
-        <p>Edit preferences</p>
-        <LiaEditSolid size={17} />
+      <div className="w-[407px] bg-white h-[72px] absolute right-0 left-[20px] rounded-tl-[32px] rounded-bl-[32px] before:rounded-tr-[.5%] flex justify-center items-center px-[10px]">
+        <button className="bg-[#DAF5FE] h-[52px] w-full rounded-[32px] flex justify-center items-center gap-[5px] font-[500] text-[19px] leading-[23px]">
+          Set up your profile
+          <FaArrowRightLong size={13} />
+        </button>
       </div>
     </main>
   );

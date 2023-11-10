@@ -40,7 +40,7 @@ function LoginPage() {
         <title>Keen - Login</title>
       </Head>
       <div>
-        <div className="flex flex-col justify-center items-center mx-auto w-full pt-[20px] pb-[51px] gap-[12px]">
+        <div className="flex flex-col justify-center items-center mx-auto w-full pt-[30px] pb-[51px] gap-[12px]">
           <Image src={Logo} alt="Keen Logo" className="block" />
           <Image src={Keen} alt="Keen Logo" className="block" />
         </div>
