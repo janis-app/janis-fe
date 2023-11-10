@@ -4,6 +4,8 @@ import RegisterStepText from "@/components/RegisterComponent/RegisterStepText";
 import { useState } from "react";
 import { FaArrowRightLong, FaRegImage } from "react-icons/fa6";
 import { AiFillCamera } from "react-icons/ai";
+import { useRouter } from "next/router";
+import CustomDatePicker from "@/components/Common/DatePicker";
 
 function RegisterPage() {
   const [step, setStep] = useState(1);
@@ -14,6 +16,9 @@ function RegisterPage() {
     emailAddress: "",
     password: "",
   });
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const router = useRouter();
 
   const containsNumber = (inputString) => {
     return /\d/.test(inputString);
@@ -40,7 +45,11 @@ function RegisterPage() {
       {step === 2 && (
         <>
           <RegisterStepText text="Cool! When is your birthday?" />
-          {/* <MyPicker /> */}
+          <CustomDatePicker
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+            // maxDate={maxDate}
+          />
         </>
       )}
       {step === 3 && (
@@ -110,7 +119,9 @@ function RegisterPage() {
       <div
         className="fixed bottom-[56px] mx-auto left-0 right-0 w-[248px] h-[60px] text-center button-bg flex justify-center items-center rounded-[40px]"
         onClick={() => {
-          if (step < 5) {
+          if (step === 5) {
+            router.push("/credits");
+          } else if (step < 5) {
             setStep((prev) => prev + 1);
           }
         }}

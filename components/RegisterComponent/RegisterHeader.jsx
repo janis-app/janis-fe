@@ -1,13 +1,21 @@
+import { useRouter } from "next/router";
 import { PiCaretLeftBold } from "react-icons/pi";
 
-function RegisterHeader({ step, setStep }) {
+function RegisterHeader({ step, setStep, link }) {
+  const router = useRouter();
   return (
     <div className="pt-[24px] flex justify-between items-center mb-[53px]">
       <span
         className="bg-[#D9F5FE80]  h-[32px] w-[32px] flex justify-center items-center rounded-full"
         onClick={() => {
-          if (step > 1) {
-            setStep((prev) => prev - 1);
+          if (setStep) {
+            if (step > 1) {
+              setStep((prev) => prev - 1);
+            } else {
+              router.push("/login");
+            }
+          } else {
+            router.push(link);
           }
         }}
       >
