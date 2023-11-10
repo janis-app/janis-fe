@@ -42,3 +42,18 @@ body {
     rgba(218, 245, 254, 0.76) 97.57%
   );
 }
+
+.datepicker {
+  position: relative !important;
+  background: none !important;
+}
+.datepicker.default .datepicker-scroll li {
+  color: white !important;
+  font-weight: 500 !important;
+  font-size: 20px !important;
+}
+
+.datepicker.default .datepicker-wheel {
+  border-top: 1px solid #fff !important;
+  border-bottom: 1px solid #fff !important;
+}
