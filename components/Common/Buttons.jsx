@@ -7,6 +7,8 @@ export default function Button({ title, selectedBtn, clickHandler, isMulti }) {
           style={{
             backgroundColor: isMulti
               ? selectedBtn.includes(title)
+                ? "#D9F5FE80"
+                : "transparent"
               : title == selectedBtn
               ? "#D9F5FE80"
               : "transparent",
