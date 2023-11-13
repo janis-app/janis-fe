@@ -1,0 +1,18 @@
+.mainDiv {
+    margin-top: 20px;
+    padding: 0px 15px;
+}
+
+.contentDiv {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btnDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
