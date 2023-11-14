@@ -12,7 +12,7 @@ function Interest() {
 
   return (
     <div className="relative">
-      <Header link="personality" show={true} progess={32} />
+      <Header link="information-gathering/personality" show={true} progess={32} />
       <HeaderText
         title="What are you keen about?"
         text="Pick your play! What activities make you jump out of bed? 🏄‍♀️🧘‍♂️
