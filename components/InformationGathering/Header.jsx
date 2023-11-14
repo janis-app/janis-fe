@@ -5,7 +5,7 @@ import { PiCaretLeftBold } from "react-icons/pi";
 function Header({ progess, link, show }) {
   const router = useRouter();
   return (
-    <div className="pt-[24px] flex justify-between items-center  mb-[32px]">
+    <div className="relative z-[2] pt-[24px] flex justify-between items-center  mb-[32px]">
       <div
         className="bg-[#D9F5FE80]  h-[32px] w-[32px] flex justify-center items-center rounded-full"
         onClick={() => router.back()}
