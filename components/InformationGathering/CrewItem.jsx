@@ -4,7 +4,7 @@ function CrewItem() {
   const [radioValue, setRadioValue] = useState(false);
   return (
     <div>
-      <div className={`mt-[20px]`}>
+      <div className={`mt-[80px]`}>
         <div className="w-full">
           <div>
             {data.map((item, index) => {
