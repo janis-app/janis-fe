@@ -11,7 +11,7 @@ function Personality() {
 
   return (
     <div className="relative">
-      <Header progess={17} show={true} link="/" />
+      <Header progess={17} show={true} link="" />
       <HeaderText
         title="Discover Your Travel Energy!"
         text="Slide to your vibe! Are you the life of the party or a cozy bookworm? 🎉📚"

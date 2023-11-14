@@ -2,6 +2,7 @@ import PageHeader from "@/components/Common/PageHeader";
 import Image from "next/image";
 import logo from "../public/assets/logo.png";
 import { LiaEditSolid } from "react-icons/lia";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -25,10 +26,10 @@ export default function Home() {
       <div className="w-[407px] bg-white h-[72px] absolute right-0 left-[20px] rounded-tl-[32px] rounded-bl-[32px] before:rounded-tr-[.5%]">
         f
       </div>
-      <div className="text-center mt-[150px] text-[#AFB3BC] text-[14px] font-[500] leading-[16.94px] flex justify-center items-center gap-[5px]">
+      <Link href="/information-gathering/personality" className="text-center mt-[150px] text-[#AFB3BC] text-[14px] font-[500] leading-[16.94px] flex justify-center items-center gap-[5px]">
         <p>Edit preferences</p>
         <LiaEditSolid size={17} />
-      </div>
+      </Link>
     </main>
   );
 }
