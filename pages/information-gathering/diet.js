@@ -14,7 +14,7 @@ function Diet() {
 
   return (
     <div>
-      <Header progess={68} link="vehicles" show={true} />
+      <Header progess={68} link="information-gathering/vehicles" show={true} />
       <HeaderText
         title="Are you a picky eater?"
         text="Tell us about your food preferences!"

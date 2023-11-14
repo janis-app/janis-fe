@@ -15,7 +15,7 @@ function Budget() {
 
   return (
     <div>
-      <Header progess={80} link="diet" show={true} />
+      <Header progess={80} link="information-gathering/diet" show={true} />
       <HeaderText
         title="Plan Your Adventure, Your Way!"
         text="What’s your daily budget?"

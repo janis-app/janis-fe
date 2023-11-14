@@ -13,7 +13,7 @@ function Vehicle() {
 
   return (
     <div>
-      <Header progess={53} link="interests" show={true} />
+      <Header progess={53} link="information-gathering/interests" show={true} />
       <HeaderText
         title="How do you roll?"
         text="Choose your go-to wheels or walks 🚗🚶
