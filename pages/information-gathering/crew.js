@@ -38,5 +38,5 @@ function Crew() {
 export default Crew;
 
 Crew.getLayout = function PageLayout(page) {
-  return <div>{page}</div>;
+  return <div className="white-screen-container">{page}</div>;
 };

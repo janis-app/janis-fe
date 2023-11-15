@@ -42,7 +42,7 @@ function Mood() {
         })}
       </div>
       <Link
-        href="/start-adventure/mood"
+        href="/generate"
         className="fixed bottom-[56px] mx-auto left-0 right-0 w-[248px] h-[60px] text-center button-bg flex justify-center items-center rounded-[40px]"
       >
         <NextButton />
@@ -69,5 +69,5 @@ const data = [
 ];
 
 Mood.getLayout = function PageLayout(page) {
-  return <div>{page}</div>;
+  return <div className="white-screen-container">{page}</div>;
 };

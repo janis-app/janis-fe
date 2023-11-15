@@ -33,9 +33,19 @@ body {
   height: 100vh;
   padding: 0 24px;
 }
+.generate-container {
+  width: 400px;
+  max-width: 400px;
+  margin: 0 auto;
+  background: url("../public/assets/generateBg.png") no-repeat;
+  background-position: top;
+  background-size: cover;
+  height: 100vh;
+  /* padding: 0 24px; */
+}
 
 @media only screen and (max-width: 767px) {
-  .screen-container {
+  .screen-container, .white-screen-container, .generate-container {
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
