@@ -45,7 +45,7 @@ export default Personality;
 
 Personality.getLayout = function PageLayout(page) {
   return (
-    <div className="flex">
+    <div className="white-screen-container">
       {page}
     </div>
   );
