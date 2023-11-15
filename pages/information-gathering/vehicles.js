@@ -33,5 +33,5 @@ function Vehicle() {
 export default Vehicle;
 
 Vehicle.getLayout = function PageLayout(page) {
-  return <div>{page}</div>;
+  return <div className="white-screen-container">{page}</div>;
 };
