@@ -25,6 +25,17 @@ body {
   height: 100vh;
   /* padding: 0 24px; */
 }
+.login_container{
+  
+  background: linear-gradient(
+    180deg,
+    #a1dbef 34.8%,
+    #caeefa 74.84%,
+    rgba(218, 245, 254, 0.76) 97.57%
+  );
+  height: 100vh;
+  padding: 0 24px;
+}
 .white-screen-container {
   width: 400px;
   max-width: 400px;
