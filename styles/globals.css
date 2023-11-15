@@ -70,6 +70,7 @@ body {
 /***** Chrome, Safari, Opera, and Edge Chromium *****/
 input[type="range"]::-webkit-slider-runnable-track {
   background: #daf5fe;
+  height: 10px;
 }
 
 /******** Firefox ********/
@@ -77,12 +78,35 @@ input[type="range"]::-moz-range-track {
   background: #daf5fe;
 }
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
-  appearance: none;
+  background-color: #b9e6f5;
+  position: relative;
+  top: -10px;
+  border: 5px solid #daf5fe;
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  box-shadow: inset 1em 1em #b9e6f5;
+}
 
-  /*custom styles*/
-  background-color: #daf5fe;
-  height: 20px;
+input[type="range"]::-moz-range-thumb {
+  background-color: #b9e6f5;
+  position: relative;
+  top: -10px;
+  border: 5px solid #daf5fe;
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  box-shadow: inset 1em 1em #b9e6f5;
+}
+input[type="range"]::-ms-thumb {
+  background-color: #b9e6f5;
+  position: relative;
+  top: -10px;
+  border: 5px solid #daf5fe;
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  box-shadow: inset 1em 1em #b9e6f5;
 }
 
 input[type="radio"] {
@@ -97,7 +121,7 @@ input[type="radio"] {
   color: #daf5fe;
   width: 24px;
   height: 24px;
-  border: 0.15em solid #B9E6F5;
+  border: 0.15em solid #b9e6f5;
   border-radius: 50%;
   transform: translateY(-0.075em);
   display: grid;
