@@ -16,12 +16,20 @@ body {
   width: 400px;
   max-width: 400px;
   margin: 0 auto;
-  background: linear-gradient(
+  /* background: linear-gradient(
     180deg,
     #a1dbef 34.8%,
     #caeefa 74.84%,
     rgba(218, 245, 254, 0.76) 97.57%
-  );
+  ); */
+  height: 100vh;
+  /* padding: 0 24px; */
+}
+.white-screen-container {
+  width: 400px;
+  max-width: 400px;
+  margin: 0 auto;
+  background: white;
   height: 100vh;
   padding: 0 24px;
 }
@@ -41,4 +49,75 @@ body {
     #caeefa 74.84%,
     rgba(218, 245, 254, 0.76) 97.57%
   );
+}
+
+.datepicker {
+  position: relative !important;
+  background: none !important;
+}
+.datepicker.default .datepicker-scroll li {
+  color: white !important;
+  font-weight: 500 !important;
+  font-size: 20px !important;
+}
+
+.datepicker.default .datepicker-wheel {
+  border-top: 1px solid #fff !important;
+  border-bottom: 1px solid #fff !important;
+}
+
+/***** Track Styles *****/
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #daf5fe;
+}
+
+/******** Firefox ********/
+input[type="range"]::-moz-range-track {
+  background: #daf5fe;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+
+  /*custom styles*/
+  background-color: #daf5fe;
+  height: 20px;
+}
+
+input[type="radio"] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  appearance: none;
+  /* For iOS < 15 to remove gradient background */
+  background-color: #fff;
+  /* Not removed via appearance */
+  margin: 0;
+  font: inherit;
+  color: #daf5fe;
+  width: 24px;
+  height: 24px;
+  border: 0.15em solid #B9E6F5;
+  border-radius: 50%;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #daf5fe;
+  border: 0.15em solid #daf5fe;
+  color: #daf5fe;
+}
+
+input[type="radio"]:checked::before {
+  border: 0.15em solid #daf5fe;
+  transform: scale(1);
+  color: #daf5fe;
 }

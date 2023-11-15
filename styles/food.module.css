@@ -1,0 +1,50 @@
+.mainDiv {
+    margin-top: 20px;
+    padding: 0px 15px;
+}
+
+.contentDiv {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btnDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text {
+    font-weight: 700;
+    margin: 7px auto;
+}
+
+.countryBtn{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.btns {
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    border: none;
+    margin: 0px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.textBtn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
