@@ -23,11 +23,12 @@ function Personality() {
         </span>
         <input
           type="range"
-          className="w-[226px] bg-[#DAF5FE] h-[15px]"
+          className="w-[226px] bg-[#DAF5FE] !h-[10px] outline-none"
           value={value}
           min={0}
           max={100}
           step={1}
+          onChange={(e)=>setValue(e.target.valueAsNumber)}
         />
         <span className="w-[46px] h-[46px] rounded-full flex justify-center items-center bg-[#DAF5FE]">
           🎉
