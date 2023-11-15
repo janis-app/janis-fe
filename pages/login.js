@@ -35,7 +35,7 @@ function LoginPage() {
   };
 
   return (
-    <>
+    <div className='login_container'>
       <Head>
         <title>Keen - Login</title>
       </Head>
@@ -125,7 +125,7 @@ function LoginPage() {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
