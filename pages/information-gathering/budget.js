@@ -34,5 +34,5 @@ function Budget() {
 export default Budget;
 
 Budget.getLayout = function PageLayout(page) {
-  return <div>{page}</div>;
+  return <div className="white-screen-container">{page}</div>;
 };

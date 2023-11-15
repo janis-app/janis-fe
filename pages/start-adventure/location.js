@@ -44,5 +44,5 @@ function Location() {
 export default Location;
 
 Location.getLayout = function PageLayout(page) {
-  return <div>{page}</div>;
+  return <div className="white-screen-container">{page}</div>;
 };
