@@ -15,9 +15,7 @@ export default function App({ Component, pageProps }) {
           />
         </Head>
         <ToastContainer autoClose={2000} position="top-center" />
-        <div className="white-screen-container">
-          {Component.getLayout(<Component {...pageProps} />)}
-        </div>
+        {Component.getLayout(<Component {...pageProps} />)}
       </>
     );
   }

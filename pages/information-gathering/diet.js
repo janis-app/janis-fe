@@ -33,5 +33,5 @@ function Diet() {
 export default Diet;
 
 Diet.getLayout = function PageLayout(page) {
-  return <div>{page}</div>;
+  return <div className="white-screen-container">{page}</div>;
 };

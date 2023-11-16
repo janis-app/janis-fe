@@ -10,12 +10,14 @@
 
 .conatiner {
     background-color: #fff;
-
 }
 
 
 .logo_container {
-    background: linear-gradient(180deg, #a1dbef 34.8%, #caeefa 74.84%, rgba(218, 245, 254, 0.76) 97.57%);
+    background: linear-gradient(180deg,
+            #a1dbef 34.8%,
+            #caeefa 74.84%,
+            rgba(218, 245, 254, 0.76) 97.57%);
     padding-top: 50px;
     border-radius: 0px 0px 40px 0px;
 }
@@ -36,11 +38,11 @@
     background-color: #c5ecf9be;
     display: flex;
     justify-content: center;
-    
+
     /* background-color:  rgba(218, 245, 254, 0.76); */
 }
 
-.credit_div{
+.credit_div {
     display: flex;
     align-items: center;
     background-color: #B9E6F5;
@@ -48,6 +50,7 @@
     height: 32px;
     border-radius: 51px;
 }
+
 .credit_no {
     font-size: 12px;
     font-weight: 500;
@@ -60,7 +63,8 @@
     align-items: center;
     margin-left: 3px;
 }
-.credit{
+
+.credit {
     margin-left: 5px;
     font-size: 12px;
     font-weight: 500;
@@ -69,7 +73,7 @@
     align-items: center;
 }
 
-.edit_pref{
+.edit_pref {
     padding-top: 15px;
     display: flex;
     align-items: center;
