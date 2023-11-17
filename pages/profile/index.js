@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react'
 import { PiCaretLeftBold } from "react-icons/pi";
 import styles from "@/styles/profile/profile.module.css"

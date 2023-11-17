@@ -1,3 +1,4 @@
+"use client"
 import Header from '@/components/InformationGathering/Header'
 import React, { useState } from 'react'
 import profile from '@/public/assets/profileImg.svg'
