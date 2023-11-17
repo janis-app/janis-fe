@@ -20,7 +20,7 @@ import mx from '@/public/assets/mx.svg'
 import Switch from "react-switch";
 
 
-export default function index() {
+export default function Profile() {
     const [switch1, setSwitch1] = useState(false);
     const [switch2, setSwitch2] = useState(false);
     const [switch3, setSwitch3] = useState(false);
