@@ -30,7 +30,7 @@ function RegisterPage() {
   }
 
   return (
-    <div className="relative">
+    <div className="relative login_container">
       <RegisterHeader step={step} setStep={setStep} />
       {step === 1 && (
         <>
