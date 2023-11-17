@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react'
 import { PiCaretLeftBold } from "react-icons/pi";
 import styles from "@/styles/profile/profile.module.css"
@@ -19,7 +20,7 @@ import mx from '@/public/assets/mx.svg'
 import Switch from "react-switch";
 
 
-export default function index() {
+export default function Profile() {
     const [switch1, setSwitch1] = useState(false);
     const [switch2, setSwitch2] = useState(false);
     const [switch3, setSwitch3] = useState(false);
