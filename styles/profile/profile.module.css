@@ -1,0 +1,151 @@
+.main_conatiner {
+    background-image: url("../../public/assets/profileBackground.png");
+    height: 500px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.profile_no {
+    font-size: 14px;
+    font-weight: 500;
+    border: 2px solid #fff;
+    height: 29px;
+    width: 29px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #B9E6F5;
+    position: relative;
+    top: 108px;
+    left: 80px;
+    color: #000;
+
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+}
+
+.dashboardBtn {
+    padding: 8px;
+    border: none;
+    color: #000;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    background-color: #B9E6F5;
+    border-radius: 100px;
+    border: 1px solid #B9E6F5;
+}
+
+.planBtn {
+
+    padding: 8px;
+    border: 1px solid #fff;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    background-color: transparent;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+}
+
+.profile_container {
+    border-radius: 20px 20px 0px 0px;
+    margin-top: 50px;
+    width: 100%;
+    height: auto;
+    padding: 24px;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+}
+
+.redoBtn {
+    width: 81px;
+    margin: 0px auto;
+    color: #3592B1;
+    padding: 8px;
+    border: 1px solid #B9E6F5;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    background-color: #B9E6F5;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.card {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+}
+
+.card p {
+    color: #AFB3BC;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.mini_card {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background: rgba(161, 219, 239, 0.30);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.personality {
+    height: auto;
+    border-radius: 10px;
+    background-color: rgba(237, 240, 244, 0.90);
+    padding: 14px;
+}
+
+.personality p {
+    display: flex;
+    align-items: center;
+}
+
+.radius_div {
+    height: 46px;
+    width: 46px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.radius_container {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    height: 5px;
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.btn {
+    margin: 0px 8px;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 40px;
+    background: #EDF0F4;
+}
