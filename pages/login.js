@@ -21,7 +21,6 @@ function LoginPage() {
   const router = useRouter();
 
   
-// login
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
