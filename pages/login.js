@@ -20,22 +20,6 @@ function LoginPage() {
 
   const router = useRouter();
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   loginUser({ identifier: email, password: password })
-  //     .then((res) => {
-  //       console.log("res", res);
-  //       setLoading(false);
-  //       setEmail("");
-  //       setPassword("");
-  //     })
-  //     .catch((err) => {
-  //       toast.error(`${err?.response?.data?.error?.message}`);
-  //       setLoading(false);
-  //     });
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -67,6 +51,8 @@ function LoginPage() {
 
     setToken(responseData);
     setLoading(false);
+    setEmail('')
+    setPassword('')
   };
 
   return (
@@ -93,8 +79,8 @@ function LoginPage() {
               />
               <label
                 className={`absolute top-3 text-[#7A7676] ${email
-                    ? "-translate-y-1 text-sm  visible"
-                    : "transform translate-y-1.5 text-base invisible"
+                  ? "-translate-y-1 text-sm  visible"
+                  : "transform translate-y-1.5 text-base invisible"
                   }`}
                 style={{ transition: "all 0.2s" }}
               >
@@ -114,8 +100,8 @@ function LoginPage() {
               />
               <label
                 className={`absolute top-3 z-20 text-[#7A7676]  ${password
-                    ? "-translate-y-1 text-sm "
-                    : "transform translate-y-1.5 text-base "
+                  ? "-translate-y-1 text-sm "
+                  : "transform translate-y-1.5 text-base "
                   }`}
                 style={{ transition: "all 0.2s" }}
               >
