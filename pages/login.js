@@ -10,6 +10,8 @@ import Spinner from "@/lib/spinner";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { fetcher } from "@/lib/api";
+import { setToken } from "@/lib/auth";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -18,29 +20,49 @@ function LoginPage() {
 
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    loginUser({ identifier: email, password: password })
-      .then((res) => {
-        console.log("res", res);
-        setLoading(false);
-        setEmail("");
-        setPassword("");
-      })
-      .catch((err) => {
-        toast.error(`${err?.response?.data?.error?.message}`);
-        setLoading(false);
-      });
+    const responseData = await fetcher(
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/local`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          identifier: email,
+          password: password,
+        }),
+      }
+    );
+    if (responseData?.error) {
+      const message = responseData?.error?.message
+        ? responseData?.error?.message.replace(
+          "Invalid identifier or password",
+          "Invalid credentials"
+        )
+        : "Something went wrong please retry.";
+      toast.error(`${message}`);
+      setLoading(false);
+
+      return;
+    }
+
+    setToken(responseData);
+    setLoading(false);
+    setEmail('')
+    setPassword('')
   };
 
   return (
-    <>
+    <div className='login_container'>
       <Head>
         <title>Keen - Login</title>
       </Head>
       <div>
-        <div className="flex flex-col justify-center items-center mx-auto w-full pt-[20px] pb-[51px] gap-[12px]">
+        <div className="flex flex-col justify-center items-center mx-auto w-full pt-[30px] pb-[51px] gap-[12px]">
           <Image src={Logo} alt="Keen Logo" className="block" />
           <Image src={Keen} alt="Keen Logo" className="block" />
         </div>
@@ -48,9 +70,8 @@ function LoginPage() {
           <form onSubmit={handleSubmit}>
             <div className="bg-[#D9F1F9] w-full h-[60px] relative rounded-[50px] px-[29px] py-[14px] flex items-center mb-[16px]">
               <input
-                className={`w-full h-full bg-transparent relative outline-none placeholder:text-[#15224F] text-[#15224F] ${
-                  email ? "pt-3" : "pt-0"
-                }`}
+                className={`w-full h-full bg-transparent relative outline-none placeholder:text-[#15224F] text-[#15224F] ${email ? "pt-3" : "pt-0"
+                  }`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="off"
@@ -58,11 +79,10 @@ function LoginPage() {
                 placeholder="Email/ Phone number"
               />
               <label
-                className={`absolute top-3 text-[#7A7676] ${
-                  email
-                    ? "-translate-y-1 text-sm  visible"
-                    : "transform translate-y-1.5 text-base invisible"
-                }`}
+                className={`absolute top-3 text-[#7A7676] ${email
+                  ? "-translate-y-1 text-sm  visible"
+                  : "transform translate-y-1.5 text-base invisible"
+                  }`}
                 style={{ transition: "all 0.2s" }}
               >
                 Email/ Phone number
@@ -70,9 +90,8 @@ function LoginPage() {
             </div>
             <div className="bg-[#D9F1F9] w-full h-[60px] relative rounded-[50px] px-[29px] py-[14px] flex items-center mb-[24px]">
               <input
-                className={`w-full h-full bg-transparent relative outline-none placeholder:text-[#15224F] text-[#15224F] ${
-                  password ? "pt-3" : "pt-0 z-30"
-                }`}
+                className={`w-full h-full bg-transparent relative outline-none placeholder:text-[#15224F] text-[#15224F] ${password ? "pt-3" : "pt-0 z-30"
+                  }`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
@@ -81,11 +100,10 @@ function LoginPage() {
                 placeholder="Password"
               />
               <label
-                className={`absolute top-3 z-20 text-[#7A7676]  ${
-                  password
-                    ? "-translate-y-1 text-sm "
-                    : "transform translate-y-1.5 text-base "
-                }`}
+                className={`absolute top-3 z-20 text-[#7A7676]  ${password
+                  ? "-translate-y-1 text-sm "
+                  : "transform translate-y-1.5 text-base "
+                  }`}
                 style={{ transition: "all 0.2s" }}
               >
                 Password
@@ -125,7 +143,7 @@ function LoginPage() {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
