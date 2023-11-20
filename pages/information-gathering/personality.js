@@ -17,22 +17,24 @@ function Personality() {
         text="Slide to your vibe! Are you the life of the party or a cozy bookworm? 🎉📚"
         subText="Keen"
       />
-      <div className="my-[190px] flex justify-center items-center">
-        <span className="w-[46px] h-[46px] rounded-full flex justify-center items-center bg-[#DAF5FE]">
-          🤫
+      <div className="mt-[190px] Introvert flex justify-between items-center h-[10px] bg-[#DAF5FE]">
+        <div >
+          <div className="w-[46px] h-[46px] rounded-full flex justify-center items-center bg-[#DAF5FE]">
+            🤫
+          </div>
+        </div>
+        <span className="w-[40px] h-[40px] rounded-full flex justify-center items-center  bg-[#DAF5FE]">
+          <span className="w-[25px] h-[25px] rounded-full  bg-[#B9E6F5]"></span>
         </span>
-        <input
-          type="range"
-          className="w-[226px] bg-[#DAF5FE] !h-[10px] outline-none"
-          value={value}
-          min={0}
-          max={100}
-          step={1}
-          onChange={(e)=>setValue(e.target.valueAsNumber)}
-        />
-        <span className="w-[46px] h-[46px] rounded-full flex justify-center items-center bg-[#DAF5FE]">
-          🎉
-        </span>
+        <div >
+          <div className="w-[46px] h-[46px] rounded-full flex justify-center items-center bg-[#DAF5FE]">
+            🎉
+          </div>
+        </div>
+      </div>
+      <div className="mb-[175px] mt-[20px] Introvert flex justify-between items-center">
+        <p className="text-sm">Introvert</p>
+        <p className="text-sm">Extrovert</p>
       </div>
       <Link href="/information-gathering/interests" className="fixed bottom-[56px] mx-auto left-0 right-0 w-[248px] h-[60px] text-center button-bg flex justify-center items-center rounded-[40px]">
         <NextButton />
