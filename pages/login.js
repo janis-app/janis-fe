@@ -112,6 +112,8 @@ function LoginPage() {
             <button
               className="w-full outline-none bg-[#9FDBED] text-white h-[60px] rounded-[50px] text-[16px] font-semibold tracking-[2%] leading-[24px]"
               disabled={loading}
+              type="button"
+              onClick={()=>router.push("/")}
             >
               {loading ? <Spinner /> : "Login"}
             </button>
