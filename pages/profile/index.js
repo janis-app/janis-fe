@@ -107,11 +107,11 @@ export default function Index() {
                         Las Palmas, Gran Canaria, Spain
                     </p>
 
-                    <div className='flex items-center mt-[17px]'>
-                        <button className={styles.dashboardBtn}>
+                    <div className='flex flex-col gap-[10px] items-center mt-[17px]'>
+                        <button className={styles.dashboardBtn} type='button'  onClick={()=>router.push('/dashboard')}>
                             Dashboard
                         </button>
-                        <button className={styles.planBtn}>
+                        <button className={styles.planBtn} type='button'  onClick={()=>router.push('/dashboard/plans')}>
                             <Image
                                 src={vector}
                                 width={13}

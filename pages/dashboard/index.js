@@ -31,7 +31,7 @@ export default function Dashboard() {
         <div style={{ margin: "29px 24px" }} className='pt-[10px]'>
           <p style={{ fontSize: 12, paddingTop: 19 }}>Credits</p>
           <h1>5</h1>
-          <button className={styles.creditBtn}>
+          <button className={styles.creditBtn} type='button'  onClick={()=>router.push('/dashboard/get-credits')}>
             <Image
               src={arrowIcon}
               width={24}
@@ -43,7 +43,7 @@ export default function Dashboard() {
 
           <div className='flex justify-between items-center'>
             <p>Recent plans</p>
-            <p className={styles.viewAll}>View All</p>
+            <p className={styles.viewAll}  onClick={()=>router.push('/dashboard/likes')}>View All</p>
           </div>
           <div className='flex justify-between items-center'>
             <div className={styles.recent_div}>

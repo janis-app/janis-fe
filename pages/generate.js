@@ -2,8 +2,10 @@ import Header from "@/components/InformationGathering/Header";
 import HeaderText from "@/components/InformationGathering/HeaderText";
 import Image from "next/image";
 import animatedButton from "../public/assets/AnimatedButton.png";
+import { useRouter } from "next/router";
 
 function Generate() {
+  const router = useRouter()
   return (
     <div className="relative min-h-screen">
       <div className="absolute top-0 right-0 left-0 bottom-0 button-bg opacity-10"></div>
@@ -14,7 +16,7 @@ function Generate() {
           title="Ready for Your Perfect Day?"
           color="white"
         />
-        <div className="mt-[10rem]">
+        <div className="mt-[10rem] z-[1000] relative" onClick={()=> router.push("/day-plan")}>
           <Image src={animatedButton} alt="" />
         </div>
       </div>
