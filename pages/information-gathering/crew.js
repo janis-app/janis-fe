@@ -19,8 +19,8 @@ function Crew() {
     <div>
       <Header progess={100} link="information-gathering/budget" show={true}/>
       <HeaderText
-        title="Plan Your Adventure, Your Way!"
-        text="What’s your daily budget?"
+        title="Who's Your Adventure Crew?"
+        text="Crafted Exclusively for Your Travel Crew!"
       />
       <CrewItem />
       <Link
