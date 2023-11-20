@@ -15,8 +15,7 @@ function Mood() {
       <Header show={false} progess={32} />
       <div className="relative z-[2] text-center flex flex-col justify-center items-center font-[500]">
         <h3 className="text-[20px] leading-[24.2px]">
-          How <span style={{ color: '#B9E6F5' }}>Keen</span> are you today?
-
+          How <span className="text-[#B9E6F5]">Keen</span> are you today?
         </h3>
         <p className="text-[16px] leading-[19.36px] text-[#7A7676] mt-[8px]">
           Let us know about your current mood

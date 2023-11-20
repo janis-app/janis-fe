@@ -37,6 +37,7 @@ function Header({ progess, link, show, title , profile }) {
           height={32}
           alt="Profile image"
           className="rounded-2xl"
+          onClick={()=>router.push('/profile')}
         />
         }
       </div>

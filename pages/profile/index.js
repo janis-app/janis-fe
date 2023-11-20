@@ -22,7 +22,6 @@ import { useRouter } from 'next/router';
 
 
 export default function Profile() {
-
     const [switch1, setSwitch1] = useState(false);
     const [switch2, setSwitch2] = useState(false);
     const [switch3, setSwitch3] = useState(false);
@@ -109,11 +108,11 @@ export default function Profile() {
                         Las Palmas, Gran Canaria, Spain
                     </p>
 
-                    <div className='flex items-center mt-[17px]'>
-                        <button className={styles.dashboardBtn}>
+                    <div className='flex flex-col gap-[10px] items-center mt-[17px]'>
+                        <button className={styles.dashboardBtn} type='button'  onClick={()=>router.push('/dashboard')}>
                             Dashboard
                         </button>
-                        <button className={styles.planBtn}>
+                        <button className={styles.planBtn} type='button'  onClick={()=>router.push('/dashboard/plans')}>
                             <Image
                                 src={vector}
                                 width={13}
