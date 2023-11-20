@@ -1,3 +1,4 @@
+"use client"
 import Header from '@/components/InformationGathering/Header'
 import React, { useState } from 'react'
 import profile from '@/public/assets/profileImg.svg'
@@ -16,7 +17,7 @@ import mask2 from '@/public/assets/Mask1.png'
 import mask3 from '@/public/assets/Mask2.png'
 import sun from '@/public/assets/sun.svg'
 
-export default function index() {
+export default function DayPlan() {
     const [isTextVisible, setIsTextVisible] = useState(false);
     const [updatedIndex, setUpdatedIndex] = useState(null)
     const [foodIndex, setFoodIndex] = useState(null)
