@@ -17,12 +17,15 @@ import vn from '@/public/assets/vn.svg'
 import ind from '@/public/assets/in.svg'
 import mx from '@/public/assets/mx.svg'
 import Switch from "react-switch";
+import { useRouter } from 'next/router';
 
 
-export default function index() {
+export default function Index() {
     const [switch1, setSwitch1] = useState(false);
     const [switch2, setSwitch2] = useState(false);
     const [switch3, setSwitch3] = useState(false);
+
+    const router = useRouter()
 
     const handleSwitch1 = (checked) => {
         setSwitch1(checked);
@@ -76,6 +79,7 @@ export default function index() {
                         width={25}
                         height={25}
                         alt="setting icon"
+                        onClick={()=>router.push('/settings')}
                     />
                 </div>
                 <div className={styles.container}>
@@ -133,9 +137,9 @@ export default function index() {
 
                     <div className='flex justify-between'>
                         {
-                            data.map((items, index) => {
+                            data.map((items, Index) => {
                                 return (
-                                    <div className={styles.card} key={index}>
+                                    <div className={styles.card} key={Index}>
                                         <div className={styles.mini_card}>
                                             <Image
                                                 src={items.img}
@@ -207,9 +211,9 @@ export default function index() {
                         </p>
 
                         <div className='flex justify-between items-center '>
-                            {flag.map((items, index) => {
+                            {flag.map((items, Index) => {
                                 return (
-                                    <div className={styles.radius_div} key={index}>
+                                    <div className={styles.radius_div} key={Index}>
                                         <Image
                                             src={items.img}
                                             width={18}

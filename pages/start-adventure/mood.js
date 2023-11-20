@@ -13,10 +13,18 @@ function Mood() {
   return (
     <div>
       <Header show={false} progess={32} />
-      <HeaderText
+      {/* <HeaderText
         title="How Keen are you today?"
         text="Let us know about your current mood"
-      />
+      /> */}
+      <div className="relative z-[2] text-center flex flex-col justify-center items-center font-[500]">
+        <h3 className="text-[20px] leading-[24.2px]">
+          How <span className="text-[#DAF5FE]">Keen</span> are you today?
+        </h3>
+        <p className="text-[16px] leading-[19.36px] text-[#7A7676] mt-[8px]">
+          Let us know about your current mood
+        </p>
+      </div>
       <div className={`mt-[80px]`}>
         {data.map((item, index) => {
           return (
