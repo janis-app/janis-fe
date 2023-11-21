@@ -8,7 +8,7 @@ import crown from '@/public/assets/crown.svg'
 import Switch from "react-switch";
 import { FiCheck } from "react-icons/fi";
 
-export default function credits() {
+export default function Credits() {
     const [switchs, setSwitch] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null)
 
