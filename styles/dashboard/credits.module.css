@@ -1,0 +1,29 @@
+.main_conatiner {
+    height: 100vh;
+    background: linear-gradient(180deg,
+            #a1dbef 34.8%,
+            #caeefa 74.84%,
+            rgba(218, 245, 254, 0.76) 97.57%);
+    ;
+}
+
+.nextBtnDIv {
+    margin: 0px auto;
+    height: auto;
+    width: 250px;
+    background: var(--Gradient, linear-gradient(180deg, #A1DBEF 34.8%, #CAEEFA 74.84%, rgba(218, 245, 254, 0.76) 97.57%));
+    padding: 4px;
+    border-radius: 40px;
+}
+
+.nextBtn {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 240px;
+    border: 5px solid ;
+    padding: 8px 16px;
+    border-radius: 40px;
+    border: none;
+}
