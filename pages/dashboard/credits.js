@@ -8,7 +8,7 @@ import crown from '@/public/assets/crown.svg'
 import Switch from "react-switch";
 import { FiCheck } from "react-icons/fi";
 
-export default function credits() {
+export default function Credits() {
     const [switchs, setSwitch] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null)
 
@@ -43,7 +43,7 @@ export default function credits() {
             <div style={{ margin: "0px 24px" }} >
                 <Header progess={17} title="Dashboard" link="" profile={profile} />
             </div>
-            <div className='mt-[33px] pt-[15px] px-[25px] bg-white rounded-t-[32px] '>
+            <div className={`mt-[33px] pt-[15px] px-[25px] bg-white rounded-t-[32px] ${styles.container} `}>
                 <div className='bg-[#A2DCF0] rounded-[20px] px-[17px] py-[12px] text-white flex items-center	'>
                     <Image
                         src={crown}
