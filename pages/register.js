@@ -6,6 +6,7 @@ import { FaArrowRightLong, FaRegImage } from "react-icons/fa6";
 import { AiFillCamera } from "react-icons/ai";
 import { useRouter } from "next/router";
 import CustomDatePicker from "@/components/Common/DatePicker";
+import { fetcher } from "@/lib/api";
 
 function RegisterPage() {
   const [step, setStep] = useState(1);
@@ -18,6 +19,9 @@ function RegisterPage() {
   });
   const [selectedDate, setSelectedDate] = useState(null);
 
+  console.log("Form Values: ", formValues);
+  console.log("selectedDate: ", selectedDate);
+
   const router = useRouter();
 
   const containsNumber = (inputString) => {
@@ -27,6 +31,42 @@ function RegisterPage() {
   function containsSymbol(str) {
     var regex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
     return regex.test(str);
+  }
+
+  const handleImageChange = (event) => {
+    const selectedImage = event.target.files[0];
+
+    setFormValues({
+      ...formValues,
+      profilePictureUrl: selectedImage,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // setLoading(true);
+
+    const responseData = await fetcher(
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/local/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formValues.name,
+          email: formValues.emailAddress,
+          dob: selectedDate,
+          password: formValues.password
+        }),
+      }
+    );
+
+    if (responseData.error) {
+      console.log("Error at Register", responseData.error);
+    }
+
+    console.log("response data: ", responseData);
   }
 
   return (
@@ -39,6 +79,10 @@ function RegisterPage() {
             type="text"
             className="w-full h-[27px] bg-transparent text-center text-[#FFFFFF80] placeholder:text-[#FFFFFF80] text-[20px] outline-none"
             placeholder="e.g Janis Scheuermann"
+            value={formValues.name}
+            onChange={(e) =>
+              setFormValues({ ...formValues, name: e.target.value })
+            }
           />
         </>
       )}
@@ -48,7 +92,7 @@ function RegisterPage() {
           <CustomDatePicker
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
-            // maxDate={maxDate}
+          // maxDate={maxDate}
           />
         </>
       )}
@@ -73,6 +117,8 @@ function RegisterPage() {
               accept="image/*"
               capture="camera"
               className="hidden"
+              onChange={handleImageChange}
+
             />
           </label>
         </>
@@ -84,6 +130,10 @@ function RegisterPage() {
             type="email"
             className="w-full h-[27px] bg-transparent text-center text-[#FFFFFF80] placeholder:text-[#FFFFFF80] text-[20px] outline-none"
             placeholder="e.g janisscheuermann@gmail.com"
+            value={formValues.emailAddress}
+            onChange={(e) =>
+              setFormValues({ ...formValues, emailAddress: e.target.value })
+            }
           />
         </>
       )}
@@ -116,12 +166,22 @@ function RegisterPage() {
         </>
       )}
 
-      <div
+      <button
         className="fixed bottom-[56px] mx-auto left-0 right-0 w-[248px] h-[60px] text-center button-bg flex justify-center items-center rounded-[40px]"
-        onClick={() => {
+        disabled={
+          (step === 1 && formValues.name.trim() === "") ||
+          (step === 2 && selectedDate === null) ||
+          // (step === 3 && formValues.profilePictureUrl === "") ||
+          (step === 4 && formValues.emailAddress.trim() === "") ||
+          (step === 5 && (formValues.password.length > 7 ? false : true) && (containsNumber(formValues?.password) ? true : false) && (containsSymbol(formValues?.password) ? true : false))
+        }
+
+        onClick={(e) => {
           if (step === 5) {
-            router.push("/credits");
+            handleSubmit(e)
+            // router.push("/credits");
           } else if (step < 5) {
+
             setStep((prev) => prev + 1);
           }
         }}
@@ -129,7 +189,8 @@ function RegisterPage() {
         <button className="bg-white w-[240px] h-[52px] rounded-[40px] flex items-center justify-center gap-[6px] text-[16px] font-medium leading-[19.36px]">
           Next <FaArrowRightLong size={13} />
         </button>
-      </div>
+
+      </button>
     </div>
   );
 }

@@ -65,7 +65,7 @@ export default function plan() {
                 <div style={{ margin: "0px 24px" }} >
                     <Header progess={17} title="Recent plans" link="" profile={profile} />
                 </div>
-                <div className='mt-[33px] pt-[15px] px-[25px] bg-white rounded-t-[32px] h-[80%]'>
+                <div className={`mt-[33px] pt-[15px] px-[25px] bg-white rounded-t-[32px] ${styles.container} `}>
                     <div className={styles.search_div}>
                         <input
                             type="text"

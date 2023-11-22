@@ -21,9 +21,9 @@ const CustomDatePicker = ({ selectedDate, setSelectedDate, maxDate }) => {
   };
 
   const handleDateChange = (date) => {
-    const formattedDate = `${date.getFullYear()}/${
+    const formattedDate = `${date.getFullYear()}-${
       date.getMonth() + 1
-    }/${date.getDate()}`;
+    }-${date.getDate()}`;
     setSelectedDate(formattedDate);
     setInitialDate(date);
   };

@@ -43,7 +43,7 @@ export default function Credits() {
             <div style={{ margin: "0px 24px" }} >
                 <Header progess={17} title="Dashboard" link="" profile={profile} />
             </div>
-            <div className='mt-[33px] pt-[15px] px-[25px] bg-white rounded-t-[32px] '>
+            <div className={`mt-[33px] pt-[15px] px-[25px] bg-white rounded-t-[32px] ${styles.container} `}>
                 <div className='bg-[#A2DCF0] rounded-[20px] px-[17px] py-[12px] text-white flex items-center	'>
                     <Image
                         src={crown}

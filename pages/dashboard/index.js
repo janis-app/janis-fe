@@ -4,6 +4,7 @@ import profile from '@/public/assets/profileImg.svg'
 import styles from '@/styles/dashboard/dashboard.module.css'
 import Image from 'next/image'
 import arrowIcon from "@/public/assets/arrowIcon.svg"
+import Link from 'next/link'
 
 export default function Dashboard() {
   const data = [
@@ -31,7 +32,7 @@ export default function Dashboard() {
         <div style={{ margin: "29px 24px" }} className='pt-[10px]'>
           <p style={{ fontSize: 12, paddingTop: 19 }}>Credits</p>
           <h1>5</h1>
-          <button className={styles.creditBtn}>
+          <Link href="/dashboard/credits" className={styles.creditBtn}>
             <Image
               src={arrowIcon}
               width={24}
@@ -39,11 +40,11 @@ export default function Dashboard() {
               alt="Profile image"
               className="rounded-2xl"
             /> <h2>Get credits</h2>
-          </button>
+          </Link>
 
           <div className='flex justify-between items-center'>
             <p>Recent plans</p>
-            <p className={styles.viewAll}>View All</p>
+            <Link href="/dashboard/plans" className={styles.viewAll}>View All</Link>
           </div>
           <div className='flex justify-between items-center'>
             <div className={styles.recent_div}>
@@ -64,7 +65,7 @@ export default function Dashboard() {
         <div className={styles.sub_container}>
           <div className='flex justify-between items-center'>
             <p style={{ fontWeight: 700 }}>You liked</p>
-            <p className={styles.viewAll}>View All</p>
+            <Link href="/dashboard/likes" className={styles.viewAll}>View All</Link>
           </div>
 
           {
