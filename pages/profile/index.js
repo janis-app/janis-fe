@@ -18,13 +18,19 @@ import vn from '@/public/assets/vn.svg'
 import ind from '@/public/assets/in.svg'
 import mx from '@/public/assets/mx.svg'
 import Switch from "react-switch";
+<<<<<<< HEAD
 import Link from 'next/link';
+=======
+import { useRouter } from 'next/router';
+>>>>>>> 0d6d7f8cd727a4ea51aa1b0b5f77cae178c53672
 
 
 export default function Profile() {
     const [switch1, setSwitch1] = useState(false);
     const [switch2, setSwitch2] = useState(false);
     const [switch3, setSwitch3] = useState(false);
+
+    const router = useRouter()
 
     const handleSwitch1 = (checked) => {
         setSwitch1(checked);
@@ -107,11 +113,11 @@ export default function Profile() {
                         Las Palmas, Gran Canaria, Spain
                     </p>
 
-                    <div className='flex items-center mt-[17px]'>
-                        <button className={styles.dashboardBtn}>
+                    <div className='flex flex-col gap-[10px] items-center mt-[17px]'>
+                        <button className={styles.dashboardBtn} type='button'  onClick={()=>router.push('/dashboard')}>
                             Dashboard
                         </button>
-                        <button className={styles.planBtn}>
+                        <button className={styles.planBtn} type='button'  onClick={()=>router.push('/dashboard/plans')}>
                             <Image
                                 src={vector}
                                 width={13}
@@ -137,9 +143,9 @@ export default function Profile() {
 
                     <div className='flex justify-between'>
                         {
-                            data.map((items, index) => {
+                            data.map((items, Index) => {
                                 return (
-                                    <div className={styles.card} key={index}>
+                                    <div className={styles.card} key={Index}>
                                         <div className={styles.mini_card}>
                                             <Image
                                                 src={items.img}
@@ -211,9 +217,9 @@ export default function Profile() {
                         </p>
 
                         <div className='flex justify-between items-center '>
-                            {flag.map((items, index) => {
+                            {flag.map((items, Index) => {
                                 return (
-                                    <div className={styles.radius_div} key={index}>
+                                    <div className={styles.radius_div} key={Index}>
                                         <Image
                                             src={items.img}
                                             width={18}

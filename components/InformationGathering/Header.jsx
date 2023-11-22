@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { PiCaretLeftBold } from "react-icons/pi";
 
@@ -28,18 +27,19 @@ function Header({ progess, link, show, title, profile }) {
         }
 
       </div>
-      <Link href="/profile">
+      <div>
         {
           profile &&
           <Image
-            src={profile}
-            width={32}
-            height={32}
-            alt="Profile image"
-            className="rounded-2xl"
-          />
+          src={profile}
+          width={32}
+          height={32}
+          alt="Profile image"
+          className="rounded-2xl"
+          onClick={()=>router.push('/profile')}
+        />
         }
-      </Link>
+      </div>
     </div>
   );
 }

@@ -32,7 +32,7 @@ export default function Dashboard() {
         <div style={{ margin: "29px 24px" }} className='pt-[10px]'>
           <p style={{ fontSize: 12, paddingTop: 19 }}>Credits</p>
           <h1>5</h1>
-          <Link href="/dashboard/credits" className={styles.creditBtn}>
+          <Link href="/dashboard/credits" className={styles.creditBtn} type='button' >
             <Image
               src={arrowIcon}
               width={24}
@@ -44,7 +44,7 @@ export default function Dashboard() {
 
           <div className='flex justify-between items-center'>
             <p>Recent plans</p>
-            <Link href="/dashboard/plans" className={styles.viewAll}>View All</Link>
+            <Link href='/dashboard/plans' className={styles.viewAll}  >View All</Link>
           </div>
           <div className='flex justify-between items-center'>
             <div className={styles.recent_div}>

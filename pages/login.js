@@ -20,7 +20,13 @@ function LoginPage() {
 
   const router = useRouter();
 
-  
+  //  Just for testing user flow cases
+
+  const handleClick = () => {
+    window.localStorage.setItem("user", "active");
+    router.push("/");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -40,9 +46,9 @@ function LoginPage() {
     if (responseData?.error) {
       const message = responseData?.error?.message
         ? responseData?.error?.message.replace(
-          "Invalid identifier or password",
-          "Invalid credentials"
-        )
+            "Invalid identifier or password",
+            "Invalid credentials"
+          )
         : "Something went wrong please retry.";
       toast.error(`${message}`);
       setLoading(false);
@@ -52,12 +58,12 @@ function LoginPage() {
 
     setToken(responseData);
     setLoading(false);
-    setEmail('')
-    setPassword('')
+    setEmail("");
+    setPassword("");
   };
 
   return (
-    <div className='login_container'>
+    <div className="login_container">
       <Head>
         <title>Keen - Login</title>
       </Head>
@@ -70,8 +76,9 @@ function LoginPage() {
           <form onSubmit={handleSubmit}>
             <div className="bg-[#D9F1F9] w-full h-[60px] relative rounded-[50px] px-[29px] py-[14px] flex items-center mb-[16px]">
               <input
-                className={`w-full h-full bg-transparent relative outline-none placeholder:text-[#15224F] text-[#15224F] ${email ? "pt-3" : "pt-0"
-                  }`}
+                className={`w-full h-full bg-transparent relative outline-none placeholder:text-[#15224F] text-[#15224F] ${
+                  email ? "pt-3" : "pt-0"
+                }`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="off"
@@ -79,10 +86,11 @@ function LoginPage() {
                 placeholder="Email/ Phone number"
               />
               <label
-                className={`absolute top-3 text-[#7A7676] ${email
-                  ? "-translate-y-1 text-sm  visible"
-                  : "transform translate-y-1.5 text-base invisible"
-                  }`}
+                className={`absolute top-3 text-[#7A7676] ${
+                  email
+                    ? "-translate-y-1 text-sm  visible"
+                    : "transform translate-y-1.5 text-base invisible"
+                }`}
                 style={{ transition: "all 0.2s" }}
               >
                 Email/ Phone number
@@ -90,8 +98,9 @@ function LoginPage() {
             </div>
             <div className="bg-[#D9F1F9] w-full h-[60px] relative rounded-[50px] px-[29px] py-[14px] flex items-center mb-[24px]">
               <input
-                className={`w-full h-full bg-transparent relative outline-none placeholder:text-[#15224F] text-[#15224F] ${password ? "pt-3" : "pt-0 z-30"
-                  }`}
+                className={`w-full h-full bg-transparent relative outline-none placeholder:text-[#15224F] text-[#15224F] ${
+                  password ? "pt-3" : "pt-0 z-30"
+                }`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
@@ -100,10 +109,11 @@ function LoginPage() {
                 placeholder="Password"
               />
               <label
-                className={`absolute top-3 z-20 text-[#7A7676]  ${password
-                  ? "-translate-y-1 text-sm "
-                  : "transform translate-y-1.5 text-base "
-                  }`}
+                className={`absolute top-3 z-20 text-[#7A7676]  ${
+                  password
+                    ? "-translate-y-1 text-sm "
+                    : "transform translate-y-1.5 text-base "
+                }`}
                 style={{ transition: "all 0.2s" }}
               >
                 Password
@@ -112,6 +122,8 @@ function LoginPage() {
             <button
               className="w-full outline-none bg-[#9FDBED] text-white h-[60px] rounded-[50px] text-[16px] font-semibold tracking-[2%] leading-[24px]"
               disabled={loading}
+              type="button"
+              onClick={()=>handleClick()}
             >
               {loading ? <Spinner /> : "Login"}
             </button>
@@ -139,7 +151,9 @@ function LoginPage() {
           </div>
           <p className="text-[#3B4C68] text-center mx-auto font-normal text-[12px]">
             Don’t have an account ?{" "}
-            <Link href="/register" className="text-[#21899C] font-bold">Sign up</Link>
+            <Link href="/register" className="text-[#21899C] font-bold">
+              Sign up
+            </Link>
           </p>
         </div>
       </div>

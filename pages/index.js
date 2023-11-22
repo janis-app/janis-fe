@@ -7,8 +7,10 @@ import styles from '@/styles/setup-profile/setup-profile.module.css'
 import profile from '@/public/assets/profileImg.svg'
 import mark from "@/public/assets/mark.svg"
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter()
   return (
     <div className={styles.main_container}>
 
@@ -26,6 +28,7 @@ export default function Home() {
               height={32}
               alt="Profile image"
               className="rounded-2xl"
+              onClick={()=>router.push('/profile')}
             />
           </div>
 
@@ -47,12 +50,12 @@ export default function Home() {
         </div>
         <div className={styles.btn_main}>
           <div className={styles.btn_conatiner}>
-            <div className="w-[100%] bg-white h-[72px]  right-0 left-[20px] rounded-[32px]  before:rounded-tr-[.5%] flex justify-center items-center px-[10px]">
+            <Link href="/start-adventure/location" className="w-[100%] bg-white h-[72px]  right-0 left-[20px] rounded-[32px]  before:rounded-tr-[.5%] flex justify-center items-center px-[10px]">
               <button className="bg-[#DAF5FE] h-[52px] w-[99%] rounded-[32px] flex justify-center items-center gap-[5px] font-[500] text-[19px] leading-[23px]">
-                Set up your profile
+                Start you Adventure
                 <FaArrowRightLong size={13} />
               </button>
-            </div>
+            </Link>
           </div>
         </div>
         <div className={`h-4/25  pb-[62px] ${styles.empty_container}`}>
