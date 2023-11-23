@@ -42,11 +42,11 @@ export default function Dashboard() {
             /> <h2>Get credits</h2>
           </Link>
 
-          <div className='mt-[21px] flex justify-between items-center'>
+          <div className='mt-[21px] mb-[16px] flex justify-between items-center'>
             <p>Recent plans</p>
             <Link href='/dashboard/plans' className={styles.viewAll}  >View All</Link>
           </div>
-          <div className='flex justify-between items-center'>
+          <div className='flex gap-[16px] items-center'>
             <div className={styles.recent_div}>
               <p className={styles.recent_div_heading}>Las Palmas, Spain</p>
               <p className={styles.date}>17th September 2023</p>
