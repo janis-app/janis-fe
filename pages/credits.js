@@ -8,7 +8,7 @@ function Credits() {
 
   return (
     <div className="relative">
-      <RegisterHeader step={5} link={`/register`}/>
+      <div className="px-[20px]"><RegisterHeader step={5} link={`/register`} /></div>
       <div className="bg-white w-[54px] h-[5px] rounded-[30px] mx-auto relative top-[-8px]" />
       <div className="h-[673px] fixed bottom-0 top-[135px] left-0 right-0 bg-white rounded-tl-[32px] rounded-tr-[32px] px-[24px] pt-[100px] flex flex-col items-center text-[28px] font-[700]">
         <p className="text-[40px] mb-[35px]">✅</p>

@@ -18,7 +18,11 @@ import vn from '@/public/assets/vn.svg'
 import ind from '@/public/assets/in.svg'
 import mx from '@/public/assets/mx.svg'
 import Switch from "react-switch";
+<<<<<<< HEAD
+import Link from 'next/link';
+=======
 import { useRouter } from 'next/router';
+>>>>>>> 0d6d7f8cd727a4ea51aa1b0b5f77cae178c53672
 
 
 export default function Profile() {
@@ -59,10 +63,10 @@ export default function Profile() {
     ]
 
     const flag = [
-        {img: it},
-        {img: vn},
-        {img: ind},
-        {img: mx},
+        { img: it },
+        { img: vn },
+        { img: ind },
+        { img: mx },
     ]
 
     return (
@@ -75,13 +79,14 @@ export default function Profile() {
                     >
                         <PiCaretLeftBold size={20} />
                     </div>
-                    <Image
-                        src={setting}
-                        width={25}
-                        height={25}
-                        alt="setting icon"
-                        onClick={()=>router.push('/settings')}
-                    />
+                    <Link href="/settings">
+                        <Image
+                            src={setting}
+                            width={25}
+                            height={25}
+                            alt="setting icon"
+                        />
+                    </Link>
                 </div>
                 <div className={styles.container}>
                     <div>

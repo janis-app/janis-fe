@@ -1,9 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { PiCaretLeftBold } from "react-icons/pi";
 
-function Header({ progess, link, show, title , profile }) {
+function Header({ progess, link, show, title, profile }) {
   const router = useRouter();
   return (
     <div className="relative z-[2] pt-[24px] flex justify-between items-center  mb-[32px]">
@@ -24,13 +23,13 @@ function Header({ progess, link, show, title , profile }) {
         )}
 
         {
-          title && <h2 style={{ color:"#fff"}}>{title}</h2>
+          title && <h2 style={{ color: "#fff" }}>{title}</h2>
         }
 
       </div>
       <div>
         {
-          profile && 
+          profile &&
           <Image
           src={profile}
           width={32}
