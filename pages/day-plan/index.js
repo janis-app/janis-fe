@@ -226,7 +226,7 @@ export default function DayPlan() {
                 </div>
                 </div>
 
-                {isTextVisible && updatedIndex == index ? (
+                {/* {isTextVisible && updatedIndex == index ? ( */}
                   <>
                     <p style={{ fontSize: 12, color: "#7A7676" }}>
                       {items.disc}
@@ -255,15 +255,6 @@ export default function DayPlan() {
                       />
                     </div>
                   </>
-                ) : (
-                  <>
-                    <p style={{ fontSize: 12, color: "#7A7676" }}>
-                      {items.disc.length > 15
-                        ? items.disc.slice(0, 90) + "..."
-                        : items.disc}
-                    </p>
-                  </>
-                )}
               </div>
             );
           })}
