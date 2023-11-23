@@ -18,11 +18,8 @@ import vn from '@/public/assets/vn.svg'
 import ind from '@/public/assets/in.svg'
 import mx from '@/public/assets/mx.svg'
 import Switch from "react-switch";
-<<<<<<< HEAD
 import Link from 'next/link';
-=======
 import { useRouter } from 'next/router';
->>>>>>> 0d6d7f8cd727a4ea51aa1b0b5f77cae178c53672
 
 
 export default function Profile() {
