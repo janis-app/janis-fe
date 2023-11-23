@@ -7,11 +7,12 @@ import Image from 'next/image'
 import crown from '@/public/assets/crown.svg'
 import Switch from "react-switch";
 import { FiCheck } from "react-icons/fi";
+import { useRouter } from 'next/router'
 
 export default function Credits() {
     const [switchs, setSwitch] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null)
-
+    const router = useRouter()
 
     const handleSwitch = (checked) => {
         setSwitch(checked);
@@ -111,8 +112,8 @@ export default function Credits() {
                     />
                 </div>
                 <div className='bg-white flex flex-col justify-center item-center text-center mt-[20px] w-full'>
-                    <div className={styles.nextBtnDIv}>
-                        <button className={styles.nextBtn}>Next</button>
+                    <div className={styles.nextBtnDIv} onClick={()=>router.push("/dashboard/plans")}>
+                        <button className={styles.nextBtn}>Continue</button>
                     </div>
                     <div className='font-medium text-[10px] mt-[15px]'>
                         <p >By continuing you will agree to our</p>

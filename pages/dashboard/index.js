@@ -42,7 +42,7 @@ export default function Dashboard() {
             /> <h2>Get credits</h2>
           </Link>
 
-          <div className='flex justify-between items-center'>
+          <div className='mt-[21px] flex justify-between items-center'>
             <p>Recent plans</p>
             <Link href='/dashboard/plans' className={styles.viewAll}  >View All</Link>
           </div>
