@@ -103,9 +103,9 @@ export default function DayPlan() {
               Las Palmas, Gran Canaria, Spain
             </p>
           </div>
-          <div className={styles.mdi_like}>
+          {/* <div className={styles.mdi_like}>
             <Image src={mdi_like} width={24} height={24} alt="location icon" />
-          </div>
+          </div> */}
           <div className={styles.temp_div}>
             <div
               style={{
@@ -218,9 +218,12 @@ export default function DayPlan() {
                 key={index}
                 className={`${index == updatedIndex ? "bg-[#DAF5FE]" : "bg-transparent"} w-auto p-[15px] mt-[12px] rounded-[10px] border-2 border-[#DAF5FE]`}
               >
-                <div className="flex justify-between ">
+                <div className="flex justify-between items-center relative mb-2">
                   <p style={{ fontWize: 500, fontSize: 15 }}>{items.title}</p>
                   <p style={{ fontSize: 13 }}>{items.time}</p>
+                  <div className={styles.mdi_like}>
+                      <Image src={mdi_like} width={20} height={20} alt="location icon" />
+                </div>
                 </div>
 
                 {isTextVisible && updatedIndex == index ? (
