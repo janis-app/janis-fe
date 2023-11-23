@@ -83,7 +83,7 @@ export default function DayPlan() {
   ];
   return (
     <div className={styles.main_container}>
-      <div className="absolute left-[6rem] top-[6rem]">
+      <div className="absolute left-[3rem] top-[6rem]">
         <Image src={track} alt="track" />
       </div>
       <div style={{ margin: "0px 24px" }}>
@@ -150,70 +150,51 @@ export default function DayPlan() {
 
         <hr style={{ margin: "16px 0px", color: "#DDE3EA" }} />
 
-        <p style={{ fontSize: 14, fontWeight: 400, color: "#B0B6BF" }}>
-          Embark on a day of volcanic vistas, serene reservoir retreats, and
-          sunsets on sandy shores in Las Palmas.Your camera and soul will thank
-          you!
-        </p>
-      </div>
-      <div className="mx-[24px] grid grid-cols-2 gap-x-[18px] gap-y-[12px]">
-        <div className=" p-[12px] bg-[#697EEF] rounded-[15px]">
-          <div className="w-[30px] h-[30px] bg-white rounded-full mb-[15px] flex justify-center items-center">
-            <p>🍴</p>
-          </div>
-          <div className="flex justify-between items-end">
-            <div className="text-white">
-                <h3 className="font-medium text-[14px]">Food</h3>
-                <p className="text-[#AAA3FF] text-[12px] font-normal leading-[14.32px]">3 locations</p>
+                <p style={{ fontSize: 14, fontWeight: 400, color: '#B0B6BF' }}>
+                    Embark on a day of volcanic vistas, serene reservoir retreats, and sunsets
+                    on sandy shores in Las Palmas.Your camera and soul will thank you!
+                </p>
+
             </div>
-            <div>
-                <Image src={box} alt="box" />
+            <div className={styles.sub_container}>
+                {
+                    menu.map((items, index) => {
+                        return (
+                            <>
+                                <div
+                                    onClick={() => colorHandler(index)}
+                                    className={styles.card}
+                                    key={index}
+                                    style={{ backgroundColor: foodIndex == index ? "#22B1D1" : "#fff" }}>
+                                    <div className='flex items-center' >
+                                        <div
+                                            style={{ backgroundColor: foodIndex == index ? "#fff" : "#E3F4FA" }}
+                                            className={styles.img_div}>
+                                            <Image
+                                                src={items.img}
+                                                width={23}
+                                                height={23}
+                                                alt="degree icon"
+                                            />
+                                        </div>
+                                        <div style={{ marginLeft: 12 }}>
+                                            <p style={{ fontWize: 500 }}>{items.title}</p>
+                                            <p style={{ fontWize: 400, fontSize: 12 }}>{items.subTitle}</p>
+                                        </div>
+                                    </div>
+                                    <Image
+                                        style={{ color: '#ABB0AF' }}
+                                        src={foodIndex == index ? arrow : darkArrow}
+                                        width={24}
+                                        height={24}
+                                        alt="rights arrow"
+                                    />
+                                </div>
+                            </>
+                        )
+                    })
+                }
             </div>
-          </div>
-        </div>
-        <div className="p-[12px] bg-[#22B1D1] rounded-[15px]">
-          <div className="w-[30px] h-[30px] bg-white rounded-full mb-[15px] flex justify-center items-center">
-            <p>🏃🏼‍♀️</p>
-          </div>
-          <div className="flex justify-between items-end">
-            <div className="text-white">
-                <h3 className="font-medium text-[14px]">Activities</h3>
-                <p className="text-[#6EDFF8] text-[12px] font-normal leading-[14.32px]">2 locations</p>
-            </div>
-            <div>
-                <Image src={arrow1} alt="box" />
-            </div>
-          </div>
-        </div>
-        <div className="p-[12px] bg-[#FB9D2E] rounded-[15px]">
-          <div className="w-[30px] h-[30px] bg-white rounded-full mb-[15px] flex justify-center items-center">
-            <p>📸</p>
-          </div>
-          <div className="flex justify-between items-end">
-            <div className="text-white">
-                <h3 className="font-medium text-[14px]">Viewpoints</h3>
-                <p className="text-[#FFCF95] text-[12px] font-normal leading-[14.32px]">4 locations</p>
-            </div>
-            <div>
-                <Image src={arrow1} alt="box" />
-            </div>
-          </div>
-        </div>
-        <div className="p-[12px] bg-[#FF477D] rounded-[15px]">
-          <div className="w-[30px] h-[30px] bg-white rounded-full mb-[15px] flex justify-center items-center">
-            <p>⏸️</p>
-          </div>
-          <div className="flex justify-between items-end">
-            <div className="text-white">
-                <h3 className="font-medium text-[14px]">Breaks</h3>
-                <p className="text-[#FFCF95] text-[12px] font-normal leading-[14.32px]">2 locations</p>
-            </div>
-            <div>
-                <Image src={arrow1} alt="box" />
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div className="sidebar px-[20px] mt-[20px] flex items-center">
         <div className={`mr-[15px] ${styles.sidebar}`}>
