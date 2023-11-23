@@ -72,7 +72,7 @@ export default function Profile() {
             <div className={styles.main_conatiner}>
                 <div className={styles.overlay_conatiner}>
                 </div>
-                <div className='px-[24px] pt-[24px] flex justify-between'>
+                <div className='px-[24px] pt-[24px] flex justify-between relative z-[20]'>
                     <div
                         className="bg-[#D9F5FE80]  h-[32px] w-[32px] flex justify-center items-center rounded-full"
                         onClick={() => router.back()}
