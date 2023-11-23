@@ -56,77 +56,73 @@ export default function DayPlan() {
         },
     ]
 
-    const menu = [
-        {
-            title: "Food",
-            subTitle: '3 locations',
-            img: cardImg1
-        },
-        {
-            title: "Activities",
-            subTitle: '2 locations',
-            img: cardImg2
-        },
-        {
-            title: "Viewpoints",
-            subTitle: '4 locations',
-            img: cardImg3
-        },
-        {
-            title: "Breaks",
-            subTitle: '2 locations',
-            img: cardImg4
-        }
-    ]
-    return (
-        <div className={styles.main_container}>
-            <div style={{ margin: "0px 24px" }} >
-                <Header progess={17} link="" profile={profile} />
+  const menu = [
+    {
+      title: "Food",
+      subTitle: "3 locations",
+      img: cardImg1,
+    },
+    {
+      title: "Activities",
+      subTitle: "2 locations",
+      img: cardImg2,
+    },
+    {
+      title: "Viewpoints",
+      subTitle: "4 locations",
+      img: cardImg3,
+    },
+    {
+      title: "Breaks",
+      subTitle: "2 locations",
+      img: cardImg4,
+    },
+  ];
+  return (
+    <div className={styles.main_container}>
+      <div className="absolute left-[3rem] top-[6rem]">
+        <Image src={track} alt="track" />
+      </div>
+      <div style={{ margin: "0px 24px" }}>
+        <Header progess={17} link="" profile={profile} />
+      </div>
+      <div className={styles.conatiner}>
+        <div className="flex justify-between">
+          <div>
+            <h2 style={{ fontWeight: 600 }}>Janis’ Day Plan</h2>
+            <p className={styles.location}>
+              <Image
+                src={location}
+                width={20}
+                height={20}
+                alt="location icon"
+              />
+              Las Palmas, Gran Canaria, Spain
+            </p>
+          </div>
+          <div className={styles.mdi_like}>
+            <Image src={mdi_like} width={24} height={24} alt="location icon" />
+          </div>
+          <div className={styles.temp_div}>
+            <div
+              style={{
+                alignItems: "flex-end",
+                border: "1px solid white",
+                backgroundColor: "#A1DBEF",
+                borderRadius: "50%",
+                position: "relative",
+                top: -4,
+                left: 18,
+              }}
+            >
+              <Image src={sun} width={18} height={18} alt="sun image" />
             </div>
-            <div className={styles.conatiner}>
-                <div className='flex justify-between'>
-                    <div>
-                        <h2 style={{ fontWeight: 600 }}>Janis’ Day Plan</h2>
-                        <p className={styles.location}>
-                            <Image
-                                src={location}
-                                width={20}
-                                height={20}
-                                alt="location icon"
-                            />
-                            Las Palmas, Gran Canaria, Spain</p>
-                    </div>
-                    <div className={styles.mdi_like}>
-                        <Image
-                            src={mdi_like}
-                            width={24}
-                            height={24}
-                            alt="location icon"
-                        />
-                    </div>
-                    <div className={styles.temp_div}>
-                        <div style={{
-                            alignItems: "flex-end",
-                            border: '1px solid white',
-                            backgroundColor: '#A1DBEF',
-                            borderRadius: "50%",
-                            position: "relative",
-                            top: -4,
-                            left: 18
-                        }}>
-
-                            <Image
-                                src={sun}
-                                width={18}
-                                height={18}
-                                alt='sun image'
-                            />
-
-                        </div>
-                        <p style={{ display: 'flex', fontSize: 14,  marginTop: -8}}>25°</p>
-                        <p style={{ fontSize: 8, padding: 0, margin: 0, color: "#fff" }}>Sunny</p>
-                    </div>
-                </div>
+            <p style={{ display: "flex", fontSize: 14, marginTop: -8 }}>25°</p>
+            <p style={{ fontSize: 8, padding: 0, margin: 0, color: "#fff" }}>
+              Sunny
+            </p>
+          </div>
+        </div>
 
                 <hr style={{ margin: "16px 0px", color: '#DDE3EA' }} />
 
@@ -151,13 +147,14 @@ export default function DayPlan() {
 
                 <hr style={{ margin: "16px 0px", color: '#DDE3EA' }} />
 
-                <p style={{ fontSize: 14, fontWeight: 400, color: '#B0B6BF' }}>
-                    Embark on a day of volcanic vistas, serene reservoir retreats, and sunsets
-                    on sandy shores in Las Palmas.Your camera and soul will thank you!
-                </p>
+        <p style={{ fontSize: 14, fontWeight: 400, color: "#B0B6BF" }}>
+          Embark on a day of volcanic vistas, serene reservoir retreats, and
+          sunsets on sandy shores in Las Palmas.Your camera and soul will thank
+          you!
+        </p>
+      </div>
 
-            </div>
-            <div className={styles.sub_container}>
+      <div className={styles.sub_container}>
                 {
                     menu.map((items, index) => {
                         return (
