@@ -9,6 +9,7 @@ import help from "../public/assets/help.png";
 import logout from "../public/assets/logout.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { unsetToken } from "@/lib/auth";
 
 function Settings() {
   const router = useRouter();
@@ -100,7 +101,7 @@ function Settings() {
               <RxCaretRight color="#C8C9CF" size={30} />
             </div>
           </div>
-          <div className="flex justify-between mb-[24px]">
+          <div className="flex justify-between mb-[24px]" onClick={()=>unsetToken()}>
             <div className="flex items-center gap-[27px]">
               <span className="w-[40px] h-[40px] flex justify-center items-center bg-[#F4F8FC] rounded-full">
                 <Image src={logout} alt="web" />
