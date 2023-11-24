@@ -22,6 +22,10 @@ function RegisterPage() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [validationMessage, setValidationMessage] = useState('')
 
+  const [validationErr, setValidationErr] = useState({ type: '', err: '' })
+
+  const [loading, setLoading] = useState(false)
+
   console.log("Form Values: ", formValues);
   console.log("selectedDate: ", selectedDate);
 
@@ -36,15 +40,7 @@ function RegisterPage() {
     return regex.test(str);
   }
 
-  // const handleImageChange = (event) => {
-  //   console.log("Trigger onchange: ====");
-  //   const selectedImage = event.target.files[0];
 
-  //   setFormValues({
-  //     ...formValues,
-  //     profilePictureUrl: selectedImage,
-  //   });
-  // };
 
   const isValidFileType = (file) => {
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -60,9 +56,9 @@ function RegisterPage() {
   };
 
   async function handleImageChange(e) {
-    
+
     const file = e.target.files?.[0]
-    
+
     console.log('this is the file', file);
 
     if (file) {
@@ -75,46 +71,69 @@ function RegisterPage() {
       } else {
         setValidationMessage('');
 
-        setFormValues({...formValues, profilePictureUrl: file})
+        setFormValues({ ...formValues, profilePictureUrl: file })
       }
     }
   }
 
   console.log("Validation Message: ", validationMessage);
+  console.log("Err Messages: ", validationErr);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // setLoading(true);
 
-    const responseData = await fetcher(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/local/register`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: formValues.name,
-          email: formValues.emailAddress,
-          // profile_image: formValues.profilePictureUrl,
-          dob: selectedDate,
-          password: formValues.password
-        }),
+    if (
+      (step === 1 && formValues.name.trim() === "")
+    ) {
+      setValidationErr({ type: 'Name', err: 'Enter your name.' })
+    } else if (
+      (step === 2 && selectedDate === null)
+    ) {
+      setValidationErr({ type: 'dob', err: 'Select your date of birth.' })
+    } else if (
+      (step === 3 && formValues.profilePictureUrl === "")
+    ) {
+      setValidationErr({ type: 'img', err: 'Select your image' })
+    } else if (
+      (step === 4 && formValues.emailAddress.trim() === "")
+    ) {
+      setValidationErr({ type: 'email', err: 'Enter your email.' })
+    } else {
+      setLoading(true)
+      const responseData = await fetcher(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/local/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: formValues.name,
+            email: formValues.emailAddress,
+            // profile_image: formValues.profilePictureUrl,
+            dob: selectedDate,
+            password: formValues.password
+          }),
+        }
+      );
+
+      if (responseData?.error) {
+        console.log("Error at Register", responseData.error);
+        setLoading(false)
       }
-    );
 
-    if (responseData.error) {
-      console.log("Error at Register", responseData.error);
+      setToken(responseData)
+
+      if (responseData) {
+
+        const res = await changeProfileImage(formValues.profilePictureUrl, responseData?.user?.id, responseData?.jwt);
+
+      }
+      setLoading(false)
+      router.push('/c#f54242its')
+      console.log("response data: ", responseData);
     }
-
-    setToken(responseData)
-
-    if(responseData){
-
-      const res = await changeProfileImage(formValues.profilePictureUrl, responseData?.user?.id, responseData?.jwt);
-
-    }
-    console.log("response data: ", responseData);
   }
 
   return (
@@ -132,6 +151,10 @@ function RegisterPage() {
               setFormValues({ ...formValues, name: e.target.value })
             }
           />
+
+          <p className="text-[#f54242] text-center mt-[10px]"> {validationErr.type == 'name' && validationErr.err}</p>
+
+
         </>
       )}
       {step === 2 && (
@@ -142,6 +165,9 @@ function RegisterPage() {
             setSelectedDate={setSelectedDate}
           // maxDate={maxDate}
           />
+
+          <p className="text-[#f54242] text-center mt-[10px]"> {validationErr.type == 'dob' && validationErr.err}</p>
+
         </>
       )}
       {step === 3 && (
@@ -160,7 +186,7 @@ function RegisterPage() {
               id='file'
               name='files'
               accept="image/*"
-              onChange={(e)=> handleImageChange(e)}
+              onChange={(e) => handleImageChange(e)}
             />
 
 
@@ -176,10 +202,13 @@ function RegisterPage() {
               accept="image/*"
               capture="camera"
               className="hidden"
-              onChange={(e)=> handleImageChange(e)}
+              onChange={(e) => handleImageChange(e)}
 
             />
           </label>
+          <p className="text-[#f54242] text-center mt-[10px]"> {validationErr.type == 'img' && validationErr.err}</p>
+
+
         </>
       )}
       {step === 4 && (
@@ -194,6 +223,7 @@ function RegisterPage() {
               setFormValues({ ...formValues, emailAddress: e.target.value })
             }
           />
+          <p className="text-[#f54242] text-center mt-[10px]"> {validationErr.type == 'email' && validationErr.err}</p>
         </>
       )}
       {step === 5 && (
@@ -228,26 +258,44 @@ function RegisterPage() {
       <button
         className="fixed bottom-[56px] mx-auto left-0 right-0 w-[248px] h-[60px] text-center button-bg flex justify-center items-center rounded-[40px]"
         disabled={
-          (step === 1 && formValues.name.trim() === "") ||
-          (step === 2 && selectedDate === null) ||
-          (step === 3 && formValues.profilePictureUrl === "") ||
-          (step === 4 && formValues.emailAddress.trim() === "") ||
+          loading ||
           (step === 5 && (formValues.password.length > 7 ? false : true) && (containsNumber(formValues?.password) ? true : false) && (containsSymbol(formValues?.password) ? true : false))
         }
 
         onClick={(e) => {
           if (step === 5) {
             handleSubmit(e)
-            // router.push("/credits");
           } else if (step < 5) {
 
-            setStep((prev) => prev + 1);
+            if (
+              (step === 1 && formValues.name.trim() === "")
+            ) {
+              setValidationErr({ type: 'name', err: 'Enter your name.' })
+            } else if (
+              (step === 2 && selectedDate === null)
+            ) {
+              setValidationErr({ type: 'dob', err: 'Select your date of birth.' })
+            } else if (
+              (step === 3 && formValues.profilePictureUrl === "")
+            ) {
+              setValidationErr({ type: 'img', err: 'Select your image' })
+            } else if (
+              (step === 4 && formValues.emailAddress.trim() === "")
+            ) {
+              setValidationErr({ type: 'email', err: 'Enter your email.' })
+            } else {
+              setStep((prev) => prev + 1);
+            }
           }
         }}
       >
-        <button className="bg-white w-[240px] h-[52px] rounded-[40px] flex items-center justify-center gap-[6px] text-[16px] font-medium leading-[19.36px]">
-          Next <FaArrowRightLong size={13} />
-        </button>
+        {
+          loading ?
+            <div className="loader"  /> :
+            <button className="bg-white w-[240px] h-[52px] rounded-[40px] flex items-center justify-center gap-[6px] text-[16px] font-medium leading-[19.36px]">
+              Next <FaArrowRightLong size={13} />
+            </button>
+        }
 
       </button>
     </div>
