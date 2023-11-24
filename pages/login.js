@@ -22,10 +22,10 @@ function LoginPage() {
 
   //  Just for testing user flow cases
 
-  const handleClick = () => {
-    window.localStorage.setItem("user", "active");
-    router.push("/");
-  };
+  // const handleClick = () => {
+  //   window.localStorage.setItem("user", "active");
+  //   router.push("/");
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,6 +60,8 @@ function LoginPage() {
     setLoading(false);
     setEmail("");
     setPassword("");
+    router.push("/");
+
   };
 
   return (
@@ -122,8 +124,8 @@ function LoginPage() {
             <button
               className="w-full outline-none bg-[#9FDBED] text-white h-[60px] rounded-[50px] text-[16px] font-semibold tracking-[2%] leading-[24px]"
               disabled={loading}
-              type="button"
-              onClick={()=>handleClick()}
+              type="submit"
+              // onClick={()=>handleClick()}
             >
               {loading ? <Spinner /> : "Login"}
             </button>
