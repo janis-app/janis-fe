@@ -123,15 +123,14 @@ function RegisterPage() {
         setLoading(false)
       }
 
-      setToken(responseData)
-
       if (responseData) {
-
+        setToken(responseData)
         const res = await changeProfileImage(formValues.profilePictureUrl, responseData?.user?.id, responseData?.jwt);
+        router.push('/credits')
 
       }
       setLoading(false)
-      router.push('/credits')
+
       console.log("response data: ", responseData);
     }
   }
