@@ -131,7 +131,7 @@ function RegisterPage() {
 
       }
       setLoading(false)
-      router.push('/c#f54242its')
+      router.push('/credits')
       console.log("response data: ", responseData);
     }
   }
