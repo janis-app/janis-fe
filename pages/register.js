@@ -23,6 +23,7 @@ function RegisterPage() {
   const [validationMessage, setValidationMessage] = useState('')
 
   const [validationErr, setValidationErr] = useState({ type: '', err: '' })
+  const [err, setErr] = useState(false)
 
   const [loading, setLoading] = useState(false)
 
@@ -121,6 +122,8 @@ function RegisterPage() {
       if (responseData?.error) {
         console.log("Error at Register", responseData.error);
         setLoading(false)
+
+        setErr(responseData?.error?.message)
       }
 
       if (responseData) {
@@ -251,8 +254,13 @@ function RegisterPage() {
               at least one symbol
             </div>
           </div>
+          {
+            err && <p style={{ color: 'red' }} className="text-center text-[20px] mt-[20px]">{err}</p>
+          }
         </>
       )}
+
+
 
       <button
         className="fixed bottom-[56px] mx-auto left-0 right-0 w-[248px] h-[60px] text-center button-bg flex justify-center items-center rounded-[40px]"
@@ -290,7 +298,7 @@ function RegisterPage() {
       >
         {
           loading ?
-            <div className="loader"  /> :
+            <div className="loader" /> :
             <button className="bg-white w-[240px] h-[52px] rounded-[40px] flex items-center justify-center gap-[6px] text-[16px] font-medium leading-[19.36px]">
               Next <FaArrowRightLong size={13} />
             </button>
