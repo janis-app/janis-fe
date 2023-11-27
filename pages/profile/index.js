@@ -111,10 +111,10 @@ export default function Profile() {
                     </p>
 
                     <div className='flex flex-col gap-[10px] items-center mt-[17px]'>
-                        <button className={styles.dashboardBtn} type='button'  onClick={()=>router.push('/dashboard')}>
+                        <button className={styles.dashboardBtn} type='button' onClick={() => router.push('/dashboard')}>
                             Dashboard
                         </button>
-                        <button className={styles.planBtn} type='button'  onClick={()=>router.push('/dashboard/plans')}>
+                        <button className={styles.planBtn} type='button' onClick={() => router.push('/dashboard/plans')}>
                             <Image
                                 src={vector}
                                 width={13}
