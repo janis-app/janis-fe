@@ -21,6 +21,7 @@ import Switch from "react-switch";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import bg from "@/public/assets/profile-bg.png"
+import { FiEdit } from 'react-icons/fi';
 
 
 export default function Profile() {
@@ -160,12 +161,13 @@ export default function Profile() {
                         <div className='flex gap-[6px] mb-[11px] '>
                         <p className='text-[14px] font-[600] leading-[20px]'>Personality
                         </p>
-                            <Image
+                            {/* <Image
                                 src={pencil}
                                 width={20}
                                 height={20}
                                 alt="vector icon"
-                            />
+                            /> */}
+                            <FiEdit color="#d3d3d3" />
                         </div>
                         <div className={styles.radius_container}>
                             <div className={styles.radius_div}>🤫</div>
@@ -185,12 +187,13 @@ export default function Profile() {
                         <div className='flex items-center gap-[6px] '>
                         <p className='text-[16px] font-[600] leading-[20px]'>Interests
                         </p>
-                            <Image
+                            {/* <Image
                                 src={pencil}
                                 width={20}
                                 height={20}
                                 alt="vector icon"
-                            />
+                            /> */}
+                            <FiEdit color="#d3d3d3" />
                         </div>
                         <div className='mt-[16px]'>
                             <button className={styles.btn}>
@@ -209,12 +212,13 @@ export default function Profile() {
                     <div className='flex gap-[6px] mb-[11px] '>
                     <p className='text-[14px] font-[600] leading-[20px]'>Cuisine
                         </p>
-                            <Image
+                            {/* <Image
                                 src={pencil}
                                 width={22}
                                 height={22}
                                 alt="vector icon"
-                            />
+                            /> */}
+                            <FiEdit color="#d3d3d3" />
                     </div>
                         <div className='flex justify-between items-center '>
                             {flag.map((items, Index) => {
