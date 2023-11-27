@@ -126,7 +126,7 @@ function RegisterPage() {
         setErr(responseData?.error?.message)
       }
 
-      if (responseData) {
+      if (responseData?.user?.id) {
         setToken(responseData)
         const res = await changeProfileImage(formValues.profilePictureUrl, responseData?.user?.id, responseData?.jwt);
         router.push('/credits')
@@ -137,6 +137,8 @@ function RegisterPage() {
       console.log("response data: ", responseData);
     }
   }
+
+  console.log("Err:", err);
 
   return (
     <div className="relative login_container">
