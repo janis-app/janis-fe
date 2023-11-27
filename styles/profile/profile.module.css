@@ -54,6 +54,8 @@
     background-color: #B9E6F5;
     border-radius: 100px;
     border: 1px solid #B9E6F5;
+    position: relative;
+    z-index: 20;
 }
 
 .planBtn {
@@ -69,6 +71,8 @@
     margin-left: 8px;
     border: 1px solid white;
     gap: 3.8px;
+    position: relative;
+    z-index: 20;
 }
 
 .profile_container {
