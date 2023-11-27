@@ -20,6 +20,7 @@ import mx from '@/public/assets/mx.svg'
 import Switch from "react-switch";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import bg from "@/public/assets/profile-bg.png"
 
 
 export default function Profile() {
@@ -42,19 +43,19 @@ export default function Profile() {
     };
     const data = [
         {
-            img: transport,
+            img: "🚗",
             title: 'Transport',
         },
         {
-            img: diet,
+            img: "🍲",
             title: 'Diet',
         },
         {
-            img: budget,
+            img: "💰",
             title: 'Budget',
         },
         {
-            img: crew,
+            img: "👱‍♂️",
             title: 'Crew',
         },
     ]
@@ -67,9 +68,11 @@ export default function Profile() {
     ]
 
     return (
-        <>
+        <div>
             <div className={styles.main_conatiner}>
-                <div className='px-[24px] pt-[24px] flex justify-between'>
+                <div className={styles.overlay_conatiner}>
+                </div>
+                <div className='px-[24px] pt-[24px] flex justify-between relative z-[20]'>
                     <div
                         className="bg-[#D9F5FE80]  h-[32px] w-[32px] flex justify-center items-center rounded-full"
                         onClick={() => router.back()}
@@ -97,21 +100,25 @@ export default function Profile() {
                             style={{ border: "2px solid #fff" }}
                         />
                     </div>
-                    <h2 style={{ fontWeight: 700, marginTop: 17 }}>Janis</h2>
+                    <h2 className='text-[22px] z-[10]' style={{ fontWeight: 700, marginTop: 17 }}>Janis</h2>
                     <p
                         style={{ fontSize: 14 }}
-                        className='flex items-center'>
+                        className='flex items-center z-[10]'>
                         <Image
                             src={location}
-                            width={14}
-                            height={14}
+                            width={20}
+                            height={20}
                             alt="location icon"
                         />
                         Las Palmas, Gran Canaria, Spain
                     </p>
 
+
                     <div className='flex flex-col gap-[10px] items-center mt-[17px]'>
                         <button className={styles.dashboardBtn} type='button' onClick={() => router.push('/dashboard')}>
+
+                  
+
                             Dashboard
                         </button>
                         <button className={styles.planBtn} type='button' onClick={() => router.push('/dashboard/plans')}>
@@ -121,11 +128,11 @@ export default function Profile() {
                                 height={13}
                                 alt="vector icon"
                             />
-                            Your plan</button>
+                            Your plans</button>
                     </div>
                 </div>
                 <div className={styles.profile_container}>
-                    <h2 style={{ fontWeight: 600 }}>Your profile</h2>
+                    <h2 style={{ fontWeight: 600 }} className='text-[24px] font-semibold mb-[3px]'>Your profile</h2>
                     <button className={styles.redoBtn}>
                         Redo
                         <Image
@@ -138,20 +145,15 @@ export default function Profile() {
 
                     <hr style={{ margin: "16px 0px", color: '#DDE3EA' }} />
 
-                    <div className='flex justify-between'>
+                    <div className='flex justify-between mb-[18px]'>
                         {
                             data.map((items, Index) => {
                                 return (
                                     <div className={styles.card} key={Index}>
                                         <div className={styles.mini_card}>
-                                            <Image
-                                                src={items.img}
-                                                width={22}
-                                                height={22}
-                                                alt="vector icon"
-                                            />
+                                            <p className='block !text-[22px] mb-[2px]'>{items?.img}</p>
                                         </div>
-                                        <p>{items.title}</p>
+                                        <p className='text-[12px] font-[500] text-[#AFB3BC]'>{items.title}</p>
                                     </div>
                                 )
                             })
@@ -159,21 +161,23 @@ export default function Profile() {
                     </div>
 
                     <div className={styles.personality}>
-                        <p>Personality
+                        <div className='flex gap-[6px] mb-[11px] '>
+                        <p className='text-[14px] font-[600] leading-[20px]'>Personality
+                        </p>
                             <Image
                                 src={pencil}
-                                width={22}
-                                height={22}
+                                width={20}
+                                height={20}
                                 alt="vector icon"
                             />
-                        </p>
+                        </div>
                         <div className={styles.radius_container}>
                             <div className={styles.radius_div}>🤫</div>
                             <div className={styles.radius_div}>
                                 <Image
                                     src={profile}
-                                    width={22}
-                                    height={22}
+                                    width={20}
+                                    height={20}
                                     alt="vector icon"
                                     className='rounded-full'
                                 />
@@ -182,14 +186,16 @@ export default function Profile() {
                         </div>
                     </div>
                     <div className='mt-[16px] h-auto'>
-                        <p className='flex items-center'>Interests
+                        <div className='flex items-center gap-[6px] '>
+                        <p className='text-[16px] font-[600] leading-[20px]'>Interests
+                        </p>
                             <Image
                                 src={pencil}
-                                width={22}
-                                height={22}
+                                width={20}
+                                height={20}
                                 alt="vector icon"
                             />
-                        </p>
+                        </div>
                         <div className='mt-[16px]'>
                             <button className={styles.btn}>
                                 🏞️ Hiking
@@ -204,15 +210,16 @@ export default function Profile() {
                     </div>
 
                     <div className={`mt-[28px] ${styles.personality}`}>
-                        <p>Cuisine
+                    <div className='flex gap-[6px] mb-[11px] '>
+                    <p className='text-[14px] font-[600] leading-[20px]'>Cuisine
+                        </p>
                             <Image
                                 src={pencil}
                                 width={22}
                                 height={22}
                                 alt="vector icon"
                             />
-                        </p>
-
+                    </div>
                         <div className='flex justify-between items-center '>
                             {flag.map((items, Index) => {
                                 return (
@@ -230,7 +237,7 @@ export default function Profile() {
                     </div>
 
                     <div>
-                        <p style={{ fontWeight: 700 }} className='text-left mt-[20px]'>Intolerances</p>
+                        <p style={{ fontWeight: 700 }} className='text-left mt-[20px] text-[16px] leading-[20px]'>Intolerances</p>
                         <div style={{ marginTop: 16 }} >
                             <div className='flex justify-between items-center w-full px-[16px] py-[14px]'>
                                 <p style={{ fontSize: 14, fontWeight: 500 }}>🥛 Lactose-intolerance</p>
@@ -270,6 +277,6 @@ export default function Profile() {
 
                 </div>
             </div>
-        </>
+        </div>
     )
 }
