@@ -113,11 +113,15 @@ export default function Profile() {
                         Las Palmas, Gran Canaria, Spain
                     </p>
 
-                    <div className='flex gap-[10px] items-center mt-[17px] z-[10]'>
-                        <button className={styles.dashboardBtn} type='button'  onClick={()=>router.push('/dashboard')}>
+
+                    <div className='flex flex-col gap-[10px] items-center mt-[17px]'>
+                        <button className={styles.dashboardBtn} type='button' onClick={() => router.push('/dashboard')}>
+
+                  
+
                             Dashboard
                         </button>
-                        <button className={styles.planBtn} type='button'  onClick={()=>router.push('/dashboard/plans')}>
+                        <button className={styles.planBtn} type='button' onClick={() => router.push('/dashboard/plans')}>
                             <Image
                                 src={vector}
                                 width={13}
