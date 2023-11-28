@@ -69,7 +69,7 @@ function Settings() {
               <RxCaretRight color="#C8C9CF" size={30} />
             </div>
           </div>
-          <div className="flex justify-between mb-[24px]">
+          {/* <div className="flex justify-between mb-[24px]">
             <div className="flex items-center gap-[27px]">
               <span className="w-[40px] h-[40px] flex justify-center items-center bg-[#F4F8FC] rounded-full">
                 <Image src={web} alt="web" />
@@ -82,7 +82,7 @@ function Settings() {
               </p>
               <RxCaretRight color="#C8C9CF" size={30} />
             </div>
-          </div>
+          </div> */}
           <div className="w-full h-[1px] bg-[#DDE3EA] my-[16px]" />
           <div className="flex justify-between mb-[24px]">
             <div className="flex items-center gap-[27px]">

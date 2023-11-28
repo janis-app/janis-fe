@@ -12,7 +12,7 @@ import withAuthProtection from '@/components/hoc/withAuthProtection'
 
 function Credits() {
     const [switchs, setSwitch] = useState(false);
-    const [selectedIndex, setSelectedIndex] = useState(null)
+    const [selectedIndex, setSelectedIndex] = useState("")
     const router = useRouter()
 
     const handleSwitch = (checked) => {
@@ -66,11 +66,11 @@ function Credits() {
                 {
                     data.map((item, index) => {
                         return (
-                            <div className='border-2 mt-[14px] rounded-[20px] p-[16px]  flex items-center'
+                            <div className={`border-2 mt-[14px] rounded-[20px] p-[16px]  flex items-center ${selectedIndex == item.title && "bg-[#F0F8FF] border-[#A2DCF0]"}`}
                                 key={index}
-                                onClick={() => setSelectedIndex(index)}>
+                                onClick={() => setSelectedIndex(item.title)}>
                                 {
-                                    selectedIndex == index ?
+                                    selectedIndex == item.title ?
                                         <div className='h-[24px] w-[24px] bg-[#A2DCF0] rounded-full flex justify-center text-white items-center'><FiCheck size={13} /></div>
                                         :
                                         <div className='h-[24px] w-[24px] border-[#D9D9D9] border-2	 rounded-full'></div>
