@@ -9,8 +9,12 @@ import mark from "@/public/assets/mark.svg"
 import Link from "next/link";
 import { useRouter } from "next/router";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
+import profileIcon from '@/public/assets/profileIcon.jpg'
+import { AppContext } from "@/components/context/AppContext";
+import { useContext } from "react";
 
 function Home() {
+  const {state, dispatch} = useContext(AppContext)
   const router = useRouter()
   return (
     <div className={styles.main_container}>
@@ -24,7 +28,8 @@ function Home() {
               <p style={{ fontSize: 12, fontWeight: 500 }} className={styles.credit}>Credits</p>
             </div>
             <Image
-              src={profile}
+              // src={profile}
+              src={state?.user?.profile_image ? state?.user?.profile_image?.url  : profileIcon}
               width={32}
               height={32}
               alt="Profile image"

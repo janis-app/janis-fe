@@ -4,7 +4,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ["agcnwo.com", "res.cloudinary.com"],
+    domains: [ "res.cloudinary.com"],
   },
 };
 module.exports = nextConfig;
