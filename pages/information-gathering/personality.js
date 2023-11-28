@@ -1,6 +1,7 @@
 import NextButton from "@/components/Common/NextButton";
 import Header from "@/components/InformationGathering/Header";
 import HeaderText from "@/components/InformationGathering/HeaderText";
+import withAuthProtection from "@/components/hoc/withAuthProtection";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -43,7 +44,9 @@ function Personality() {
   );
 }
 
-export default Personality;
+// export default Personality;
+export default withAuthProtection(Personality);
+
 
 Personality.getLayout = function PageLayout(page) {
   return (

@@ -7,12 +7,13 @@ import { FiCheck } from "react-icons/fi";
 import Link from "next/link";
 import NextButton from "@/components/Common/NextButton";
 import { useState } from "react";
+import withAuthProtection from "@/components/hoc/withAuthProtection";
 
 function Mood() {
   const [radioValue, setRadioValue] = useState(false);
   return (
     <div>
-      <Header show={false} progess={32} />
+      <div className="px-[20px]"><Header show={false} progess={32} /></div>
       <div className="relative z-[2] text-center flex flex-col justify-center items-center font-[500]">
         <h3 className="text-[20px] leading-[24.2px]">
           How <span className="text-[#B9E6F5]">Keen</span> are you today?
@@ -54,7 +55,9 @@ function Mood() {
   );
 }
 
-export default Mood;
+// export default Mood;
+export default withAuthProtection(Mood);
+
 
 const data = [
   {

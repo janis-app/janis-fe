@@ -5,8 +5,9 @@ import styles from '@/styles/dashboard/dashboard.module.css'
 import Image from 'next/image'
 import arrowIcon from "@/public/assets/arrowIcon.svg"
 import Link from 'next/link'
+import withAuthProtection from '@/components/hoc/withAuthProtection'
 
-export default function Dashboard() {
+function Dashboard() {
   const data = [
     {
       title: "🌋 Volcano Visit",
@@ -86,3 +87,7 @@ export default function Dashboard() {
     </div>
   )
 }
+
+
+export default withAuthProtection(Dashboard);
+

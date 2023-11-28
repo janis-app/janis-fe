@@ -1,8 +1,13 @@
+
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useContext } from "react";
 import { PiCaretLeftBold } from "react-icons/pi";
+import { AppContext } from "../context/AppContext";
 
 function Header({ progess, link, show, title, profile }) {
+  const {state, dispatch} = useContext(AppContext)
+
   const router = useRouter();
   return (
     <div className="relative z-[2] pt-[24px] flex justify-between items-center mb-[32px]">
@@ -29,9 +34,10 @@ function Header({ progess, link, show, title, profile }) {
       </div>
       <div>
         {
-          profile &&
+          state?.user?.profile_image &&
           <Image
-          src={profile}
+          // src={profile}
+          src={state?.user?.profile_image ? state?.user?.profile_image?.url  : profileIcon}
           width={32}
           height={32}
           alt="Profile image"

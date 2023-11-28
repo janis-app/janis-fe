@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { PiCaretLeftBold } from "react-icons/pi";
 import styles from "@/styles/profile/profile.module.css"
 import setting from '@/public/assets/setting.svg'
@@ -20,9 +20,16 @@ import mx from '@/public/assets/mx.svg'
 import Switch from "react-switch";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import withAuthProtection from '@/components/hoc/withAuthProtection';
+import { AppContext } from '@/components/context/AppContext';
+import profileIcon from '@/public/assets/profileIcon.jpg'
 
 
-export default function Profile() {
+function Profile() {
+    const {state, dispatch} = useContext(AppContext)
+
+    console.log("State of user profile: ", state?.user);
+
     const [switch1, setSwitch1] = useState(false);
     const [switch2, setSwitch2] = useState(false);
     const [switch3, setSwitch3] = useState(false);
@@ -89,7 +96,8 @@ export default function Profile() {
                     <div>
                         <p className={styles.profile_no}>5</p>
                         <Image
-                            src={profile}
+                            src={state?.user?.profile_image ? state?.user?.profile_image?.url  : profileIcon}
+                            // src={`https://res.cloudinary.com/dmbidfbiq/image/upload/v1699454859/service1_Image_b11ab5a96c.png`}
                             width={108}
                             height={108}
                             alt="setting icon"
@@ -97,7 +105,7 @@ export default function Profile() {
                             style={{ border: "2px solid #fff" }}
                         />
                     </div>
-                    <h2 style={{ fontWeight: 700, marginTop: 17 }}>Janis</h2>
+                    <h2 style={{ fontWeight: 700, marginTop: 17 }}>{state.user?.username}</h2>
                     <p
                         style={{ fontSize: 14 }}
                         className='flex items-center'>
@@ -273,3 +281,7 @@ export default function Profile() {
         </>
     )
 }
+
+
+export default withAuthProtection(Profile);
+
