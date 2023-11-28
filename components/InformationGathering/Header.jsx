@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import { PiCaretLeftBold } from "react-icons/pi";
 import { AppContext } from "../context/AppContext";
+import profileIcon from '@/public/assets/profileIcon.jpg'
 
 function Header({ progess, link, show, title, profile }) {
   const {state, dispatch} = useContext(AppContext)
