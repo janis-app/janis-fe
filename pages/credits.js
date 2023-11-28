@@ -1,4 +1,5 @@
 import RegisterHeader from "@/components/RegisterComponent/RegisterHeader";
+import withAuthProtection from "@/components/hoc/withAuthProtection";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -38,4 +39,6 @@ function Credits() {
   );
 }
 
-export default Credits;
+// export default Credits;
+export default withAuthProtection(Credits);
+

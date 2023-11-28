@@ -5,7 +5,8 @@ import profile from '@/public/assets/profileImg.svg'
 import magnifier from "@/public/assets/search.svg"
 import image from '@/public/assets/like_img.svg'
 import Image from 'next/image'
-export default function likes() {
+import withAuthProtection from '@/components/hoc/withAuthProtection'
+function likes() {
     const data = [
         {
             img: image,
@@ -98,3 +99,6 @@ export default function likes() {
         </>
     )
 }
+
+
+export default withAuthProtection(likes);

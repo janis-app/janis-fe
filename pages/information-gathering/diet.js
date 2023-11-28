@@ -4,6 +4,7 @@ import Header from "@/components/InformationGathering/Header";
 import HeaderText from "@/components/InformationGathering/HeaderText";
 import InterestItems from "@/components/InformationGathering/InterestItems";
 import VehicleItems from "@/components/InformationGathering/VehicleItems";
+import withAuthProtection from "@/components/hoc/withAuthProtection";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -30,7 +31,9 @@ function Diet() {
   );
 }
 
-export default Diet;
+// export default Diet;
+export default withAuthProtection(Diet);
+
 
 Diet.getLayout = function PageLayout(page) {
   return <div className="white-screen-container">{page}</div>;

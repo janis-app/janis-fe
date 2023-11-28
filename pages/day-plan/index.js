@@ -19,8 +19,9 @@ import sun from "@/public/assets/sun.svg";
 import track from "@/public/assets/track.png";
 import box from "@/public/assets/box.png";
 import arrow1 from "@/public/assets/arrow.png";
+import withAuthProtection from "@/components/hoc/withAuthProtection";
 
-export default function DayPlan() {
+function DayPlan() {
   const [isTextVisible, setIsTextVisible] = useState(false);
   const [updatedIndex, setUpdatedIndex] = useState(null);
   const [foodIndex, setFoodIndex] = useState(null);
@@ -263,3 +264,6 @@ export default function DayPlan() {
     </div>
   );
 }
+
+export default withAuthProtection(DayPlan);
+

@@ -8,8 +8,9 @@ import crown from '@/public/assets/crown.svg'
 import Switch from "react-switch";
 import { FiCheck } from "react-icons/fi";
 import { useRouter } from 'next/router'
+import withAuthProtection from '@/components/hoc/withAuthProtection'
 
-export default function Credits() {
+function Credits() {
     const [switchs, setSwitch] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState("")
     const router = useRouter()
@@ -127,3 +128,6 @@ export default function Credits() {
         </div >
     )
 }
+
+export default withAuthProtection(Credits);
+

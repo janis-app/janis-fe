@@ -5,8 +5,9 @@ import { LiaEditSolid } from "react-icons/lia";
 import { FaArrowRightLong } from "react-icons/fa6";
 import styles from '@/styles/setup-profile/setup-profile.module.css'
 import Link from "next/link";
+import withAuthProtection from "@/components/hoc/withAuthProtection";
 
-export default function Home() {
+function SetUpProfile() {
   return (
     <div className={styles.main_container}>
       <div className={styles.conatiner}>
@@ -46,3 +47,6 @@ export default function Home() {
     </div>
   );
 }
+
+
+export default withAuthProtection(SetUpProfile);

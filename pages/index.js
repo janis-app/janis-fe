@@ -8,8 +8,9 @@ import profile from '@/public/assets/profileImg.svg'
 import mark from "@/public/assets/mark.svg"
 import Link from "next/link";
 import { useRouter } from "next/router";
+import withAuthProtection from "@/components/hoc/withAuthProtection";
 
-export default function Home() {
+function Home() {
   const router = useRouter()
   return (
     <div className={styles.main_container}>
@@ -69,3 +70,8 @@ export default function Home() {
     </div>
   );
 }
+
+
+export default Home;
+// export default withAuthProtection(Home);
+

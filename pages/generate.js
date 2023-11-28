@@ -3,6 +3,7 @@ import HeaderText from "@/components/InformationGathering/HeaderText";
 import Image from "next/image";
 import animatedButton from "../public/assets/AnimatedButton.png";
 import { useRouter } from "next/router";
+import withAuthProtection from "@/components/hoc/withAuthProtection";
 
 function Generate() {
   const router = useRouter()
@@ -24,7 +25,9 @@ function Generate() {
   );
 }
 
-export default Generate;
+// export default Generate;
+export default withAuthProtection(Generate);
+
 
 Generate.getLayout = function PageLayout(page) {
   return <div className="generate-container">{page}</div>;

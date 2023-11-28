@@ -2,6 +2,7 @@ import NextButton from "@/components/Common/NextButton";
 import Header from "@/components/InformationGathering/Header";
 import HeaderText from "@/components/InformationGathering/HeaderText";
 import InterestItems from "@/components/InformationGathering/InterestItems";
+import withAuthProtection from "@/components/hoc/withAuthProtection";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -29,7 +30,9 @@ function Interest() {
   );
 }
 
-export default Interest;
+// export default Interest;
+export default withAuthProtection(Interest);
+
 
 Interest.getLayout = function PageLayout(page) {
     return (

@@ -10,8 +10,13 @@ import logout from "../public/assets/logout.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { unsetToken } from "@/lib/auth";
+import withAuthProtection from "@/components/hoc/withAuthProtection";
+import { useContext } from "react";
+import { AppContext } from "@/components/context/AppContext";
 
 function Settings() {
+  const {state, dispatch} = useContext(AppContext)
+
   const router = useRouter();
   return (
     <div className="bg-[#A2DCF0]">
@@ -37,7 +42,7 @@ function Settings() {
             </div>
             <div className="flex items-center gap-[20px]">
               <p className="text-[#ADB3C2] text-[14px] font-normal text-right">
-                example@gmail.com
+                {state?.user?.email}
               </p>
               <RxCaretRight color="#C8C9CF" size={30} />
             </div>
@@ -117,4 +122,6 @@ function Settings() {
   );
 }
 
-export default Settings;
+// export default Settings;
+export default withAuthProtection(Settings);
+

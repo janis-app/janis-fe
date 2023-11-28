@@ -11,7 +11,8 @@ import map4 from '@/public/assets/map4.png'
 import map5 from '@/public/assets/map5.png'
 import calendar from '@/public/assets/calendar.svg'
 import location from '@/public/assets/loc_icon.svg'
-export default function plan() {
+import withAuthProtection from '@/components/hoc/withAuthProtection'
+function Plans() {
     const plans = [
         {
             img: map1,
@@ -127,3 +128,6 @@ export default function plan() {
         </>
     )
 }
+
+export default withAuthProtection(Plans);
+

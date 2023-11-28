@@ -6,11 +6,12 @@ import { BiSolidMap } from "react-icons/bi";
 import { FiCheck } from "react-icons/fi";
 import Link from "next/link";
 import NextButton from "@/components/Common/NextButton";
+import withAuthProtection from "@/components/hoc/withAuthProtection";
 
 function Location() {
   return (
     <div>
-      <Header show={false} progess={32} />
+      <div className="px-[20px]"><Header show={false} progess={32} /></div>
       <HeaderText
         title="Let’s start Your Adventure!"
         text="Share Your Starting Point"
@@ -41,7 +42,9 @@ function Location() {
   );
 }
 
-export default Location;
+// export default Location;
+export default withAuthProtection(Location);
+
 
 Location.getLayout = function PageLayout(page) {
   return <div className="white-screen-container">{page}</div>;
