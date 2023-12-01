@@ -219,15 +219,31 @@ function RegisterPage() {
         <>
           <RegisterStepText text="What is your email?" />
           <input
+            required
             type="email"
             className="w-full h-[27px] bg-transparent text-center text-[#FFFFFF80] placeholder:text-[#FFFFFF80] text-[20px] outline-none"
             placeholder="e.g janisscheuermann@gmail.com"
             value={formValues.emailAddress}
-            onChange={(e) =>
-              setFormValues({ ...formValues, emailAddress: e.target.value })
-            }
+            // onChange={(e) =>
+            //   setFormValues({ ...formValues, emailAddress: e.target.value })
+            // }
+            onChange={(e) => {
+              const email = e.target.value;
+              const isValidEmail = /\S+@\S+\.\S+/.test(email); // Basic email format check
+
+              setFormValues({ ...formValues, emailAddress: email });
+
+              if (!isValidEmail) {
+                setValidationErr({
+                  type: 'email',
+                  err: 'Please enter a valid email address.',
+                });
+              } else {
+                setValidationErr({ type: null, err: null });
+              }
+            }}
           />
-          <p className="text-[#f54242] text-center mt-[10px]"> {validationErr.type == 'email' && validationErr.err}</p>
+          <p className="text-[#f54242] text-center mt-[10px]"> {(validationErr.type == 'email' && validationErr.err) || err}</p>
         </>
       )}
       {step === 5 && (
@@ -289,7 +305,7 @@ function RegisterPage() {
             ) {
               setValidationErr({ type: 'img', err: 'Select your image' })
             } else if (
-              (step === 4 && formValues.emailAddress.trim() === "")
+              ((step === 4 && formValues.emailAddress.trim() === "") || err)
             ) {
               setValidationErr({ type: 'email', err: 'Enter your email.' })
             } else {
