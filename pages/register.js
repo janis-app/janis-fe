@@ -11,6 +11,8 @@ import { changeProfileImage } from "@/lib/profile";
 import { setToken } from "@/lib/auth";
 
 function RegisterPage() {
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const [step, setStep] = useState(1);
   const [formValues, setFormValues] = useState({
     name: "",
@@ -174,7 +176,7 @@ function RegisterPage() {
 
         </>
       )}
-      {step === 3 && (
+      {/* {step === 3 && (
         <>
           <RegisterStepText text={`Upload a`} subText="profile picture" />
           <label className="w-[102px] h-[102px] border border-white flex flex-col justify-center items-center gap-[12px] mb-[30px] mx-auto rounded-full">
@@ -214,7 +216,67 @@ function RegisterPage() {
 
 
         </>
+      )} */}
+
+{step === 3 && (
+  <>
+
+    <RegisterStepText text={`Upload a`} subText="profile picture" />
+    <label className="w-[102px] h-[102px] border border-white flex flex-col justify-center items-center gap-[12px] mb-[30px] mx-auto rounded-full">
+      {selectedImage ? (
+        <img
+          src={URL.createObjectURL(selectedImage)}
+          alt="Selected"
+          className="w-full h-full object-cover rounded-full"
+        />
+      ) : (
+        <>
+          <span>
+            <FaRegImage color="white" />
+          </span>
+          <label htmlFor="file" className="text-[14px] font-normal leading-[20.16px] text-center text-white">
+            Select file
+          </label>
+          <input
+            type="file"
+            className="hidden"
+            id='file'
+            name='files'
+            accept="image/*"
+            onChange={(e) => {
+              handleImageChange(e);
+              setSelectedImage(e.target.files[0]);
+            }}
+          />
+        </>
       )}
+    </label>
+
+
+    <p className="text-white text-center mb-[39px]">Or</p>
+          <label className="text-white flex justify-center items-center gap-[16px] w-full h-[72px] bg-[#9FDBED] rounded-t-[24px] rounded-b-[20px] text-[16px] font-[500] leading-[24px]">
+            <AiFillCamera size={24} />
+            Open camera & take photo
+            <input
+              id='file'
+              type="file"
+              name='files'
+              accept="image/*"
+              capture="camera"
+              className="hidden"
+              onChange={(e) => {handleImageChange(e),
+                setSelectedImage(e.target.files[0])}}
+
+            />
+          </label>
+          <p className="text-[#f54242] text-center mt-[10px]"> {validationErr.type == 'img' && validationErr.err}</p>
+
+
+
+
+    
+  </>
+)}
       {step === 4 && (
         <>
           <RegisterStepText text="What is your email?" />
