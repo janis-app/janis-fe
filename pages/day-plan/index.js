@@ -32,7 +32,7 @@ function DayPlan() {
   useEffect(() => {
     const fetchData = async () => {
       const responcedata = await fetchFavouriteActivitiesApi()
-      setFavoriteActivities(responcedata?.data[0])
+      // setFavoriteActivities(responcedata?.data[0])
     }
 
     fetchData()
