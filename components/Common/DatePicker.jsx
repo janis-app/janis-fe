@@ -20,10 +20,20 @@ const CustomDatePicker = ({ selectedDate, setSelectedDate, maxDate }) => {
     setIsOpen(false);
   };
 
+  // const handleDateChange = (date) => {
+  //   const formattedDate = `${date.getFullYear()}-${
+  //     date.getMonth() + 1
+  //   }-${date.getDate()}`;
+  //   setSelectedDate(formattedDate);
+  //   setInitialDate(date);
+  // };
+
   const handleDateChange = (date) => {
-    const formattedDate = `${date.getFullYear()}-${
-      date.getMonth() + 1
-    }-${date.getDate()}`;
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+    const day = date.getDate().toString().padStart(2, '0'); 
+
+    const formattedDate = `${year}-${month}-${day}`;
     setSelectedDate(formattedDate);
     setInitialDate(date);
   };
@@ -65,7 +75,7 @@ const CustomDatePicker = ({ selectedDate, setSelectedDate, maxDate }) => {
     const datePickerWheels =
       document.getElementsByClassName("datepicker-wheel");
     for (let i = 0; i < datePickerWheels.length; i++) {
-    //   datePickerWheels[i].style.border = "none";
+      //   datePickerWheels[i].style.border = "none";
     }
   }, []);
 
