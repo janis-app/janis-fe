@@ -35,7 +35,7 @@ function Header({ progess, link, show, title, profile }) {
       </div>
       <div>
         {
-          state?.user?.profile_image &&
+          state?.user?.profile_image ?
           <Image
           // src={profile}
           src={state?.user?.profile_image ? state?.user?.profile_image?.url  : profileIcon}
@@ -44,7 +44,15 @@ function Header({ progess, link, show, title, profile }) {
           alt="Profile image"
           className="rounded-2xl"
           onClick={()=>router.push('/profile')}
-        />
+        /> : <Image
+        // src={profile}
+        src={profileIcon}
+        width={32}
+        height={32}
+        alt="Profile image"
+        className="rounded-2xl"
+        onClick={()=>router.push('/profile')}
+      />
         }
       </div>
     </div>
