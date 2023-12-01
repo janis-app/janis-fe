@@ -74,7 +74,7 @@ const CustomDatePicker = ({ selectedDate, setSelectedDate, maxDate }) => {
       <DatePicker
         isPopup={false}
         isOpen={isOpen}
-        max={maxDate ? new Date() : new Date(2050, 0, 1)}
+        max={new Date()}
         value={initialDate}
         onSelect={handleDateChange}
         onChange={handleDateChange}
