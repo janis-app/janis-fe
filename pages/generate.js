@@ -11,7 +11,7 @@ function Generate() {
   return (
     <div className="relative min-h-screen">
       <div className="fixed inset-0 z-[-1]">
-        <Image src={generate}/>
+        <Image src={generate} className="w-full"/>
       </div>
       <div className="absolute top-0 right-0 left-0 bottom-0 button-bg opacity-10"></div>
       <div className="px-[24px]">
