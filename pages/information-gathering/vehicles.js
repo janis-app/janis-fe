@@ -45,7 +45,7 @@ function Vehicle() {
   };
 
   return (
-    <div className="mx-[24px]">
+    <div className="px-[24px]">
       <Header progess={53} link="information-gathering/interests" show={true} />
       <HeaderText
         title="How do you roll?"

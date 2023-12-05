@@ -54,7 +54,7 @@ function Diet() {
   };
 
   return (
-    <div className="mx-[24px]">
+    <div className="px-[24px]">
       <Header progess={68} link="information-gathering/vehicles" show={true} />
       <HeaderText
         title="Are you a picky eater?"
