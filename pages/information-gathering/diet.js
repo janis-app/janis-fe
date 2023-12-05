@@ -14,7 +14,7 @@ function Diet() {
   const [value, setValue] = useState(50);
 
   return (
-    <div>
+    <div className="px-[24px]">
       <Header progess={68} link="information-gathering/vehicles" show={true} />
       <HeaderText
         title="Are you a picky eater?"

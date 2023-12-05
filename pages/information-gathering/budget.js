@@ -15,7 +15,7 @@ function Budget() {
   const [value, setValue] = useState(50);
 
   return (
-    <div>
+    <div className="px-[24px]">
       <Header progess={80} link="information-gathering/diet" show={true} />
       <HeaderText
         title="Plan Your Adventure, Your Way!"
