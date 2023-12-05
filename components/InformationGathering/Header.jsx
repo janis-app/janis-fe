@@ -35,6 +35,7 @@ function Header({ progess, link, show, title, profile }) {
       </div>
       <div>
         {
+          profile ?
           state?.user?.profile_image ?
           <Image
           // src={profile}
@@ -52,7 +53,7 @@ function Header({ progess, link, show, title, profile }) {
         alt="Profile image"
         className="rounded-2xl"
         onClick={()=>router.push('/profile')}
-      />
+      /> : null
         }
       </div>
     </div>

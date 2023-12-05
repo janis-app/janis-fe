@@ -2,8 +2,8 @@ import styles from "@/styles/interest.module.css";
 import Button from "../Common/Buttons";
 import { useState } from "react";
 
-function InterestItems() {
-  const [selectedBtn, setSelectedBtn] = useState([]);
+function InterestItems({ selectedBtn, setSelectedBtn }) {
+  // const [selectedBtn, setSelectedBtn] = useState([]);
   const clickHandler = (title) => {
     // Check if the item is already in the selected items array
     const index = selectedBtn.indexOf(title);

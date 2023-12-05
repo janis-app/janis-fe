@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 
-function VehicleItems() {
-  const [radioValue, setRadioValue] = useState(false);
+function VehicleItems({value, setValue}) {
+  // const [radioValue, setRadioValue] = useState(false);
 
   return (
     <>
@@ -13,18 +13,18 @@ function VehicleItems() {
               return (
                 <label
                   className={`w-full h-[72px] py-[30px] px-[20px] border-2 border-[#DAF5FE] flex items-center rounded-[40px] mb-[8px] ${
-                    item.title == radioValue
+                    item.title == value
                       ? "bg-[#DAF5FE]"
                       : "bg-transparent"
                   }`}
                   key={index}
-                  onClick={() => setRadioValue(item.title)}
+                  onClick={() => setValue(item.title)}
                 >
                   <input
                     type="radio"
                     name="radio"
                     className={`w-[24px] h-[24px]`}
-                    checked={item.title == radioValue}
+                    checked={item.title == value}
                   />
                   <div className={`w-[181px] text-center mx-auto font-medium`}>
                     <p className="text-[14px]">{item.title}</p>
