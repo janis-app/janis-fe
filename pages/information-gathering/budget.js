@@ -48,7 +48,7 @@ function Budget() {
   };
 
   return (
-    <div className="mx-[24px]">
+    <div className="px-[24px]">
       <Header progess={80} link="information-gathering/diet" show={true} />
       <HeaderText
         title="Plan Your Adventure, Your Way!"

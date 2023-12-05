@@ -43,24 +43,30 @@ function Personality() {
   };
 
   return (
-    <div className="relative mx-[24px]">
+    <div className="relative px-[24px]">
       <Header progess={17} show={true} link="" />
       <HeaderText
         title="Discover Your Travel Energy!"
         text="Slide to your vibe! Are you the life of the party or a cozy bookworm? 🎉📚"
         subText="Keen"
       />
-      <div className="mt-[190px] Introvert flex justify-between items-center h-[10px] bg-[#DAF5FE]">
+      <div className="mt-[190px] Introvert flex justify-between items-center  ">
         <div>
           <div className="w-[46px] h-[46px] rounded-full flex justify-center items-center bg-[#DAF5FE]">
             🤫
           </div>
         </div>
-        <span className="w-[40px] h-[40px] rounded-full flex justify-center items-center  bg-[#DAF5FE]">
+
+        {/* <span className="w-[40px] h-[40px] rounded-full flex justify-center items-center  bg-[#DAF5FE]">
           <span className="w-[25px] h-[25px] rounded-full  bg-[#B9E6F5]"></span>
-        </span>
+        </span> */}
+        <input
+          type="range"
+          className="w-full "
+        // value={value}
+        />
         <div>
-          <div className="w-[46px] h-[46px] rounded-full flex justify-center items-center bg-[#DAF5FE]">
+          <div className="w-[46px] h-[46px] rounded-full flex justify-center items-center bg-[#DAF5FE] ">
             🎉
           </div>
         </div>

@@ -51,8 +51,8 @@ function Crew() {
   };
 
   return (
-    <div className="mx-[24px]">
-      <Header progess={100} link="information-gathering/budget" show={true} />
+    <div className="px-[24px]">
+      <Header progess={100} link="information-gathering/budget" show={true}/>
       <HeaderText
         title="Who's Your Adventure Crew?"
         text="Crafted Exclusively for Your Travel Crew!"
