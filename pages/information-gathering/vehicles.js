@@ -13,7 +13,7 @@ function Vehicle() {
   const [value, setValue] = useState(50);
 
   return (
-    <div>
+    <div className="px-[24px]">
       <Header progess={53} link="information-gathering/interests" show={true} />
       <HeaderText
         title="How do you roll?"

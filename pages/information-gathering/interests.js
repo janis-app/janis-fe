@@ -12,7 +12,7 @@ function Interest() {
   const [value, setValue] = useState(50);
 
   return (
-    <div className="relative">
+    <div className="relative px-[24px]">
       <Header link="information-gathering/personality" show={true} progess={32} />
       <HeaderText
         title="What are you keen about?"

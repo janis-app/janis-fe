@@ -17,7 +17,7 @@ function Crew() {
   const [value, setValue] = useState(50);
 
   return (
-    <div>
+    <div className="px-[24px]">
       <Header progess={100} link="information-gathering/budget" show={true}/>
       <HeaderText
         title="Who's Your Adventure Crew?"
