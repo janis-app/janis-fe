@@ -2,6 +2,9 @@ import NextButton from "@/components/Common/NextButton";
 import Header from "@/components/InformationGathering/Header";
 import HeaderText from "@/components/InformationGathering/HeaderText";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
+import { getTokenFromLocalCookie } from "@/lib/auth";
+import userStore from "@/store/userSlice";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -9,6 +12,35 @@ import { useState } from "react";
 function Personality() {
   const router = useRouter();
   const [value, setValue] = useState(50);
+  const { user_profile } = userStore();
+  const [loading, setLoading] = useState(false);
+
+  const handleBtnClick = async () => {
+    setLoading(true);
+    const token = getTokenFromLocalCookie();
+    await axios
+      .put(
+        process.env.NEXT_PUBLIC_STRAPI_URL +
+          `/information-gatherings/${user_profile?.information_gathering?.id}`,
+        {
+          data: {
+            personality: "Edited Now",
+          },
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then(() => {
+        setLoading(false);
+        router.push("/information-gathering/interests")
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     <div className="relative px-[24px]">
@@ -43,9 +75,12 @@ function Personality() {
         <p className="text-sm">Introvert</p>
         <p className="text-sm">Extrovert</p>
       </div>
-      <Link href="/information-gathering/interests" className="fixed bottom-[56px] mx-auto left-0 right-0 w-[248px] h-[60px] text-center button-bg flex justify-center items-center rounded-[40px]">
-        <NextButton />
-      </Link>
+      <div
+        // href="/information-gathering/interests"
+        className="fixed bottom-[56px] mx-auto left-0 right-0 w-[248px] h-[60px] text-center button-bg flex justify-center items-center rounded-[40px]"
+      >
+        <NextButton handleClick={handleBtnClick} loading={loading} />
+      </div>
     </div>
   );
 }
@@ -53,11 +88,6 @@ function Personality() {
 // export default Personality;
 export default withAuthProtection(Personality);
 
-
 Personality.getLayout = function PageLayout(page) {
-  return (
-    <div className="white-screen-container">
-      {page}
-    </div>
-  );
+  return <div className="white-screen-container">{page}</div>;
 };
