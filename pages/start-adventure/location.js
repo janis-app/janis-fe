@@ -7,11 +7,50 @@ import { FiCheck } from "react-icons/fi";
 import Link from "next/link";
 import NextButton from "@/components/Common/NextButton";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
+import { useState } from "react";
+import userStore from "@/store/userSlice";
+import { useRouter } from "next/router";
+import { getTokenFromLocalCookie } from "@/lib/auth";
+import axios from "axios";
 
 function Location() {
+  const router = useRouter();
+  const { user_profile } = userStore();
+  const [loading, setLoading] = useState(false);
+  const [location, setLoacation] = useState("");
+
+  const handleBtnClick = async () => {
+    setLoading(true);
+    const token = getTokenFromLocalCookie();
+    await axios
+      .put(
+        process.env.NEXT_PUBLIC_STRAPI_URL +
+          `/information-gatherings/${user_profile?.information_gathering?.id}`,
+        {
+          data: {
+            location,
+          },
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then(() => {
+        setLoading(false);
+        router.push("/start-adventure/mood");
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <div>
-      <div className="px-[20px]"><Header show={false} progess={32} /></div>
+      <div className="px-[20px]">
+        <Header show={false} progess={32} />
+      </div>
       <HeaderText
         title="Let’s start Your Adventure!"
         text="Share Your Starting Point"
@@ -21,6 +60,8 @@ function Location() {
           <input
             className="h-[56px] border-2 border-[#DAF5FE] outline-none px-[16px] py-[8px] rounded-[8px] relative top-[11rem] w-full flex justify-center"
             placeholder="Enter your Location"
+            value={location}
+            onChange={(e) => setLoacation(e.target.value)}
           />
           <BiSolidMap
             className="absolute top-[12.2rem] right-[19px]"
@@ -32,19 +73,18 @@ function Location() {
       <div className="fixed bottom-0 w-full left-0 right-0">
         <Image src={map} alt="map" className="w-full" />
       </div>
-      <Link
-        href="/start-adventure/mood"
+      <div
+        // href="/start-adventure/mood"
         className="fixed bottom-[56px] mx-auto left-0 right-0 w-[248px] h-[60px] text-center button-bg flex justify-center items-center rounded-[40px]"
       >
-        <NextButton />
-      </Link>
+        <NextButton handleClick={handleBtnClick} loading={loading} />
+      </div>
     </div>
   );
 }
 
 // export default Location;
 export default withAuthProtection(Location);
-
 
 Location.getLayout = function PageLayout(page) {
   return <div className="white-screen-container">{page}</div>;

@@ -7,6 +7,10 @@ import HeaderText from "@/components/InformationGathering/HeaderText";
 import InterestItems from "@/components/InformationGathering/InterestItems";
 import VehicleItems from "@/components/InformationGathering/VehicleItems";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
+import { getTokenFromLocalCookie } from "@/lib/auth";
+import Spinner from "@/lib/spinner";
+import userStore from "@/store/userSlice";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -14,7 +18,37 @@ import { FiCheck } from "react-icons/fi";
 
 function Crew() {
   const router = useRouter();
-  const [value, setValue] = useState(50);
+  const [value, setValue] = useState("");
+
+  const { user_profile } = userStore();
+  const [loading, setLoading] = useState(false);
+
+  const handleBtnClick = async () => {
+    setLoading(true);
+    const token = getTokenFromLocalCookie();
+    await axios
+      .put(
+        process.env.NEXT_PUBLIC_STRAPI_URL +
+          `/information-gatherings/${user_profile?.information_gathering?.id}`,
+        {
+          data: {
+            personality: "Edited Now",
+          },
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then(() => {
+        setLoading(false);
+        router.push("/start-adventure/location");
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     <div className="px-[24px]">
@@ -23,15 +57,24 @@ function Crew() {
         title="Who's Your Adventure Crew?"
         text="Crafted Exclusively for Your Travel Crew!"
       />
-      <CrewItem />
-      <Link
-        href="/start-adventure/location"
+      <CrewItem value={value} setValue={setValue} />
+      <div
+        // href="/start-adventure/location"
         className="fixed bottom-[56px] mx-auto left-0 right-0 w-[248px] h-[60px] text-center button-bg flex justify-center items-center rounded-[40px]"
       >
-        <button className="bg-white w-[240px] h-[52px] rounded-[40px] flex items-center justify-center gap-[6px] text-[16px] font-medium leading-[19.36px]">
-          Confirm <FiCheck size={13} />
+        <button
+          className="bg-white w-[240px] h-[52px] rounded-[40px] flex items-center justify-center gap-[6px] text-[16px] font-medium leading-[19.36px]"
+          onClick={handleBtnClick}
+        >
+          {loading ? (
+            <Spinner colour="#B9E6F5" />
+          ) : (
+            <>
+              Confirm <FiCheck size={13} />
+            </>
+          )}
         </button>
-      </Link>
+      </div>
     </div>
   );
 }

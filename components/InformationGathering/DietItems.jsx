@@ -15,14 +15,25 @@ import Switch from "react-switch";
 import { useState } from "react";
 import Button from "../Common/Buttons";
 
-export default function DietItems() {
-  const [lactose, setLacktose] = useState(false);
-  const [gluten, setGluten] = useState(false);
-  const [fructose, setFructose] = useState(false);
-  const [selectedBtn, setSelectedBtn] = useState(null);
+export default function DietItems({
+  lactose,
+  setLactose,
+  gluten,
+  setGluten,
+  fructose,
+  setFructose,
+  setDietType,
+  setCuisineType,
+  dietType,
+  cuisineType
+}) {
+  // const [lactose, setLacktose] = useState(false);
+  // const [gluten, setGluten] = useState(false);
+  // const [fructose, setFructose] = useState(false);
+  // const [selectedBtn, setSelectedBtn] = useState(null);
 
   const lactoseHandler = () => {
-    setLacktose(!lactose);
+    setLactose(!lactose);
   };
 
   const glutenHandler = () => {
@@ -34,9 +45,12 @@ export default function DietItems() {
   };
 
   const clickHandler = (title) => {
-    setSelectedBtn(title);
+    setCuisineType(title);
   };
 
+  const selectDietType = (type) => {
+    setDietType(type);
+  };
   return (
     <>
       <div className={styles.mainDiv}>
@@ -46,25 +60,25 @@ export default function DietItems() {
             <div className={styles.btnDiv}>
               <Button
                 title="🥩 Omnivore"
-                clickHandler={() => clickHandler("🥩 Omnivore")}
-                selectedBtn={selectedBtn}
+                clickHandler={() => selectDietType("🥩 Omnivore")}
+                selectedBtn={dietType}
               />
               <Button
                 title="🐟 Pescatarian"
-                clickHandler={() => clickHandler("🐟 Pescatarian")}
-                selectedBtn={selectedBtn}
+                clickHandler={() => selectDietType("🐟 Pescatarian")}
+                selectedBtn={dietType}
               />
             </div>
             <div className={styles.btnDiv}>
               <Button
                 title="🌱 Vegan"
-                clickHandler={() => clickHandler("🌱 Vegan")}
-                selectedBtn={selectedBtn}
+                clickHandler={() => selectDietType("🌱 Vegan")}
+                selectedBtn={dietType}
               />
               <Button
                 title="🚫🥩 Vegetarian"
-                clickHandler={() => clickHandler("🚫🥩 Vegetarian")}
-                selectedBtn={selectedBtn}
+                clickHandler={() => selectDietType("🚫🥩 Vegetarian")}
+                selectedBtn={dietType}
               />
             </div>
             <p className={styles.text}>Cuisine</p>
@@ -73,7 +87,7 @@ export default function DietItems() {
                 className={styles.btns}
                 style={{
                   backgroundColor:
-                    selectedBtn == "jp" ? "#D9F5FE80" : "#F9FAFB",
+                    cuisineType == "jp" ? "#D9F5FE80" : "#F9FAFB",
                 }}
                 onClick={() => clickHandler("jp")}
               >
@@ -88,7 +102,7 @@ export default function DietItems() {
                 className={styles.btns}
                 style={{
                   backgroundColor:
-                    selectedBtn == "it" ? "#D9F5FE80" : "#F9FAFB",
+                    cuisineType == "it" ? "#D9F5FE80" : "#F9FAFB",
                 }}
                 onClick={() => clickHandler("it")}
               >
@@ -103,7 +117,7 @@ export default function DietItems() {
                 className={styles.btns}
                 style={{
                   backgroundColor:
-                    selectedBtn == "vn" ? "#D9F5FE80" : "#F9FAFB",
+                    cuisineType == "vn" ? "#D9F5FE80" : "#F9FAFB",
                 }}
                 onClick={() => clickHandler("vn")}
               >
@@ -118,7 +132,7 @@ export default function DietItems() {
                 className={styles.btns}
                 style={{
                   backgroundColor:
-                    selectedBtn == "es" ? "#D9F5FE80" : "#F9FAFB",
+                    cuisineType == "es" ? "#D9F5FE80" : "#F9FAFB",
                 }}
                 onClick={() => clickHandler("es")}
               >
@@ -133,7 +147,7 @@ export default function DietItems() {
                 className={styles.btns}
                 style={{
                   backgroundColor:
-                    selectedBtn == "cn" ? "#D9F5FE80" : "#F9FAFB",
+                    cuisineType == "cn" ? "#D9F5FE80" : "#F9FAFB",
                 }}
                 onClick={() => clickHandler("cn")}
               >
@@ -150,7 +164,7 @@ export default function DietItems() {
                 className={styles.btns}
                 style={{
                   backgroundColor:
-                    selectedBtn == "ind" ? "#D9F5FE80" : "#F9FAFB",
+                    cuisineType == "ind" ? "#D9F5FE80" : "#F9FAFB",
                 }}
                 onClick={() => clickHandler("ind")}
               >
@@ -165,7 +179,7 @@ export default function DietItems() {
                 className={styles.btns}
                 style={{
                   backgroundColor:
-                    selectedBtn == "us" ? "#D9F5FE80" : "#F9FAFB",
+                    cuisineType == "us" ? "#D9F5FE80" : "#F9FAFB",
                 }}
                 onClick={() => clickHandler("us")}
               >
@@ -180,7 +194,7 @@ export default function DietItems() {
                 className={styles.btns}
                 style={{
                   backgroundColor:
-                    selectedBtn == "th" ? "#D9F5FE80" : "#F9FAFB",
+                    cuisineType == "th" ? "#D9F5FE80" : "#F9FAFB",
                 }}
                 onClick={() => clickHandler("th")}
               >
@@ -195,7 +209,7 @@ export default function DietItems() {
                 className={styles.btns}
                 style={{
                   backgroundColor:
-                    selectedBtn == "turkey" ? "#D9F5FE80" : "#F9FAFB",
+                    cuisineType == "turkey" ? "#D9F5FE80" : "#F9FAFB",
                 }}
                 onClick={() => clickHandler("turkey")}
               >
@@ -210,7 +224,7 @@ export default function DietItems() {
                 className={styles.btns}
                 style={{
                   backgroundColor:
-                    selectedBtn == "mx" ? "#D9F5FE80" : "#F9FAFB",
+                    cuisineType == "mx" ? "#D9F5FE80" : "#F9FAFB",
                 }}
                 onClick={() => clickHandler("mx")}
               >
