@@ -13,7 +13,7 @@ import { unsetToken } from "@/lib/auth";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
 import { useContext } from "react";
 import { AppContext } from "@/components/context/AppContext";
-import { FaUserEdit } from "react-icons/fa";
+import { LiaUserEditSolid } from "react-icons/lia";
 import Link from "next/link";
 
 function Settings() {
@@ -35,6 +35,22 @@ function Settings() {
         <div></div>
       </div>
         <div className="bg-white h-[677px] w-full  rounded-tr-[50px] rounded-tl-[50px] border px-[35px] py-[46px]">
+        <Link
+          href={'/edit-profile'}
+          className="flex justify-between mb-[24px]">
+            <div className="flex items-center gap-[27px]">
+              <span className="w-[40px] h-[40px] flex justify-center items-center bg-[#F4F8FC] rounded-full">
+              {/* <FaUserEdit size={30} color="#878a88"/> */}
+              <LiaUserEditSolid size={30} color="#616362"/> 
+              </span>
+              <p className="text-[16px] font-medium">Edit Profile</p>
+            </div>
+            <div className="flex items-center gap-[20px]">
+              <p className="text-[#ADB3C2] text-[14px] font-normal text-right">
+              </p>
+              <RxCaretRight color="#C8C9CF" size={30} />
+            </div>
+          </Link>
           <Link
             href={'edit-profile/email'}
             className="flex justify-between mb-[24px]">
@@ -75,21 +91,6 @@ function Settings() {
               <RxCaretRight color="#C8C9CF" size={30} />
             </div>
           </div>
-          <Link
-          href={'/edit-profile'}
-          className="flex justify-between mb-[24px]">
-            <div className="flex items-center gap-[27px]">
-              <span className="w-[40px] h-[40px] flex justify-center items-center bg-[#F4F8FC] rounded-full">
-              <FaUserEdit size={30} color="#706664"/>
-              </span>
-              <p className="text-[16px] font-medium">Edit Profile</p>
-            </div>
-            <div className="flex items-center gap-[20px]">
-              <p className="text-[#ADB3C2] text-[14px] font-normal text-right">
-              </p>
-              <RxCaretRight color="#C8C9CF" size={30} />
-            </div>
-          </Link>
           <div className="w-full h-[1px] bg-[#DDE3EA] my-[16px]" />
           <div className="flex justify-between mb-[24px]">
             <div className="flex items-center gap-[27px]">
