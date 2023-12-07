@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
             const jwt = getTokenFromLocalCookie();
             // console.log("getTokenFromLocalCookie: ", jwt);
             const userData = await fetcher(
-                `${process.env.NEXT_PUBLIC_STRAPI_URL}/users/me?populate=profile_image`,
+                `${process.env.NEXT_PUBLIC_STRAPI_URL}/users/me?populate=*`,
                 {
                     method: "GET",
                     headers: {
@@ -29,7 +29,7 @@ const Layout = ({ children }) => {
             );
             if (userData?.id) {
                 dispatch({ type: "USER", payload: userData });
-
+                console.log("User Data: ", userData); 
             }
         }
 
