@@ -66,7 +66,7 @@ function Email() {
                         <input type="email"
                         value={newEmail}
                             className='ml-[12px] outline-none h-[24px] w-full'
-                            placeholder='Change Name'
+                            placeholder='Change Email'
                             onChange={(e) => {
                                 const newEmail = e.target.value;
                                 const isValidEmail = /\S+@\S+\.\S+/.test(newEmail); // Basic email format check

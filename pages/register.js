@@ -153,8 +153,9 @@ function RegisterPage() {
             className="w-full h-[27px] bg-transparent text-center text-[#FFFFFF80] placeholder:text-[#FFFFFF80] text-[20px] outline-none"
             placeholder="e.g Janis Scheuermann"
             value={formValues.name}
-            onChange={(e) =>
-              setFormValues({ ...formValues, name: e.target.value })
+            onChange={(e) =>{
+              setValidationErr({ type: '', err: '' })
+              setFormValues({ ...formValues, name: e.target.value })}
             }
           />
 
@@ -265,6 +266,7 @@ function RegisterPage() {
               capture="camera"
               className="hidden"
               onChange={(e) => {handleImageChange(e),
+                setValidationErr({ type: '', err: '' }),
                 setSelectedImage(e.target.files[0])}}
 
             />

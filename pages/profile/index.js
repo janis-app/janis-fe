@@ -30,7 +30,7 @@ import { FiEdit } from 'react-icons/fi';
 function Profile() {
     const {state, dispatch} = useContext(AppContext)
 
-    console.log("State of user profile: ", state?.user);
+    // console.log("State of user profile: ", state?.user);
 
     const [switch1, setSwitch1] = useState(false);
     const [switch2, setSwitch2] = useState(false);

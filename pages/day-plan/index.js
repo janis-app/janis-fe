@@ -1,6 +1,6 @@
 "use client";
 import Header from "@/components/InformationGathering/Header";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import profile from "@/public/assets/profileImg.svg";
 import styles from "@/styles/day-plan/day-plan.module.css";
 import Image from "next/image";
@@ -21,11 +21,14 @@ import box from "@/public/assets/box.png";
 import arrow1 from "@/public/assets/arrow.png";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
 import { fetchFavouriteActivitiesApi, updateFavouriteActivitiesApi } from "@/lib/profile";
+import { AppContext } from "@/components/context/AppContext";
 
 function DayPlan() {
   const [isTextVisible, setIsTextVisible] = useState(false);
   const [updatedIndex, setUpdatedIndex] = useState(null);
   const [foodIndex, setFoodIndex] = useState(null);
+  const {state, dispatch} = useContext(AppContext)
+
 
   const [favoriteActivities, setFavoriteActivities] = useState(null)
 
