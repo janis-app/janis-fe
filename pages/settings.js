@@ -13,6 +13,8 @@ import { unsetToken } from "@/lib/auth";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
 import { useContext } from "react";
 import { AppContext } from "@/components/context/AppContext";
+import { FaUserEdit } from "react-icons/fa";
+import Link from "next/link";
 
 function Settings() {
   const {state, dispatch} = useContext(AppContext)
@@ -33,7 +35,9 @@ function Settings() {
         <div></div>
       </div>
         <div className="bg-white h-[677px] w-full  rounded-tr-[50px] rounded-tl-[50px] border px-[35px] py-[46px]">
-          <div className="flex justify-between mb-[24px]">
+          <Link
+            href={'edit-profile/email'}
+            className="flex justify-between mb-[24px]">
             <div className="flex items-center gap-[27px]">
               <span className="w-[40px] h-[40px] flex justify-center items-center bg-[#F4F8FC] rounded-full">
                 <HiOutlineEnvelope size={22} />
@@ -46,8 +50,10 @@ function Settings() {
               </p>
               <RxCaretRight color="#C8C9CF" size={30} />
             </div>
-          </div>
-          <div className="flex justify-between mb-[24px]">
+          </Link>
+          <Link
+          href={'edit-profile/password'}
+          className="flex justify-between mb-[24px]">
             <div className="flex items-center gap-[27px]">
               <span className="w-[40px] h-[40px] flex justify-center items-center bg-[#F4F8FC] rounded-full">
                 <SlLock size={22} />
@@ -57,7 +63,7 @@ function Settings() {
             <div className="flex items-center gap-[20px]">
               <RxCaretRight color="#C8C9CF" size={30} />
             </div>
-          </div>
+          </Link>
           <div className="flex justify-between mb-[24px]">
             <div className="flex items-center gap-[27px]">
               <span className="w-[40px] h-[40px] flex justify-center items-center bg-[#F4F8FC] rounded-full">
@@ -69,20 +75,21 @@ function Settings() {
               <RxCaretRight color="#C8C9CF" size={30} />
             </div>
           </div>
-          {/* <div className="flex justify-between mb-[24px]">
+          <Link
+          href={'/edit-profile'}
+          className="flex justify-between mb-[24px]">
             <div className="flex items-center gap-[27px]">
               <span className="w-[40px] h-[40px] flex justify-center items-center bg-[#F4F8FC] rounded-full">
-                <Image src={web} alt="web" />
+              <FaUserEdit size={30} color="#706664"/>
               </span>
-              <p className="text-[16px] font-medium">Language option</p>
+              <p className="text-[16px] font-medium">Edit Profile</p>
             </div>
             <div className="flex items-center gap-[20px]">
               <p className="text-[#ADB3C2] text-[14px] font-normal text-right">
-                English
               </p>
               <RxCaretRight color="#C8C9CF" size={30} />
             </div>
-          </div> */}
+          </Link>
           <div className="w-full h-[1px] bg-[#DDE3EA] my-[16px]" />
           <div className="flex justify-between mb-[24px]">
             <div className="flex items-center gap-[27px]">
