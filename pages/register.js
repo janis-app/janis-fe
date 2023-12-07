@@ -246,6 +246,7 @@ function RegisterPage() {
             accept="image/*"
             onChange={(e) => {
               handleImageChange(e);
+              setValidationErr({ type: '', err: '' });
               setSelectedImage(e.target.files[0]);
             }}
           />
