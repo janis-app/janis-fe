@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-mobile-datepicker";
 import styles from "../../styles/customPicker.module.css";
-const CustomDatePicker = ({ selectedDate, setSelectedDate, maxDate }) => {
+const CustomDatePicker = ({ selectedDate, setSelectedDate, maxDate ,setValidationErr}) => {
   const [isOpen, setIsOpen] = useState(true);
   const [initialDate, setInitialDate] = useState(new Date());
 
@@ -36,6 +36,7 @@ const CustomDatePicker = ({ selectedDate, setSelectedDate, maxDate }) => {
     const formattedDate = `${year}-${month}-${day}`;
     setSelectedDate(formattedDate);
     setInitialDate(date);
+    setValidationErr({ type: '', err: '' });
   };
 
   const monthMap = {

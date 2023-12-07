@@ -170,6 +170,7 @@ function RegisterPage() {
           <CustomDatePicker
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
+            setValidationErr = {setValidationErr}
           // maxDate={maxDate}
           />
 
