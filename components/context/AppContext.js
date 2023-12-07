@@ -11,11 +11,10 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "USER":
       return { ...state, user: action.payload };
-    case "UPDATE_USER":
+    case "UPDATE_USER_PROFILE_IMAGE":
       return { ...state, user: { ...state.user, profile_image: action.payload.profile_image } };
-    case "DECREMENT":
-      // Assuming you want to remove 'count' from the state
-      return { ...state };
+    case "UPDATE_USER":
+      return { ...state, user: { ...state.user, ...action.payload } };
     case "RESET":
       // Assuming you want to remove 'count' from the state
       return { ...state };

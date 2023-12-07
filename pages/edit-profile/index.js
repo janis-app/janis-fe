@@ -1,5 +1,5 @@
 import Header from '@/components/InformationGathering/Header'
-import React from 'react'
+import React, { useContext } from 'react'
 import styles from '@/styles/dashboard/dashboard.module.css'
 import Image from 'next/image'
 import { HiOutlineEnvelope } from "react-icons/hi2";
@@ -8,8 +8,11 @@ import { SlLock } from "react-icons/sl";
 import Link from 'next/link'
 import withAuthProtection from '@/components/hoc/withAuthProtection'
 import profile_svg from '@/public/assets/profile_svg.svg'
+import { AppContext } from '@/components/context/AppContext';
 
 function EditProfile() {
+    const {state, dispatch} = useContext(AppContext)
+    // console.log("state value for edit profile",state.user)
 
     return (
         <div className={styles.main_conatiner}>
@@ -35,7 +38,7 @@ function EditProfile() {
                         </div>
                         <div className="flex items-center gap-[20px]">
                             <p className="text-[#ADB3C2] text-[14px] font-normal text-right">
-                                Janis
+                            {state?.user?.username}
                             </p>
                             <RxCaretRight color="#C8C9CF" size={30} />
                         </div>
@@ -51,7 +54,7 @@ function EditProfile() {
                         </div>
                         <div className="flex items-center gap-[20px]">
                             <p className="text-[#ADB3C2] text-[14px] font-normal text-right">
-                                example@gmail.com
+                                {state?.user?.email}
                             </p>
                             <RxCaretRight color="#C8C9CF" size={30} />
                         </div>

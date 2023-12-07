@@ -55,12 +55,13 @@ function LoginPage() {
 
       return;
     }
-
-    setToken(responseData);
-    setLoading(false);
-    setEmail("");
-    setPassword("");
-    router.push("/");
+    if(responseData?.jwt){
+          setToken(responseData);
+          setLoading(false);
+          setEmail("");
+          setPassword("");
+          router.push("/");
+    }
 
   };
 
