@@ -5,6 +5,7 @@ import { createContext, useReducer } from "react";
 
 const initialState = {
   user: null,
+  dayPlan: null,
   // Add initial state for other parts of the state
 };
 

@@ -19,8 +19,11 @@ function Generate() {
         state?.user?.user?.information_gathering
     )
       .then((res) => {
-        console.log("res", res);
-        router.push("/day-plan")
+        router.push("/day-plan");
+        dispatch({
+          type: "SAVE_DAY_PLAN",
+          payload: res?.data?.choices[0]?.message?.content,
+        });
       })
       .catch((err) => {
         console.log("err", err);
