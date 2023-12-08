@@ -41,9 +41,13 @@ function Password() {
 
         await changeUserPassword(userDetails)
             .then((res) => {
-                console.log("request responce", res.error.message)
-                if (res) {
-                    setSuccMsg('Password changed successfully');
+
+                if (res?.user?.id) {
+                    // console.log("print inside the if-----+++");
+                    // setSuccMsg('Password changed successfully');
+
+                    setShowModal(true)
+
                     setUserDetails({
                         currentPassword: '',
                         password: '',
@@ -53,11 +57,13 @@ function Password() {
                     //     setSuccMsg('');
                     //   }, 2000);
                 }
-            })
-            .catch((err) => {
+
                 if (res?.error?.message) {
                     setErrMsg(`${res.error.message}`);
                 }
+            })
+            .catch((err) => {
+
             });
     };
 
@@ -79,13 +85,15 @@ function Password() {
                         <input 
                         type={showCurrentPassword ? "text" : "password"}
                             value={userDetails.currentPassword}
-                            onChange={(e) => setUserDetails({ ...userDetails, currentPassword: e.target.value })}
+                            onChange={(e) =>{
+                                setErrMsg("")
+                                setUserDetails({ ...userDetails, currentPassword: e.target.value })
+                            }}
                             className='ml-[12px] outline-none h-[24px] w-full'
                             placeholder='Enter Current Password'
                         />
                         {showCurrentPassword ? (
                             <Image
-                                className={styles.eyeIcon}
                                 src={eyeIconOpen}
                                 height={20}
                                 width={20}
@@ -94,7 +102,6 @@ function Password() {
                             />
                         ) : (
                             <Image
-                                className={styles.eyeIcon}
                                 src={eyeIconClose}
                                 height={20}
                                 width={20}
@@ -115,13 +122,14 @@ function Password() {
                         type={showNewPassword ? "text" : "password"}
                             value={userDetails.password}
                             // onChange={(e) => setPassword(e.target.value)}
-                            onChange={(e) => setUserDetails({ ...userDetails, password: e.target.value })}
+                            onChange={(e) => {
+                                setErrMsg("")
+                                setUserDetails({ ...userDetails, password: e.target.value })}}
                             className='ml-[12px] outline-none h-[24px] w-full'
                             placeholder='Create new password'
                         />
                         {showNewPassword ? (
                             <Image
-                                className={styles.eyeIcon}
                                 src={eyeIconOpen}
                                 height={20}
                                 width={20}
@@ -130,7 +138,6 @@ function Password() {
                             />
                         ) : (
                             <Image
-                                className={styles.eyeIcon}
                                 src={eyeIconClose}
                                 height={20}
                                 width={20}
@@ -150,14 +157,15 @@ function Password() {
                         <input
                         type={showConfirmPassword ? "text" : "password"}
                             value={userDetails.passwordConfirmation}
-                            onChange={(e) => setUserDetails({ ...userDetails, passwordConfirmation: e.target.value })}
+                            onChange={(e) => {
+                                setErrMsg("")
+                                setUserDetails({ ...userDetails, passwordConfirmation: e.target.value })}}
                             // onChange={(e) => setPasswordConfirmation(e.target.value)}
                             className='ml-[12px] outline-none h-[24px] w-full'
                             placeholder='Confirm new password'
                         />
                         {showConfirmPassword ? (
                             <Image
-                                className={styles.eyeIcon}
                                 src={eyeIconOpen}
                                 height={20}
                                 width={20}
@@ -166,7 +174,6 @@ function Password() {
                             />
                         ) : (
                             <Image
-                                className={styles.eyeIcon}
                                 src={eyeIconClose}
                                 height={20}
                                 width={20}
@@ -175,6 +182,9 @@ function Password() {
                             />
                         )}
                     </div>
+                    <p className='text-[red]'>{
+                        errMsg ? errMsg : ""
+                        }</p>
                     <div className="mx-auto text-center flex flex-col gap-[10px] text-[16px] font-[500] leading-24px]">
                         <div>
                             <span>{userDetails.password?.length > 7 ? "✅" : "❌"}</span> at
@@ -189,9 +199,7 @@ function Password() {
                             at least one symbol
                         </div>
                     </div>
-                    {
-                        errMsg && <p style={{ color: 'red' }} className="text-center text-[20px] mt-[20px]">{errMsg}</p>
-                    }
+    
                 </div>
                 {
                     showModal ? <UpdateProfileModal
