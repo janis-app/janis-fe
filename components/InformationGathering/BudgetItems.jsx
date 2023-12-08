@@ -33,7 +33,7 @@ function BudgetItems({value , setValue}) {
               min={0}
               max={100}
               step={1}
-              onChange={(e) => setValue(e.target.valueAsNumber)}
+              onChange={(e) => setValue(100 - e.target.valueAsNumber)}
             />
           </div>
           <div className="relative">

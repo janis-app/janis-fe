@@ -20,26 +20,30 @@ import track from "@/public/assets/track.png";
 import box from "@/public/assets/box.png";
 import arrow1 from "@/public/assets/arrow.png";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
-import { fetchFavouriteActivitiesApi, updateFavouriteActivitiesApi } from "@/lib/profile";
+import {
+  fetchFavouriteActivitiesApi,
+  updateFavouriteActivitiesApi,
+} from "@/lib/profile";
 import { AppContext } from "@/components/context/AppContext";
 
 function DayPlan() {
   const [isTextVisible, setIsTextVisible] = useState(false);
   const [updatedIndex, setUpdatedIndex] = useState(null);
   const [foodIndex, setFoodIndex] = useState(null);
-  const {state, dispatch} = useContext(AppContext)
+  const { state, dispatch } = useContext(AppContext);
 
+  const [favoriteActivities, setFavoriteActivities] = useState(null);
 
-  const [favoriteActivities, setFavoriteActivities] = useState(null)
+  const emojiRegex = /[\uD800-\uDBFF][\uDC00-\uDFFF]/;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const responcedata = await fetchFavouriteActivitiesApi()
-      // setFavoriteActivities(responcedata?.data[0])
-    }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const responcedata = await fetchFavouriteActivitiesApi();
+  //     // setFavoriteActivities(responcedata?.data[0])
+  //   };
 
-    fetchData()
-  }, [])
+  //   fetchData();
+  // }, []);
 
   console.log("favoriteActivities: ", favoriteActivities);
 
@@ -48,63 +52,38 @@ function DayPlan() {
     setUpdatedIndex(index);
   };
 
-
   const updateFavouriteActivites = async (id) => {
     const existingActivities = favoriteActivities?.attributes?.activities || [];
-    
+
     // Check if the id exists in the array
     const isIdExist = existingActivities.includes(id);
 
     // If the id exists, filter it out; otherwise, add it
     const updatedActivities = isIdExist
-        ? existingActivities.filter(activityId => activityId !== id)
-        : [...existingActivities, id];
+      ? existingActivities.filter((activityId) => activityId !== id)
+      : [...existingActivities, id];
 
     const data = {
-        activities: updatedActivities
+      activities: updatedActivities,
     };
 
-    const res = await updateFavouriteActivitiesApi(favoriteActivities?.id, data);
+    const res = await updateFavouriteActivitiesApi(
+      favoriteActivities?.id,
+      data
+    );
 
-    if(res?.data?.id) setFavoriteActivities(res?.data);
-
-};
+    if (res?.data?.id) setFavoriteActivities(res?.data);
+  };
 
   const colorHandler = (index) => {
     setFoodIndex(index);
   };
-  const data = [
-    {
-      id: 1,
-      title: "☕  Coffee Kickstart",
-      time: "08:00 AM",
-      disc: 'Start your day early with a cup of coffee at "Ristretto Coffee Shop", it has great reviews... and a comfortable ambience',
-    },
-    {
-      id: 2,
-      title: "🌋  Volcano Visit",
-      time: "09:00 AM",
-      disc: 'Drive down to "Caldera de Bandama", a volcanic crater located in the island could... hike up the trail for a panoramic view of the island while enjoying the tranquility of nature.',
-    },
-    {
-      id: 3,
-      title: "🌷  Garden Gaze",
-      time: "11:00 AM",
-      disc: 'Visit "Jardin Botanico Canario Viera Y Clavijo" - a beautiful botanical garden that houses a variety of endemic plants. Perfect for some photography.',
-    },
-    {
-      id: 4,
-      title: "🍽️  Lunch Locale",
-      time: "01:00 AM",
-      disc: 'Lunch at "Bochinche El Chato". Its a local restaurant known for its seafood dishes.',
-    },
-    {
-      id: 5,
-      title: "🧘‍♂️  Reservoir Relax",
-      time: "02:00 AM",
-      disc: 'Drive towards "Presa de las Niñas", a beautiful reservoir surrounded by pine trees. You could... spend some time there taking in the scenery and snap some great photos.',
-    },
-  ];
+
+  const dayPlan = state?.dayPlan?.dayPlan;
+  let parsedDayPlan = dayPlan && JSON.parse(dayPlan);
+
+  // console.log("parsedDayPlan", parsedDayPlan);
+  const data = parsedDayPlan?.activities;
 
   const menu = [
     {
@@ -139,7 +118,9 @@ function DayPlan() {
       <div className={styles.conatiner}>
         <div className="flex justify-between">
           <div>
-            <h2 style={{ fontWeight: 600 }}>Janis’ Day Plan</h2>
+            <h2 style={{ fontWeight: 600 }}>
+              {state?.user?.user?.username}’s Day Plan
+            </h2>
             <p className={styles.location}>
               <Image
                 src={location}
@@ -147,7 +128,8 @@ function DayPlan() {
                 height={20}
                 alt="location icon"
               />
-              Las Palmas, Gran Canaria, Spain
+              {state?.user?.user?.information_gathering?.attributes?.location ||
+                state?.user?.user?.information_gathering?.location}
             </p>
           </div>
           {/* <div className={styles.mdi_like}>
@@ -187,102 +169,131 @@ function DayPlan() {
           </div>
           <div className={styles.time_card}>
             <p style={{ color: "#7B8487", fontSize: 10 }}>Budget</p>
-            <p style={{ fontWeight: 600 }}>20€</p>
+            <p style={{ fontWeight: 600 }}>
+              {state?.user?.user?.information_gathering?.attributes?.budget ||
+                state?.user?.user?.information_gathering?.budget}
+              €
+            </p>
           </div>
           <div className={styles.time_card}>
             <p style={{ color: "#7B8487", fontSize: 10 }}>Transport</p>
-            <p style={{ fontWeight: 600 }}>🚗</p>
+            <p style={{ fontWeight: 600 }}>
+              {state?.user?.user?.information_gathering?.attributes?.preferred_vehicle?.match(
+                emojiRegex
+              ) ||
+                state?.user?.user?.information_gathering?.preferred_vehicle?.match(
+                  emojiRegex
+                )}
+            </p>
           </div>
         </div>
 
         <hr style={{ margin: "16px 0px", color: "#DDE3EA" }} />
 
-        <p style={{ fontSize: 14, fontWeight: 400, color: '#B0B6BF' }}>
-          Embark on a day of volcanic vistas, serene reservoir retreats, and sunsets
-          on sandy shores in Las Palmas.Your camera and soul will thank you!
+        <p style={{ fontSize: 14, fontWeight: 400, color: "#B0B6BF" }}>
+          Embark on a day of volcanic vistas, serene reservoir retreats, and
+          sunsets on sandy shores in Las Palmas.Your camera and soul will thank
+          you!
         </p>
-
       </div>
       <div className={styles.sub_container}>
-        {
-          menu.map((items, index) => {
-            return (
-              <>
-                <div
-                  // onClick={() => colorHandler(index)}
-                  className={styles.card}
-                  key={index}
-                  style={{ backgroundColor: foodIndex == index ? "#22B1D1" : "#fff" }}>
-                  <div className='flex items-center' >
-                    <div
-                      // style={{ backgroundColor: foodIndex == index ? "#fff" : "#E3F4FA" }}
-                      className={styles.img_div}>
-                      <Image
-                        src={items.img}
-                        width={23}
-                        height={23}
-                        alt="degree icon"
-                      />
-                    </div>
-                    <div style={{ marginLeft: 12 }}>
-                      <p style={{ fontWize: 500 }}>{items.title}</p>
-                      <p style={{ fontWize: 400, fontSize: 12 }}>{items.subTitle}</p>
-                    </div>
+        {menu.map((items, index) => {
+          return (
+            <>
+              <div
+                // onClick={() => colorHandler(index)}
+                className={styles.card}
+                key={index}
+                style={{
+                  backgroundColor: foodIndex == index ? "#22B1D1" : "#fff",
+                }}
+              >
+                <div className="flex items-center">
+                  <div
+                    // style={{ backgroundColor: foodIndex == index ? "#fff" : "#E3F4FA" }}
+                    className={styles.img_div}
+                  >
+                    <Image
+                      src={items.img}
+                      width={23}
+                      height={23}
+                      alt="degree icon"
+                    />
                   </div>
-                  <Image
-                    style={{ color: '#ABB0AF' }}
-                    src={foodIndex == index ? arrow : darkArrow}
-                    width={24}
-                    height={24}
-                    alt="rights arrow"
-                  />
+                  <div style={{ marginLeft: 12 }}>
+                    <p style={{ fontWize: 500 }}>{items.title}</p>
+                    <p style={{ fontWize: 400, fontSize: 12 }}>
+                      {items.subTitle}
+                    </p>
+                  </div>
                 </div>
-              </>
-            )
-          })
-        }
+                <Image
+                  style={{ color: "#ABB0AF" }}
+                  src={foodIndex == index ? arrow : darkArrow}
+                  width={24}
+                  height={24}
+                  alt="rights arrow"
+                />
+              </div>
+            </>
+          );
+        })}
       </div>
 
-      <div className="sidebar px-[20px] mt-[20px] flex items-center">
+      <div className="sidebar px-[20px] mt-[20px] flex items-start">
         <div className={`mr-[15px] ${styles.sidebar}`}>
           <div className={styles.sidebar_line} style={{ height: 32 }}></div>
           <div className={styles.sidebar_circle}></div>
-          <div className={styles.sidebar_line} style={{ height: 85 }}></div>
-          <div className={styles.sidebar_circle}></div>
-          <div className={styles.sidebar_line} style={{ height: 85 }}></div>
-          <div className={styles.sidebar_circle}></div>
-          <div className={styles.sidebar_line} style={{ height: 85 }}></div>
-          <div className={styles.sidebar_circle}></div>
-          <div className={styles.sidebar_line} style={{ height: 85 }}></div>
+          {data?.map((item) => (
+            <>
+              <div className={styles.sidebar_line} style={{ height: 85 }}></div>
+              <div className={styles.sidebar_circle}></div>
+            </>
+          ))}
+             <div className={styles.sidebar_line} style={{ height: 85 }}></div>
+              {/* <div className={styles.sidebar_circle}></div> */}
           <div className={styles.sidebar_circle}></div>
           <div className={styles.sidebar_line} style={{ height: 32 }}></div>
         </div>
         <div className="mr-[4px]">
-          {data.map((items, index) => {
-
-            const isActivityExist = favoriteActivities && favoriteActivities?.attributes?.activities?.find(act => act == items.id);
+          {data?.map((items, index) => {
+            const isActivityExist =
+              favoriteActivities &&
+              favoriteActivities?.attributes?.activities?.find(
+                (act) => act == items.id
+              );
             console.log("isActivityExist: ", isActivityExist);
 
             return (
               <div
                 // onClick={() => accordionHandler(index)}
                 key={index}
-                className={`${index == updatedIndex ? "bg-[#DAF5FE]" : "bg-transparent"} w-auto p-[15px] mt-[12px] rounded-[10px] border-2 border-[#DAF5FE]`}
+                className={`${
+                  index == updatedIndex ? "bg-[#DAF5FE]" : "bg-transparent"
+                } w-auto p-[15px] mt-[12px] rounded-[10px] border-2 border-[#DAF5FE]`}
               >
-                <div className="flex justify-between items-center relative mb-2">
-                  <p style={{ fontWize: 500, fontSize: 15 }}>{items.title}</p>
+                <div className="flex justify-between items-start relative mb-2">
+                  <p style={{ fontWize: 500, fontSize: 15 }} className="w-[70%]">{items.title}</p>
                   <p style={{ fontSize: 13 }}>{items.time}</p>
 
-                  <div onClick={()=> updateFavouriteActivites(items.id)} className={`${styles.mdi_like} ${isActivityExist ? 'bg-[#DAF5FE]' : 'bg-[#FFF]'} `}>
-                    <Image src={mdi_like} width={20} height={20} alt="location icon" />
+                  <div
+                    onClick={() => updateFavouriteActivites(items.id)}
+                    className={`${styles.mdi_like} ${
+                      isActivityExist ? "bg-[#DAF5FE]" : "bg-[#FFF]"
+                    } `}
+                  >
+                    <Image
+                      src={mdi_like}
+                      width={20}
+                      height={20}
+                      alt="location icon"
+                    />
                   </div>
                 </div>
 
                 {/* {isTextVisible && updatedIndex == index ? ( */}
                 <>
-                  <p style={{ fontSize: 12, color: "#7A7676" }}>
-                    {items.disc}
-                  </p>
+                  <p style={{ fontSize: 12, color: "#7A7676" }}>{items.disc}</p>
                   <div className="flex items-center">
                     <Image
                       className={styles.sub_img}
@@ -317,4 +328,3 @@ function DayPlan() {
 }
 
 export default withAuthProtection(DayPlan);
-
