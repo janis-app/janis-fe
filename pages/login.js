@@ -18,7 +18,6 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const {user_profile, saveUserProfile} = userStore()
 
   const router = useRouter();
 
