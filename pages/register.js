@@ -9,6 +9,9 @@ import CustomDatePicker from "@/components/Common/DatePicker";
 import { fetcher } from "@/lib/api";
 import { changeProfileImage } from "@/lib/profile";
 import { setToken } from "@/lib/auth";
+import eyeIconClose from "@/public/assets/eye-close-white.svg";
+import eyeIconOpen from "@/public/assets/eye-open-white.svg";
+import Image from "next/image";
 
 function RegisterPage() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -28,6 +31,8 @@ function RegisterPage() {
   const [err, setErr] = useState(false)
 
   const [loading, setLoading] = useState(false)
+  
+  const [showPassword,setShowPassword] = useState(false)
 
   console.log("Form Values: ", formValues);
   console.log("selectedDate: ", selectedDate);
@@ -153,9 +158,10 @@ function RegisterPage() {
             className="w-full h-[27px] bg-transparent text-center text-[#FFFFFF80] placeholder:text-[#FFFFFF80] text-[20px] outline-none"
             placeholder="e.g Janis Scheuermann"
             value={formValues.name}
-            onChange={(e) =>{
+            onChange={(e) => {
               setValidationErr({ type: '', err: '' })
-              setFormValues({ ...formValues, name: e.target.value })}
+              setFormValues({ ...formValues, name: e.target.value })
+            }
             }
           />
 
@@ -170,7 +176,7 @@ function RegisterPage() {
           <CustomDatePicker
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
-            setValidationErr = {setValidationErr}
+            setValidationErr={setValidationErr}
           // maxDate={maxDate}
           />
 
@@ -220,43 +226,43 @@ function RegisterPage() {
         </>
       )} */}
 
-{step === 3 && (
-  <>
-
-    <RegisterStepText text={`Upload a`} subText="profile picture" />
-    <label className="w-[102px] h-[102px] border border-white flex flex-col justify-center items-center gap-[12px] mb-[30px] mx-auto rounded-full">
-      {selectedImage ? (
-        <img
-          src={URL.createObjectURL(selectedImage)}
-          alt="Selected"
-          className="w-full h-full object-cover rounded-full"
-        />
-      ) : (
+      {step === 3 && (
         <>
-          <span>
-            <FaRegImage color="white" />
-          </span>
-          <label htmlFor="file" className="text-[14px] font-normal leading-[20.16px] text-center text-white">
-            Select file
+
+          <RegisterStepText text={`Upload a`} subText="profile picture" />
+          <label className="w-[102px] h-[102px] border border-white flex flex-col justify-center items-center gap-[12px] mb-[30px] mx-auto rounded-full">
+            {selectedImage ? (
+              <img
+                src={URL.createObjectURL(selectedImage)}
+                alt="Selected"
+                className="w-full h-full object-cover rounded-full"
+              />
+            ) : (
+              <>
+                <span>
+                  <FaRegImage color="white" />
+                </span>
+                <label htmlFor="file" className="text-[14px] font-normal leading-[20.16px] text-center text-white">
+                  Select file
+                </label>
+                <input
+                  type="file"
+                  className="hidden"
+                  id='file'
+                  name='files'
+                  accept="image/*"
+                  onChange={(e) => {
+                    handleImageChange(e);
+                    setValidationErr({ type: '', err: '' });
+                    setSelectedImage(e.target.files[0]);
+                  }}
+                />
+              </>
+            )}
           </label>
-          <input
-            type="file"
-            className="hidden"
-            id='file'
-            name='files'
-            accept="image/*"
-            onChange={(e) => {
-              handleImageChange(e);
-              setValidationErr({ type: '', err: '' });
-              setSelectedImage(e.target.files[0]);
-            }}
-          />
-        </>
-      )}
-    </label>
 
 
-    <p className="text-white text-center mb-[39px]">Or</p>
+          <p className="text-white text-center mb-[39px]">Or</p>
           <label className="text-white flex justify-center items-center gap-[16px] w-full h-[72px] bg-[#9FDBED] rounded-t-[24px] rounded-b-[20px] text-[16px] font-[500] leading-[24px]">
             <AiFillCamera size={24} />
             Open camera & take photo
@@ -267,9 +273,11 @@ function RegisterPage() {
               accept="image/*"
               capture="camera"
               className="hidden"
-              onChange={(e) => {handleImageChange(e),
+              onChange={(e) => {
+                handleImageChange(e),
                 setValidationErr({ type: '', err: '' }),
-                setSelectedImage(e.target.files[0])}}
+                setSelectedImage(e.target.files[0])
+              }}
 
             />
           </label>
@@ -278,9 +286,9 @@ function RegisterPage() {
 
 
 
-    
-  </>
-)}
+
+        </>
+      )}
       {step === 4 && (
         <>
           <RegisterStepText text="What is your email?" />
@@ -315,15 +323,34 @@ function RegisterPage() {
       {step === 5 && (
         <>
           <RegisterStepText text="Setup a password" />{" "}
-          <input
-            type="password"
-            className="w-full h-[27px] bg-transparent text-center text-[#FFFFFF80] placeholder:text-[#FFFFFF80] text-[20px] outline-none mb-[43px]"
-            placeholder="********"
-            value={formValues?.password}
-            onChange={(e) =>
-              setFormValues({ ...formValues, password: e.target.value })
-            }
-          />
+          <div className="w-full flex items-center pr-[20px] mb-[43px]">
+            <input
+              type={showPassword ? "text" : "password"}
+              className="w-full h-[27px] bg-transparent text-center text-[#FFFFFF80] placeholder:text-[#FFFFFF80] text-[20px] outline-none "
+              placeholder="********"
+              value={formValues?.password}
+              onChange={(e) =>
+                setFormValues({ ...formValues, password: e.target.value })
+              }
+            />
+            {showPassword ? (
+              <Image
+                src={eyeIconOpen}
+                height={24}
+                width={24}
+                alt="Eye Icon"
+                onClick={() => setShowPassword(false)}
+              />
+            ) : (
+              <Image
+                src={eyeIconClose}
+                height={24}
+                width={24}
+                alt="Eye Icon"
+                onClick={() => setShowPassword(true)}
+              />
+            )}
+          </div>
           <div className="mx-auto text-center flex flex-col gap-[10px] text-white text-[16px] font-[500] leading-24px]">
             <div>
               <span>{formValues?.password?.length > 7 ? "✅" : "❌"}</span> at
