@@ -7,39 +7,52 @@ import { FiCheck } from "react-icons/fi";
 import Link from "next/link";
 import NextButton from "@/components/Common/NextButton";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
-import { useState } from "react";
-import userStore from "@/store/userSlice";
+import { useContext, useEffect, useState } from "react";
+
 import { useRouter } from "next/router";
 import { getTokenFromLocalCookie } from "@/lib/auth";
 import axios from "axios";
+import { AppContext } from "@/components/context/AppContext";
 
 function Location() {
   const router = useRouter();
-  const { user_profile } = userStore();
+  const { state, dispatch } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const [location, setLoacation] = useState("");
+
+  const informations = state?.user?.user?.information_gathering?.attributes || state?.user?.user?.information_gathering;
+  useEffect(()=>{
+setLoacation(informations?.location)
+  }, [state])
 
   const handleBtnClick = async () => {
     setLoading(true);
     const token = getTokenFromLocalCookie();
-    await axios
-      .put(
-        process.env.NEXT_PUBLIC_STRAPI_URL +
-          `/information-gatherings/${user_profile?.information_gathering?.id}`,
-        {
-          data: {
-            location,
-          },
+    await axios({
+      url: state?.user?.user?.information_gathering?.id
+        ? process.env.NEXT_PUBLIC_STRAPI_URL +
+          `/information-gatherings/${state?.user?.user?.information_gathering?.id}`
+        : process.env.NEXT_PUBLIC_STRAPI_URL + `/information-gatherings`,
+      method: state?.user?.user?.information_gathering ? "put" : "post",
+      data: {
+        data: {
+          location,
+          users_permissions_user: state?.user?.user,
         },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
-      .then(() => {
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
         setLoading(false);
         router.push("/start-adventure/mood");
+        if (res) {
+          dispatch({
+            type: "UPDATE_USER_INFOMATION_GATHERING",
+            payload: res?.data?.data,
+          });
+        }
       })
       .catch(() => {
         setLoading(false);

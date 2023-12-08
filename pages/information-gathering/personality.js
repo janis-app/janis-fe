@@ -1,41 +1,69 @@
 import NextButton from "@/components/Common/NextButton";
 import Header from "@/components/InformationGathering/Header";
 import HeaderText from "@/components/InformationGathering/HeaderText";
+import { AppContext } from "@/components/context/AppContext";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
 import { getTokenFromLocalCookie } from "@/lib/auth";
-import userStore from "@/store/userSlice";
+import { fetchUserProfile } from "@/lib/profile";
+
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 function Personality() {
   const router = useRouter();
-  const [value, setValue] = useState(50);
-  const { user_profile } = userStore();
+  const [value, setValue] = useState();
+  const { state, dispatch } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
+
+  const personalityValue =
+    state?.user?.user?.information_gathering?.personality;
+  useEffect(() => {
+    setValue(parseInt(personalityValue));
+  }, [state]);
 
   const handleBtnClick = async () => {
     setLoading(true);
     const token = getTokenFromLocalCookie();
-    await axios
-      .put(
-        process.env.NEXT_PUBLIC_STRAPI_URL +
-          `/information-gatherings/${user_profile?.information_gathering?.id}`,
-        {
-          data: {
-            personality: "Edited Now",
-          },
+    await axios({
+      url: state?.user?.user?.information_gathering
+        ? process.env.NEXT_PUBLIC_STRAPI_URL +
+          `/information-gatherings/${state?.user?.user?.information_gathering?.id}`
+        : process.env.NEXT_PUBLIC_STRAPI_URL + `/information-gatherings`,
+      method: state?.user?.user?.information_gathering ? "put" : "post",
+      data: {
+        data: {
+          personality: value.toString(),
+          users_permissions_user: state?.user?.user
         },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
-      .then(() => {
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      // .put(
+      //   process.env.NEXT_PUBLIC_STRAPI_URL +
+      //     `/information-gatherings/${state?.user?.user?.information_gathering?.id}`,
+      //   {
+      //     data: {
+      //       personality: value,
+      //     },
+      //   },
+      //   {
+      //     headers: {
+      //       Authorization: "Bearer " + token,
+      //     },
+      //   }
+      // )
+      .then((res) => {
+        console.log("res", res);
         setLoading(false);
-        router.push("/information-gathering/interests")
+        dispatch({
+          type: "UPDATE_USER_INFOMATION_GATHERING",
+          payload: res?.data?.data,
+        });
+        router.push("/information-gathering/interests");
       })
       .catch(() => {
         setLoading(false);
@@ -63,7 +91,11 @@ function Personality() {
         <input
           type="range"
           className="w-full "
-        // value={value}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          min={0}
+          max={100}
+          step={50}
         />
         <div>
           <div className="w-[46px] h-[46px] rounded-full flex justify-center items-center bg-[#DAF5FE] ">

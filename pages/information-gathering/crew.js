@@ -6,44 +6,57 @@ import Header from "@/components/InformationGathering/Header";
 import HeaderText from "@/components/InformationGathering/HeaderText";
 import InterestItems from "@/components/InformationGathering/InterestItems";
 import VehicleItems from "@/components/InformationGathering/VehicleItems";
+import { AppContext } from "@/components/context/AppContext";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
 import { getTokenFromLocalCookie } from "@/lib/auth";
 import Spinner from "@/lib/spinner";
-import userStore from "@/store/userSlice";
+
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FiCheck } from "react-icons/fi";
 
 function Crew() {
   const router = useRouter();
   const [value, setValue] = useState("");
 
-  const { user_profile } = userStore();
+  const { state, dispatch } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
+
+  const informations = state?.user?.user?.information_gathering?.attributes || state?.user?.user?.information_gathering;
+  useEffect(() => {
+    setValue(informations?.crew || "");
+  }, [state]);
 
   const handleBtnClick = async () => {
     setLoading(true);
     const token = getTokenFromLocalCookie();
-    await axios
-      .put(
-        process.env.NEXT_PUBLIC_STRAPI_URL +
-          `/information-gatherings/${user_profile?.information_gathering?.id}`,
-        {
-          data: {
-            personality: "Edited Now",
-          },
+    await axios({
+      url: state?.user?.user?.information_gathering?.id
+        ? process.env.NEXT_PUBLIC_STRAPI_URL +
+          `/information-gatherings/${state?.user?.user?.information_gathering?.id}`
+        : process.env.NEXT_PUBLIC_STRAPI_URL + `/information-gatherings`,
+      method: state?.user?.user?.information_gathering ? "put" : "post",
+      data: {
+        data: {
+          crew: value,
+          users_permissions_user: state?.user?.user,
         },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
-      .then(() => {
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
         setLoading(false);
         router.push("/start-adventure/location");
+        if (res) {
+          dispatch({
+            type: "UPDATE_USER_INFOMATION_GATHERING",
+            payload: res?.data?.data,
+          });
+        }
       })
       .catch(() => {
         setLoading(false);
@@ -52,7 +65,7 @@ function Crew() {
 
   return (
     <div className="px-[24px]">
-      <Header progess={100} link="information-gathering/budget" show={true}/>
+      <Header progess={100} link="information-gathering/budget" show={true} />
       <HeaderText
         title="Who's Your Adventure Crew?"
         text="Crafted Exclusively for Your Travel Crew!"

@@ -6,7 +6,7 @@ function InterestItems({ selectedBtn, setSelectedBtn }) {
   // const [selectedBtn, setSelectedBtn] = useState([]);
   const clickHandler = (title) => {
     // Check if the item is already in the selected items array
-    const index = selectedBtn.indexOf(title);
+    const index = selectedBtn?.indexOf(title);
 
     if (index === -1) {
       // If not in the array, add it
@@ -14,7 +14,7 @@ function InterestItems({ selectedBtn, setSelectedBtn }) {
     } else {
       // If already in the array, remove it
       const updatedSelection = [...selectedBtn];
-      updatedSelection.splice(index, 1);
+      updatedSelection?.splice(index, 1);
       setSelectedBtn(updatedSelection);
     }
   };

@@ -14,24 +14,11 @@ import { AppContext } from "@/components/context/AppContext";
 import { useContext, useEffect } from "react";
 import { getTokenFromLocalCookie } from "@/lib/auth";
 import { getUserProfileDetails } from "@/utils/getUserProfileDetails";
-import userStore from "@/store/userSlice";
+
 
 function Home() {
-  const { state, dispatch } = useContext(AppContext);
+  const { state } = useContext(AppContext);
   const router = useRouter();
-  const { saveUserProfile } = userStore();
-
-  const token = getTokenFromLocalCookie();
-
-  useEffect(() => {
-    getUserProfileDetails().then((res) => {
-      if (res) {
-        saveUserProfile(res?.data);
-      }
-    }).catch((err)=>{
-      console.log('err', err);
-    })
-  }, []);
 
   return (
     <div className={styles.main_container}>
