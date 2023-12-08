@@ -2,42 +2,58 @@ import NextButton from "@/components/Common/NextButton";
 import Header from "@/components/InformationGathering/Header";
 import HeaderText from "@/components/InformationGathering/HeaderText";
 import InterestItems from "@/components/InformationGathering/InterestItems";
+import { AppContext } from "@/components/context/AppContext";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
 import { getTokenFromLocalCookie } from "@/lib/auth";
-import userStore from "@/store/userSlice";
+
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 function Interest() {
   const router = useRouter();
   const [selectedBtn, setSelectedBtn] = useState([]);
-
-  const { user_profile } = userStore();
+  const { state, dispatch } = useContext(AppContext);
+console.log('state', state);
   const [loading, setLoading] = useState(false);
 
+  let interestValue =
+    state?.user?.user?.information_gathering?.attributes?.Interests || state?.user?.user?.information_gathering?.Interests;
+    interestValue = interestValue?.split(",")
+    console.log('interestValue', interestValue);
+  useEffect(() => {
+    setSelectedBtn(interestValue || []);
+  }, [state]);
+
+
   const handleBtnClick = async () => {
+    console.log('ds', state?.user?.user?.information_gathering);
     setLoading(true);
     const token = getTokenFromLocalCookie();
-    await axios
-      .put(
-        process.env.NEXT_PUBLIC_STRAPI_URL +
-          `/information-gatherings/${user_profile?.information_gathering?.id}`,
-        {
-          data: {
-            Interests: selectedBtn.toString(),
-          },
+    await axios({
+      url: state?.user?.user?.information_gathering?.id
+        ? process.env.NEXT_PUBLIC_STRAPI_URL +
+          `/information-gatherings/${state?.user?.user?.information_gathering?.id}`
+        : process.env.NEXT_PUBLIC_STRAPI_URL + `/information-gatherings`,
+      method: state?.user?.user?.information_gathering ? "put" : "post",
+      data: {
+        data: {
+          Interests: selectedBtn.toString(),
+          users_permissions_user: state?.user?.user
         },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
-      .then(() => {
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
         setLoading(false);
         router.push("/information-gathering/vehicles");
+        dispatch({
+          type: "UPDATE_USER_INFOMATION_GATHERING",
+          payload: res?.data?.data,
+        });
       })
       .catch(() => {
         setLoading(false);
@@ -46,7 +62,11 @@ function Interest() {
 
   return (
     <div className="relative px-[24px]">
-      <Header link="information-gathering/personality" show={true} progess={32} />
+      <Header
+        link="information-gathering/personality"
+        show={true}
+        progess={32}
+      />
       <HeaderText
         title="What are you keen about?"
         text="Pick your play! What activities make you jump out of bed? 🏄‍♀️🧘‍♂️

@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { fetcher } from "@/lib/api";
 import { setToken } from "@/lib/auth";
-import userStore from "@/store/userSlice";
+
 
 function LoginPage() {
   const [email, setEmail] = useState("");
