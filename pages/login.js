@@ -12,12 +12,16 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { fetcher } from "@/lib/api";
 import { setToken } from "@/lib/auth";
+import eyeIconClose from "@/public/assets/eye-close.svg";
+import eyeIconOpen from "@/public/assets/eye-open.svg";
+
 
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword,setShowPassword] = useState(false)
 
   const router = useRouter();
 
@@ -107,7 +111,7 @@ function LoginPage() {
                 }`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 autoComplete="new-password"
                 required
                 placeholder="Password"
@@ -122,6 +126,23 @@ function LoginPage() {
               >
                 Password
               </label>
+              {showPassword ? (
+                            <Image
+                                src={eyeIconOpen}
+                                height={20}
+                                width={20}
+                                alt="Eye Icon"
+                                onClick={() => setShowPassword(false)}
+                            />
+                        ) : (
+                            <Image
+                                src={eyeIconClose}
+                                height={20}
+                                width={20}
+                                alt="Eye Icon"
+                                onClick={() => setShowPassword(true)}
+                            />
+                        )}
             </div>
             <button
               className="w-full outline-none bg-[#9FDBED] text-white h-[60px] rounded-[50px] text-[16px] font-semibold tracking-[2%] leading-[24px]"
