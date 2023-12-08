@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import coin from "@/public/assets/coin.svg"
 import Image from "next/image";
 
-function BudgetItems() {
-  const [value, setValue] = useState(50);
+function BudgetItems({value , setValue}) {
   return (
     <>
       <div className="mt-[35px] flex flex-col justify-center items-center relative">

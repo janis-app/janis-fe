@@ -4,13 +4,14 @@ import Header from "@/components/InformationGathering/Header";
 import HeaderText from "@/components/InformationGathering/HeaderText";
 import InterestItems from "@/components/InformationGathering/InterestItems";
 import VehicleItems from "@/components/InformationGathering/VehicleItems";
+import { AppContext } from "@/components/context/AppContext";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
 import { getTokenFromLocalCookie } from "@/lib/auth";
-import userStore from "@/store/userSlice";
+
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 function Diet() {
   const router = useRouter();
@@ -19,34 +20,49 @@ function Diet() {
   const [lactose, setLactose] = useState(false);
   const [gluten, setGluten] = useState(false);
   const [fructose, setFructose] = useState(false);
-  const { user_profile } = userStore();
+  const { state, dispatch } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
+
+  const informations = state?.user?.user?.information_gathering?.attributes || state?.user?.user?.information_gathering
+
+  useEffect(() => {
+    setDietType(informations?.diet_type || "");
+    setCuisineType(informations?.cuisine_type || "");
+    setLactose(informations?.lactose_intolerance || false);
+    setGluten(informations?.gluten_intolerance || false);
+    setFructose(informations?.fructose_intolerance || false);
+  }, [state]);
 
   const handleBtnClick = async () => {
     setLoading(true);
     const token = getTokenFromLocalCookie();
-    await axios
-      .put(
-        process.env.NEXT_PUBLIC_STRAPI_URL +
-          `/information-gatherings/${user_profile?.information_gathering?.id}`,
-        {
-          data: {
-            diet_type: dietType,
-            cuisine_type: cuisineType,
-            lactose_intolerance: lactose,
-            gluten_intolerance: gluten,
-            fructose_intolerance: fructose,
-          },
+    await axios({
+      url: state?.user?.user?.information_gathering?.id
+        ? process.env.NEXT_PUBLIC_STRAPI_URL +
+          `/information-gatherings/${state?.user?.user?.information_gathering?.id}`
+        : process.env.NEXT_PUBLIC_STRAPI_URL + `/information-gatherings`,
+      method: state?.user?.user?.information_gathering ? "put" : "post",
+      data: {
+        data: {
+          diet_type: dietType,
+          cuisine_type: cuisineType,
+          lactose_intolerance: lactose,
+          gluten_intolerance: gluten,
+          fructose_intolerance: fructose,
+          users_permissions_user: state?.user?.user,
         },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
-      .then(() => {
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
         setLoading(false);
         router.push("/information-gathering/budget");
+        dispatch({
+          type: "UPDATE_USER_INFOMATION_GATHERING",
+          payload: res?.data?.data,
+        });
       })
       .catch(() => {
         setLoading(false);

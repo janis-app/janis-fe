@@ -6,40 +6,55 @@ import { BiSolidMap } from "react-icons/bi";
 import { FiCheck } from "react-icons/fi";
 import Link from "next/link";
 import NextButton from "@/components/Common/NextButton";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
 import axios from "axios";
 import { getTokenFromLocalCookie } from "@/lib/auth";
-import userStore from "@/store/userSlice";
+
 import { useRouter } from "next/router";
+import { AppContext } from "@/components/context/AppContext";
 
 function Mood() {
-  const [radioValue, setRadioValue] = useState(false);
-  const { user_profile } = userStore();
+  const [radioValue, setRadioValue] = useState("");
+  const { state, dispatch } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  const informations =
+    state?.user?.user?.information_gathering?.attributes ||
+    state?.user?.user?.information_gathering;
+  useEffect(() => {
+    setRadioValue(informations?.mood);
+  }, [state]);
 
   const handleBtnClick = async () => {
     setLoading(true);
     const token = getTokenFromLocalCookie();
-    await axios
-      .put(
-        process.env.NEXT_PUBLIC_STRAPI_URL +
-          `/information-gatherings/${user_profile?.information_gathering?.id}`,
-        {
-          data: {
-            mood: radioValue,
-          },
+    await axios({
+      url: state?.user?.user?.information_gathering?.id
+        ? process.env.NEXT_PUBLIC_STRAPI_URL +
+          `/information-gatherings/${state?.user?.user?.information_gathering?.id}`
+        : process.env.NEXT_PUBLIC_STRAPI_URL + `/information-gatherings`,
+      method: state?.user?.user?.information_gathering ? "put" : "post",
+      data: {
+        data: {
+          mood: radioValue,
+          users_permissions_user: state?.user?.user,
         },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
-      .then(() => {
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
         setLoading(false);
         router.push("/generate");
+        if (res) {
+          dispatch({
+            type: "UPDATE_USER_INFOMATION_GATHERING",
+            payload: res?.data?.data,
+          });
+        }
       })
       .catch(() => {
         setLoading(false);
