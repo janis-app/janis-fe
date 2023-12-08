@@ -14,6 +14,7 @@ import withAuthProtection from "@/components/hoc/withAuthProtection";
 import { useContext } from "react";
 import { AppContext } from "@/components/context/AppContext";
 import { LiaUserEditSolid } from "react-icons/lia";
+import { FaUserEdit } from "react-icons/fa";
 import Link from "next/link";
 
 function Settings() {
