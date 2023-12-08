@@ -8,26 +8,41 @@ import generate from "@/public/assets/generateBg.png";
 import { useContext } from "react";
 import { AppContext } from "@/components/context/AppContext";
 import { generateDayPlan } from "@/utils/generateDayPlan";
+import axios from "axios";
+import { getTokenFromLocalCookie } from "@/lib/auth";
 
 function Generate() {
   const router = useRouter();
   const { state, dispatch } = useContext(AppContext);
 
   const handleGenerateButton = async () => {
-    await generateDayPlan(
+    const token = getTokenFromLocalCookie();
+    const res =await generateDayPlan(
       state?.user?.user?.information_gathering?.attributes ||
         state?.user?.user?.information_gathering
-    )
-      .then((res) => {
-        router.push("/day-plan");
-        dispatch({
-          type: "SAVE_DAY_PLAN",
-          payload: res?.data?.choices[0]?.message?.content,
-        });
-      })
-      .catch((err) => {
-        console.log("err", err);
+    );
+    await axios({
+      url: state?.user?.user?.user_day_plan
+        ? process.env.NEXT_PUBLIC_STRAPI_URL +
+          `/user-day-plans/${state?.user?.user?.user_day_plan?.id}`
+        : process.env.NEXT_PUBLIC_STRAPI_URL + `/user-day-plans/`,
+      method: state?.user?.user?.user_day_plan ? "put" : "post",
+      data: {
+        data: {
+          dayplan: res?.data?.choices[0]?.message?.content,
+          users_permissions_user: state?.user?.user,
+        },
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }).then((res2) => {
+      router.push("/day-plan");
+      dispatch({
+        type: "SAVE_DAY_PLAN",
+        payload: res?.data?.choices[0]?.message?.content,
       });
+    });
   };
 
   return (
