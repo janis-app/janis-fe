@@ -100,7 +100,7 @@ function Profile() {
                     <div>
                         <p className={styles.profile_no}>5</p>
                         <Image
-                            src={state?.user?.profile_image ? state?.user?.profile_image?.url  : profileIcon}
+                            src={state?.user?.user?.profile_image ? state?.user?.user?.profile_image?.url  : profileIcon}
                             // src={`https://res.cloudinary.com/dmbidfbiq/image/upload/v1699454859/service1_Image_b11ab5a96c.png`}
                             width={108}
                             height={108}
@@ -109,7 +109,7 @@ function Profile() {
                             style={{ border: "2px solid #fff" }}
                         />
                     </div>
-                    <h2  className='text-[22px] z-[10]' style={{ fontWeight: 700, marginTop: 17 }}>{state.user?.username}</h2>
+                    <h2  className='text-[22px] z-[10]' style={{ fontWeight: 700, marginTop: 17 }}>{state.user?.user?.username}</h2>
                     <p
                         style={{ fontSize: 14 }}
                         className='flex items-center z-[10]'>
