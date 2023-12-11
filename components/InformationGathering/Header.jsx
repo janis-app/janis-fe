@@ -36,10 +36,10 @@ function Header({ progess, link, show, title, profile }) {
       <div>
         {
           profile ?
-          state?.user?.profile_image ?
+          state?.user?.user?.profile_image ?
           <Image
           // src={profile}
-          src={state?.user?.profile_image ? state?.user?.profile_image?.url  : profileIcon}
+          src={state?.user?.user?.profile_image ? state?.user?.user?.profile_image?.url  : profileIcon}
           width={32}
           height={32}
           alt="Profile image"
