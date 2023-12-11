@@ -34,8 +34,8 @@ function RegisterPage() {
   
   const [showPassword,setShowPassword] = useState(false)
 
-  console.log("Form Values: ", formValues);
-  console.log("selectedDate: ", selectedDate);
+  // console.log("Form Values: ", formValues);
+  // console.log("selectedDate: ", selectedDate);
 
   const router = useRouter();
 

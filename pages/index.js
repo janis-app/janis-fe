@@ -38,8 +38,8 @@ function Home() {
             <Image
               // src={profile}
               src={
-                state?.user?.profile_image
-                  ? state?.user?.profile_image?.url
+                state?.user?.user?.profile_image
+                  ? state?.user?.user?.profile_image?.url
                   : profileIcon
               }
               width={32}
