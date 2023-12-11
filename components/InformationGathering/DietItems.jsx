@@ -31,6 +31,64 @@ export default function DietItems({
   // const [gluten, setGluten] = useState(false);
   // const [fructose, setFructose] = useState(false);
   // const [selectedBtn, setSelectedBtn] = useState(null);
+  const [cuisineindex, setCuisineindex] = useState([]);
+  const [selectedCousines, setSelectedCousines] = useState([]);
+
+  console.log("selectedCousines: ", selectedCousines);
+
+  const cuisine = [
+    {
+      img: jp,
+      text: 'jp'
+    },
+    {
+      img: it,
+      text: 'it'
+    },
+    {
+      img: vn,
+      text: 'vn'
+    },
+    {
+      img: es,
+      text: 'es'
+    },
+    {
+      img: cn,
+      text: 'cn'
+    },
+    {
+      img: ind,
+      text: 'ind'
+    },
+    {
+      img: us,
+      text: 'us'
+    },
+    {
+      img: th,
+      text: 'th'
+    },
+    {
+      img: turkey,
+      text: 'turkey'
+    },
+    {
+      img: mx,
+      text: 'mx'
+    },
+
+  ]
+
+  const cousinesHandler = (newCousine) => {
+    if (selectedCousines.length < 6) {
+      setSelectedCousines([...selectedCousines, newCousine])
+    }
+  }
+
+  const colorHandler = (index) => {
+    setCuisineindex([index, ...cuisineindex]);
+  };
 
   const lactoseHandler = () => {
     setLactose(!lactose);
@@ -51,6 +109,43 @@ export default function DietItems({
   const selectDietType = (type) => {
     setDietType(type);
   };
+
+
+  const handleBtnClick = async () => {
+    setLoading(true);
+    const token = getTokenFromLocalCookie();
+    await axios({
+      url: state?.user?.user?.information_gathering?.id
+        ? process.env.NEXT_PUBLIC_STRAPI_URL +
+        `/information-gatherings/${state?.user?.user?.information_gathering?.id}`
+        : process.env.NEXT_PUBLIC_STRAPI_URL + `/information-gatherings`,
+      method: state?.user?.user?.information_gathering ? "put" : "post",
+      data: {
+        data: {
+          crew: value,
+          users_permissions_user: state?.user?.user,
+        },
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        setLoading(false);
+        router.push("/start-adventure/location");
+        if (res) {
+          dispatch({
+            type: "UPDATE_USER_INFOMATION_GATHERING",
+            payload: res?.data?.data,
+          });
+        }
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
+
+
   return (
     <>
       <div className={styles.mainDiv}>
@@ -83,22 +178,31 @@ export default function DietItems({
             </div>
             <p className={styles.text}>Cuisine</p>
             <div className={styles.countryBtn} style={{ marginBottom: 20 }}>
-              <button
-                className={styles.btns}
-                style={{
-                  backgroundColor:
-                    cuisineType == "jp" ? "#D9F5FE80" : "#F9FAFB",
-                }}
-                onClick={() => clickHandler("jp")}
-              >
-                <Image
-                  src={jp}
-                  width={16}
-                  height={20}
-                  alt="Picture of the author"
-                />
-              </button>
-              <button
+              {
+                cuisine.map((item, index) => {
+                  return (
+                    <button key={index}
+                      className={styles.btns}
+                      style={{
+                        backgroundColor:
+                          selectedCousines.includes(item.text) ? "#D9F5FE80" : "#F9FAFB",
+                      }}
+                      onClick={() => {
+                        // clickHandler(item.text)
+                        cousinesHandler(item.text)
+                      }}
+                    >
+                      <Image
+                        src={item.img}
+                        width={16}
+                        height={20}
+                        alt="Picture of the author"
+                      />
+                    </button>
+                  )
+                })
+              }
+              {/* <button
                 className={styles.btns}
                 style={{
                   backgroundColor:
@@ -234,7 +338,7 @@ export default function DietItems({
                   height={20}
                   alt="Picture of the author"
                 />
-              </button>
+              </button> */}
             </div>
             <div style={{ marginTop: 16 }}>
               <div className={styles.textBtn}>
