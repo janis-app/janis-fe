@@ -25,6 +25,7 @@ import { AppContext } from '@/components/context/AppContext';
 import profileIcon from '@/public/assets/profileIcon.jpg'
 import bg from "@/public/assets/profile-bg.png"
 import { FiEdit } from 'react-icons/fi';
+import { changeProfileImage } from '@/lib/profile';
 
 
 function Profile() {
@@ -35,6 +36,51 @@ function Profile() {
     const [switch1, setSwitch1] = useState(false);
     const [switch2, setSwitch2] = useState(false);
     const [switch3, setSwitch3] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [validationErr, setValidationErr] = useState({ type: '', err: '' })
+
+
+    async function handleImageChange(e) {
+        const file = e.target.files?.[0];
+
+        if (file) {
+            if (!isValidFileType(file)) {
+                setValidationErr('Invalid file type. Only JPG and PNG files are allowed.');
+            } else if (!isValidFileSize(file)) {
+                setValidationErr('File size exceeds the maximum limit of 2MB.');
+            } else {
+                setValidationErr('');
+                setSelectedImage(file);
+            }
+        }
+
+        const res = await changeProfileImage(file, null, null);
+
+        console.log("Res of the file: ", res);
+
+        if (res?.success) {
+            dispatch({
+                type: "UPDATE_USER",
+                payload: {
+                    profile_image: res.profile_image
+                }
+            });
+        }
+    }
+
+
+    const isValidFileType = (file) => {
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        const fileType = file.type.toLowerCase();
+        return allowedTypes.includes(fileType);
+    };
+    const isValidFileSize = (file) => {
+        if (file && file.size) {
+            const maxSizeBytes = 2 * 1024 * 1024;
+            return file.size <= maxSizeBytes;
+        }
+        return false; // or handle the case when file or file.size is null
+    };
 
     const router = useRouter()
 
@@ -97,8 +143,18 @@ function Profile() {
                     </Link>
                 </div>
                 <div className={styles.container}>
-                    <div>
+                    <label htmlFor="file">
                         <p className={styles.profile_no}>5</p>
+                        <input
+                            type="file"
+                            className="hidden h-[100%] w-[100%] rounded-full"
+                            id='file'
+                            name='files'
+                            accept="image/*"
+                            onChange={(e) => {
+                                handleImageChange(e);
+                            }}
+                        />
                         <img
                             src={state?.user?.user?.profile_image ? state?.user?.user?.profile_image?.url : profileIcon}
                             // src={`https://res.cloudinary.com/dmbidfbiq/image/upload/v1699454859/service1_Image_b11ab5a96c.png`}
@@ -112,8 +168,13 @@ function Profile() {
                                 height: "110px"
                             }}
                         />
-                    </div>
+                    </label>
                     <h2 className='text-[22px] z-[10]' style={{ fontWeight: 700, marginTop: 17 }}>{state.user?.user?.username}</h2>
+                    {
+                        validationErr && <p className='text-[red]'>
+                            {validationErr.err}
+                        </p>
+                    }
                     <p
                         style={{ fontSize: 14 }}
                         className='flex items-center z-[10]'>
