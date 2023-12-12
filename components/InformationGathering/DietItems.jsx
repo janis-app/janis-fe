@@ -23,18 +23,18 @@ export default function DietItems({
   fructose,
   setFructose,
   setDietType,
+  cuisineType,
   setCuisineType,
   dietType,
-  cuisineType
 }) {
   // const [lactose, setLacktose] = useState(false);
   // const [gluten, setGluten] = useState(false);
   // const [fructose, setFructose] = useState(false);
   // const [selectedBtn, setSelectedBtn] = useState(null);
   const [cuisineindex, setCuisineindex] = useState([]);
-  const [selectedCousines, setSelectedCousines] = useState([]);
+  // const [selectedCousines, setSelectedCousines] = useState([]);
 
-  console.log("selectedCousines: ", selectedCousines);
+  // console.log("selectedCousines: ", cuisineType);
 
   const cuisine = [
     {
@@ -81,8 +81,9 @@ export default function DietItems({
   ]
 
   const cousinesHandler = (newCousine) => {
-    if (selectedCousines.length < 6) {
-      setSelectedCousines([...selectedCousines, newCousine])
+    console.log("cuisine array length=>", cuisineType.length);
+    if (cuisineType.length < 5) {
+      setCuisineType([...cuisineType, newCousine]) 
     }
   }
 
@@ -185,7 +186,7 @@ export default function DietItems({
                       className={styles.btns}
                       style={{
                         backgroundColor:
-                          selectedCousines.includes(item.text) ? "#D9F5FE80" : "#F9FAFB",
+                          cuisineType.includes(item.text) ? "#D9F5FE80" : "#F9FAFB",
                       }}
                       onClick={() => {
                         // clickHandler(item.text)
