@@ -35,15 +35,16 @@ function Home() {
                 Credits
               </p>
             </div>
-            <Image
+            <img
               // src={profile}
               src={
-                state?.user?.profile_image
-                  ? state?.user?.profile_image?.url
+                state?.user?.user?.profile_image
+                  ? state?.user?.user?.profile_image?.url
                   : profileIcon
               }
-              width={32}
-              height={32}
+              // width={32}
+              // height={32}
+              style={{height:"32px",width:"32px"}}
               alt="Profile image"
               className="rounded-2xl"
               onClick={() => router.push("/profile")}

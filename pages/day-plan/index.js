@@ -41,6 +41,8 @@ function DayPlan() {
   );
   const [favoriteActivities, setFavoriteActivities] = useState([]);
   const [totalTime, setTotalTime] = useState(null);
+  const [weatherData, setWeatherData] = useState(null);
+  const [temp , setTemp] = useState()
 
   const emojiRegex = /[\uD800-\uDBFF][\uDC00-\uDFFF]/;
 
@@ -50,7 +52,40 @@ function DayPlan() {
     );
   }, [state]);
 
-  console.log("favoriteActivities: ", favoriteActivities);
+ 
+
+  
+const api = {
+  key: "2319db5d5fab225d5c9d6cd5a01b577c",
+  lat: state?.user?.user?.information_gathering?.lat,
+  long: state?.user?.user?.information_gathering?.long,
+};
+// console.log(state?.user?.user?.information_gathering.lat)
+// console.log(state?.user?.user?.information_gathering?.long)
+
+const searchPressed = () => {
+  // console.log('lat',state?.user?.user?.information_gathering?.lat)
+  // console.log('long',api.long);
+  if(api.lat && api.long){
+
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${api.lat}&lon=${api.long}&appid=${api.key}&units=metric`)
+    .then((res) => res.json())
+    .then((result) => {
+      setWeatherData(result);
+      setTemp(parseInt(weatherData?.main?.temp))
+    });
+    // console.log("weather data =>", weatherData?.main?.temp)
+    // console.log("weather data =>", weatherData?.weather[0]?.main)
+    // console.log("temp is ", temp)
+  };
+}
+
+useEffect(()=>{
+  searchPressed()
+}, [state?.user?.user])
+
+
+  // console.log("favoriteActivities: ", favoriteActivities);
 
   const accordionHandler = (index) => {
     setIsTextVisible(!isTextVisible);
@@ -221,9 +256,9 @@ function DayPlan() {
             >
               <Image src={sun} width={18} height={18} alt="sun image" />
             </div>
-            <p style={{ display: "flex", fontSize: 14, marginTop: -8 }}>25°</p>
+            <p style={{ display: "flex", fontSize: 14, marginTop: -8 }}>{`${temp}°`}</p>
             <p style={{ fontSize: 8, padding: 0, margin: 0, color: "#fff" }}>
-              Sunny
+              {weatherData?.weather[0]?.main}
             </p>
           </div>
         </div>

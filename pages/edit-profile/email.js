@@ -57,7 +57,7 @@ function Email() {
                 <div style={{ margin: "29px 24px" }} className='pt-[40px]'>
                     <div className='flex justify-between items-center'>
                         <p className='font-medium text-base	'>Current Email</p>
-                        <p className="text-[#ADB3C2] text-[14px] font-normal ">{state.user?.email}</p>
+                        <p className="text-[#ADB3C2] text-[14px] font-normal ">{state.user?.user?.email}</p>
                     </div>
                     <div
                         style={{ boxShadow: '0px 12px 60px 0px rgba(67, 71, 77, 0.10)' }}

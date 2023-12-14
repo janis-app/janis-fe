@@ -1,7 +1,7 @@
 import Header from "@/components/InformationGathering/Header";
 import HeaderText from "@/components/InformationGathering/HeaderText";
 import Image from "next/image";
-import map from "../../public/assets/Subtract.png";
+import mapimg from "../../public/assets/Subtract.png";
 import { BiSolidMap } from "react-icons/bi";
 import { FiCheck } from "react-icons/fi";
 import Link from "next/link";
@@ -13,30 +13,44 @@ import { useRouter } from "next/router";
 import { getTokenFromLocalCookie } from "@/lib/auth";
 import axios from "axios";
 import { AppContext } from "@/components/context/AppContext";
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import Autocomplete, { usePlacesWidget, } from "react-google-autocomplete";
 
 function Location() {
   const router = useRouter();
   const { state, dispatch } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const [location, setLoacation] = useState("");
+  const [selectedPlace, setSelectedPlace] = useState(null);
+  const [selectedPlaceLat, setSelectedPlaceLat] = useState(null)
+  const [selectedPlaceLong, setSelectedPlaceLong] = useState(null)
 
   const informations = state?.user?.user?.information_gathering?.attributes || state?.user?.user?.information_gathering;
-  useEffect(()=>{
-setLoacation(informations?.location)
+  useEffect(() => {
+    setLoacation(informations?.location)
   }, [state])
 
+
+
+  // console.log("user location from strapi =>", state?.user?.user?.information_gathering?.location)
+
+  // console.log("onchange user location =>", location)
+
+  // console.log("selectedPlace long", selectedPlace.lat, selectedPlace.lng);
   const handleBtnClick = async () => {
     setLoading(true);
     const token = getTokenFromLocalCookie();
     await axios({
       url: state?.user?.user?.information_gathering?.id
         ? process.env.NEXT_PUBLIC_STRAPI_URL +
-          `/information-gatherings/${state?.user?.user?.information_gathering?.id}`
+        `/information-gatherings/${state?.user?.user?.information_gathering?.id}`
         : process.env.NEXT_PUBLIC_STRAPI_URL + `/information-gatherings`,
       method: state?.user?.user?.information_gathering ? "put" : "post",
       data: {
         data: {
           location,
+          lat:selectedPlaceLat,
+          long:selectedPlaceLong,
           users_permissions_user: state?.user?.user,
         },
       },
@@ -58,6 +72,37 @@ setLoacation(informations?.location)
         setLoading(false);
       });
   };
+  // console.log("Lat", selectedPlaceLat)
+
+  // console.log("Long", selectedPlaceLong)
+  
+  // console.log("user location from strapi=>", state?.user?.user?.information_gathering?.location)
+  console.log("user location from strapi  lat =>", state?.user?.user?.information_gathering?.lat)
+  console.log("user location from strapi long=>", state?.user?.user?.information_gathering?.long)
+  const handlePlaceSelected = (place) => {
+    const { geometry, formatted_address } = place;
+    const { location } = geometry;
+
+    setSelectedPlace({
+      address: formatted_address,
+      lat: location.lat(),
+      lng: location.lng(),
+    });
+    setLoacation(formatted_address);
+    setSelectedPlaceLat(location.lat())
+    setSelectedPlaceLong(location.lng())
+
+  };
+
+  const mapStyles = {
+    height: '75vh',
+    width: '100%',
+  };
+
+  const mapOptions = {
+    disableDefaultUI: true, // Remove default controls
+  };
+
 
   return (
     <div>
@@ -69,22 +114,46 @@ setLoacation(informations?.location)
         text="Share Your Starting Point"
       />
       <div className="bg-white mt-[51px] mb-[3rem] h-[300px] z-[1] absolute top-[-3.3rem] left-0 right-0 rounded-br-[50px] rounded-bl-[50px] px-[24px]">
-        <div className="relative">
-          <input
-            className="h-[56px] border-2 border-[#DAF5FE] outline-none px-[16px] py-[8px] rounded-[8px] relative top-[11rem] w-full flex justify-center"
-            placeholder="Enter your Location"
+        <div className="absolute top-[12.2rem] right-[19px] flex items-center h-[56px] w-[90%] pl-[12px] border-2	border-[#B9E6F5]">
+
+          <Autocomplete
+            // apiKey= {`${process.env.YOUR_GOOGLE_MAPS_API_KEY}`}
+            apiKey="AIzaSyBBGxKE3abRfU_ZsgC6JmiIIUpO5QmaTjI"
+            onPlaceSelected={(place) => {
+              handlePlaceSelected(place)
+            }}
             value={location}
             onChange={(e) => setLoacation(e.target.value)}
+            className="w-[90%]"
+            style={{ outline: 'none', pointerEvents: 'auto' }} // Add your custom styles here
           />
           <BiSolidMap
-            className="absolute top-[12.2rem] right-[19px]"
+            className=""
             color="#B9E6F5"
             size={18}
           />
         </div>
       </div>
+
+
+
       <div className="fixed bottom-0 w-full left-0 right-0">
-        <Image src={map} alt="map" className="w-full" />
+        {/* <Image src={mapimg} alt="map" className="w-full" /> */}
+        {
+          selectedPlace ?
+            (<GoogleMap
+              mapContainerStyle={mapStyles}
+              zoom={14}
+              center={{ lat: selectedPlace.lat, lng: selectedPlace.lng }}
+              options={mapOptions} // Apply map options
+            >
+              <Marker position={{ lat: selectedPlace.lat, lng: selectedPlace.lng }} />
+            </GoogleMap>) : (
+              <Image src={mapimg} alt="map" className="w-full" />
+            )
+        }
+
+
       </div>
       <div
         // href="/start-adventure/mood"

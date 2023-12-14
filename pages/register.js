@@ -31,11 +31,11 @@ function RegisterPage() {
   const [err, setErr] = useState(false)
 
   const [loading, setLoading] = useState(false)
-  
-  const [showPassword,setShowPassword] = useState(false)
 
-  console.log("Form Values: ", formValues);
-  console.log("selectedDate: ", selectedDate);
+  const [showPassword, setShowPassword] = useState(false)
+
+  // console.log("Form Values: ", formValues);
+  // console.log("selectedDate: ", selectedDate);
 
   const router = useRouter();
 
@@ -86,6 +86,34 @@ function RegisterPage() {
 
   console.log("Validation Message: ", validationMessage);
   console.log("Err Messages: ", validationErr);
+
+  const isEmailVerified = async (e) => {
+
+    const data = {
+      email: formValues?.emailAddress
+    }
+
+    console.log("data recieve========", data);
+
+    const response = await fetcher(
+      // 'http://localhost:1337/api/verify-email',
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/verify-email`,
+      {
+        method: 'POST',
+        body: JSON.stringify({ email: formValues?.emailAddress })
+      }
+    );
+
+    if (response?.status) {
+      setValidationErr({ type: 'email', err: response.message })
+    }
+
+    if (!response?.status) {
+      setStep((prev) => prev + 1)
+    }
+    console.log("Res of the Email Verification: ", response);
+
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -275,8 +303,8 @@ function RegisterPage() {
               className="hidden"
               onChange={(e) => {
                 handleImageChange(e),
-                setValidationErr({ type: '', err: '' }),
-                setSelectedImage(e.target.files[0])
+                  setValidationErr({ type: '', err: '' }),
+                  setSelectedImage(e.target.files[0])
               }}
 
             />
@@ -381,10 +409,11 @@ function RegisterPage() {
         }
 
         onClick={(e) => {
-          if (step === 5) {
+          if (step === 4) {
+            isEmailVerified(e)
+          } else if (step === 5) {
             handleSubmit(e)
           } else if (step < 5) {
-
             if (
               (step === 1 && formValues.name.trim() === "")
             ) {

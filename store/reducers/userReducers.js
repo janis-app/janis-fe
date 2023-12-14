@@ -11,7 +11,7 @@ const userReducer = (state = initialState, action) => {
     case "UPDATE_USER":
       return {
         ...state,
-        user: { ...state.user, profile_image: action.payload.profile_image },
+        user: { ...state.user, ...action.payload },
       };
     case "UPDATE_USER_INFOMATION_GATHERING":
       return {
