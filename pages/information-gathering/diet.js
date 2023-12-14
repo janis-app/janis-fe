@@ -16,7 +16,7 @@ import { useContext, useEffect, useState } from "react";
 function Diet() {
   const router = useRouter();
   const [dietType, setDietType] = useState("");
-  const [cuisineType, setCuisineType] = useState("");
+  const [cuisineType, setCuisineType] = useState([]);
   const [lactose, setLactose] = useState(false);
   const [gluten, setGluten] = useState(false);
   const [fructose, setFructose] = useState(false);
@@ -84,9 +84,9 @@ function Diet() {
         fructose={fructose}
         setFructose={setFructose}
         setDietType={setDietType}
+        cuisineType={cuisineType}
         setCuisineType={setCuisineType}
         dietType={dietType}
-        cuisineType={cuisineType}
       />
       <div
         // href="/information-gathering/budget"

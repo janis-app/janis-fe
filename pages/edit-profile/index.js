@@ -38,7 +38,7 @@ function EditProfile() {
                         </div>
                         <div className="flex items-center gap-[20px]">
                             <p className="text-[#ADB3C2] text-[14px] font-normal text-right">
-                            {state?.user?.username}
+                            {state.user?.user?.username}
                             </p>
                             <RxCaretRight color="#C8C9CF" size={30} />
                         </div>
@@ -54,7 +54,7 @@ function EditProfile() {
                         </div>
                         <div className="flex items-center gap-[20px]">
                             <p className="text-[#ADB3C2] text-[14px] font-normal text-right">
-                                {state?.user?.email}
+                                {state.user?.user?.email}
                             </p>
                             <RxCaretRight color="#C8C9CF" size={30} />
                         </div>

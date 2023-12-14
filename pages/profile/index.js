@@ -25,16 +25,62 @@ import { AppContext } from '@/components/context/AppContext';
 import profileIcon from '@/public/assets/profileIcon.jpg'
 import bg from "@/public/assets/profile-bg.png"
 import { FiEdit } from 'react-icons/fi';
+import { changeProfileImage } from '@/lib/profile';
 
 
 function Profile() {
-    const {state, dispatch} = useContext(AppContext)
+    const { state, dispatch } = useContext(AppContext)
 
     // console.log("State of user profile: ", state?.user);
 
     const [switch1, setSwitch1] = useState(false);
     const [switch2, setSwitch2] = useState(false);
     const [switch3, setSwitch3] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [validationErr, setValidationErr] = useState({ type: '', err: '' })
+
+
+    async function handleImageChange(e) {
+        const file = e.target.files?.[0];
+
+        if (file) {
+            if (!isValidFileType(file)) {
+                setValidationErr('Invalid file type. Only JPG and PNG files are allowed.');
+            } else if (!isValidFileSize(file)) {
+                setValidationErr('File size exceeds the maximum limit of 2MB.');
+            } else {
+                setValidationErr('');
+                setSelectedImage(file);
+            }
+        }
+
+        const res = await changeProfileImage(file, null, null);
+
+        console.log("Res of the file: ", res);
+
+        if (res?.success) {
+            dispatch({
+                type: "UPDATE_USER",
+                payload: {
+                    profile_image: res.profile_image
+                }
+            });
+        }
+    }
+
+
+    const isValidFileType = (file) => {
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        const fileType = file.type.toLowerCase();
+        return allowedTypes.includes(fileType);
+    };
+    const isValidFileSize = (file) => {
+        if (file && file.size) {
+            const maxSizeBytes = 2 * 1024 * 1024;
+            return file.size <= maxSizeBytes;
+        }
+        return false; // or handle the case when file or file.size is null
+    };
 
     const router = useRouter()
 
@@ -97,19 +143,38 @@ function Profile() {
                     </Link>
                 </div>
                 <div className={styles.container}>
-                    <div>
+                    <label htmlFor="file">
                         <p className={styles.profile_no}>5</p>
-                        <Image
-                            src={state?.user?.profile_image ? state?.user?.profile_image?.url  : profileIcon}
-                            // src={`https://res.cloudinary.com/dmbidfbiq/image/upload/v1699454859/service1_Image_b11ab5a96c.png`}
-                            width={108}
-                            height={108}
-                            alt="setting icon"
-                            className="rounded-full"
-                            style={{ border: "2px solid #fff" }}
+                        <input
+                            type="file"
+                            className="hidden h-[100%] w-[100%] rounded-full"
+                            id='file'
+                            name='files'
+                            accept="image/*"
+                            onChange={(e) => {
+                                handleImageChange(e);
+                            }}
                         />
-                    </div>
-                    <h2  className='text-[22px] z-[10]' style={{ fontWeight: 700, marginTop: 17 }}>{state.user?.username}</h2>
+                        <img
+                            src={state?.user?.user?.profile_image ? state?.user?.user?.profile_image?.url : profileIcon}
+                            // src={`https://res.cloudinary.com/dmbidfbiq/image/upload/v1699454859/service1_Image_b11ab5a96c.png`}
+                            // width={108}
+                            // height={108}
+                            alt="Profile Image"
+                            className="rounded-full"
+                            style={{
+                                border: "2px solid #fff",
+                                width: "110px",
+                                height: "110px"
+                            }}
+                        />
+                    </label>
+                    <h2 className='text-[22px] z-[10]' style={{ fontWeight: 700, marginTop: 17 }}>{state.user?.user?.username}</h2>
+                    {
+                        validationErr && <p className='text-[red]'>
+                            {validationErr.err}
+                        </p>
+                    }
                     <p
                         style={{ fontSize: 14 }}
                         className='flex items-center z-[10]'>
@@ -119,7 +184,8 @@ function Profile() {
                             height={20}
                             alt="location icon"
                         />
-                        Las Palmas, Gran Canaria, Spain
+                        {/* Las Palmas, Gran Canaria, Spain */}
+                        {state?.user?.user?.information_gathering?.location}
                     </p>
 
                     <div className='flex flex-col gap-[10px] items-center mt-[17px]'>
@@ -167,8 +233,8 @@ function Profile() {
 
                     <div className={styles.personality}>
                         <div className='flex gap-[6px] mb-[11px] '>
-                        <p className='text-[14px] font-[600] leading-[20px]'>Personality
-                        </p>
+                            <p className='text-[14px] font-[600] leading-[20px]'>Personality
+                            </p>
                             {/* <Image
                                 src={pencil}
                                 width={20}
@@ -193,8 +259,8 @@ function Profile() {
                     </div>
                     <div className='mt-[16px] h-auto'>
                         <div className='flex items-center gap-[6px] '>
-                        <p className='text-[16px] font-[600] leading-[20px]'>Interests
-                        </p>
+                            <p className='text-[16px] font-[600] leading-[20px]'>Interests
+                            </p>
                             {/* <Image
                                 src={pencil}
                                 width={20}
@@ -217,9 +283,9 @@ function Profile() {
                     </div>
 
                     <div className={`mt-[28px] ${styles.personality}`}>
-                    <div className='flex gap-[6px] mb-[11px] '>
-                    <p className='text-[14px] font-[600] leading-[20px]'>Cuisine
-                        </p>
+                        <div className='flex gap-[6px] mb-[11px] '>
+                            <p className='text-[14px] font-[600] leading-[20px]'>Cuisine
+                            </p>
                             {/* <Image
                                 src={pencil}
                                 width={22}
@@ -227,7 +293,7 @@ function Profile() {
                                 alt="vector icon"
                             /> */}
                             <FiEdit color="#d3d3d3" />
-                    </div>
+                        </div>
                         <div className='flex justify-between items-center '>
                             {flag.map((items, Index) => {
                                 return (
