@@ -22,30 +22,35 @@ import arrow1 from "@/public/assets/arrow.png";
 import withAuthProtection from "@/components/hoc/withAuthProtection";
 import {
   fetchFavouriteActivitiesApi,
+  fetchUserProfile,
   updateFavouriteActivitiesApi,
 } from "@/lib/profile";
 import { AppContext } from "@/components/context/AppContext";
+import { updateUserFavorite } from "@/utils/updateUserFavorite";
+import { getUserProfileDetails } from "@/utils/getUserProfileDetails";
+import Maps from "@/components/Maps/maps";
 
 function DayPlan() {
   const [isTextVisible, setIsTextVisible] = useState(false);
   const [updatedIndex, setUpdatedIndex] = useState(null);
   const [foodIndex, setFoodIndex] = useState(null);
   const { state, dispatch } = useContext(AppContext);
+  console.log(
+    "fgf",
+    state?.user?.user?.favorite_activity?.favourite_activities
+  );
+  const [favoriteActivities, setFavoriteActivities] = useState([]);
+  const [totalTime, setTotalTime] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
   const [temp , setTemp] = useState()
 
-  const [favoriteActivities, setFavoriteActivities] = useState(null);
-
   const emojiRegex = /[\uD800-\uDBFF][\uDC00-\uDFFF]/;
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const responcedata = await fetchFavouriteActivitiesApi();
-  //     // setFavoriteActivities(responcedata?.data[0])
-  //   };
-
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    setFavoriteActivities(
+      state?.user?.user?.favorite_activity?.favourite_activities
+    );
+  }, [state]);
 
  
 
@@ -119,36 +124,103 @@ useEffect(()=>{
 
   // console.log("parsedDayPlan", parsedDayPlan);
   const data = parsedDayPlan?.activities;
+  const foodLoactions = data?.filter((d) => d?.category?.includes("food"));
+  const activityLoactions = data?.filter((d) =>
+    d?.category?.includes("activities")
+  );
+  const viewpointLoactions = data?.filter((d) =>
+    d?.category?.includes("viewpoints")
+  );
+  const breakLocation = data?.filter((d) => d?.category?.includes("breaks"));
+  useEffect(() => {
+    if (data) {
+      function timeStringToMinutes(timeString) {
+        const [hour, minute] = timeString.match(/\d+|\w+/g);
+        const timeInMinutes =
+          parseInt(hour) * 60 + (minute === "pm" ? 12 * 60 : 0);
+        return timeInMinutes;
+      }
 
+      // Find the minimum and maximum times
+      const minTime = Math?.min(
+        ...data?.map((item) => timeStringToMinutes(item.time))
+      );
+      const maxTime = Math?.max(
+        ...data?.map((item) => timeStringToMinutes(item.time))
+      );
+
+      // Calculate the total time in minutes
+      const totalTimeInMinutes = maxTime - minTime;
+
+      // Convert the total time back to hours and minutes
+      const totalHours = Math.floor(totalTimeInMinutes / 60);
+      const totalMinutes = totalTimeInMinutes % 60;
+
+      const formattedTotalTime = `${totalHours + totalMinutes / 60}h`;
+      setTotalTime(formattedTotalTime);
+      console.log(`Total time: ${formattedTotalTime}`);
+    }
+  }, [data]);
+
+  const updateFavoriteHandler = async (activityName) => {
+    let payload;
+    console.log("data", data);
+    // check if activity is already in favorites  list
+    let ifExist = favoriteActivities?.find(
+      (d) => d?.activity_name == activityName
+    );
+    console.log("ifExist", ifExist);
+    if (ifExist) {
+      // if it already exists, remove from the favorites list
+      const newArray = favoriteActivities?.filter(
+        (activity) => activity?.activity_name !== activityName
+      );
+      payload = newArray;
+    } else {
+      payload = [...favoriteActivities, { activity_name: activityName }];
+    }
+    console.log("payload", payload);
+    // if it doesn't exist, add to the favorites list
+    await updateUserFavorite(state, payload)
+      .then((res) => {
+        fetchUserProfile(dispatch);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
   const menu = [
     {
       title: "Food",
-      subTitle: "3 locations",
+      subTitle: `${foodLoactions?.length} locations`,
       img: cardImg1,
     },
     {
       title: "Activities",
-      subTitle: "2 locations",
+      subTitle: `${activityLoactions?.length} locations`,
       img: cardImg2,
     },
     {
       title: "Viewpoints",
-      subTitle: "4 locations",
+      subTitle: `${viewpointLoactions?.length} locations`,
       img: cardImg3,
     },
     {
       title: "Breaks",
-      subTitle: "2 locations",
+      subTitle: `${breakLocation?.length} locations`,
       img: cardImg4,
     },
   ];
   return (
     <div className={styles.main_container}>
-      <div className="absolute left-[3rem] top-[6rem]">
+      {/* <div className="absolute left-[3rem] top-[6rem]">
         <Image src={track} alt="track" />
-      </div>
+      </div> */}
       <div style={{ margin: "0px 24px" }}>
         <Header progess={17} link="" profile={profile} />
+      </div>
+      <div className="absolute inset-0 top-0 h-[450px] z]">
+        <Maps />
       </div>
       <div className={styles.conatiner}>
         <div className="flex justify-between">
@@ -196,7 +268,7 @@ useEffect(()=>{
         <div className="flex justify-between">
           <div className={styles.time_card}>
             <p style={{ color: "#7B8487", fontSize: 10 }}>Time</p>
-            <p style={{ fontWeight: 600 }}>8.5h</p>
+            <p style={{ fontWeight: 600 }}>{totalTime}</p>
           </div>
           <div className={styles.time_card}>
             <p style={{ color: "#7B8487", fontSize: 10 }}>Distance</p>
@@ -285,8 +357,8 @@ useEffect(()=>{
               <div className={styles.sidebar_circle}></div>
             </>
           ))}
-             <div className={styles.sidebar_line} style={{ height: 85 }}></div>
-              {/* <div className={styles.sidebar_circle}></div> */}
+          <div className={styles.sidebar_line} style={{ height: 85 }}></div>
+          {/* <div className={styles.sidebar_circle}></div> */}
           <div className={styles.sidebar_circle}></div>
           <div className={styles.sidebar_line} style={{ height: 32 }}></div>
         </div>
@@ -308,21 +380,31 @@ useEffect(()=>{
                 } w-auto p-[15px] mt-[12px] rounded-[10px] border-2 border-[#DAF5FE]`}
               >
                 <div className="flex justify-between items-start relative mb-2">
-                  <p style={{ fontWize: 500, fontSize: 15 }} className="w-[70%]">{items.title}</p>
-                  <p style={{ fontSize: 13 }}>{items.time}</p>
-
-                  <div
-                    onClick={() => updateFavouriteActivites(items.id)}
-                    className={`${styles.mdi_like} ${
-                      isActivityExist ? "bg-[#DAF5FE]" : "bg-[#FFF]"
-                    } `}
-                  >
-                    <Image
-                      src={mdi_like}
-                      width={20}
-                      height={20}
-                      alt="location icon"
-                    />
+                  <div className="w-[70%]">
+                    <p style={{ fontWeight: 600, fontSize: 13 }}>
+                      {items.title}
+                    </p>
+                    <p className="text-[12px]"> {items.description}</p>
+                  </div>
+                  <div>
+                    <p style={{ fontSize: 13 }} className="mb-2 font-[500]">{items.time}</p>
+                    <div
+                      onClick={() => updateFavoriteHandler(items.title)}
+                      className={`${styles.mdi_like} ${
+                        favoriteActivities
+                          ?.map((a) => a?.activity_name)
+                          ?.includes(items?.title)
+                          ? "bg-[#DAF5FE]"
+                          : "bg-[#FFF]"
+                      } `}
+                    >
+                      <Image
+                        src={mdi_like}
+                        width={20}
+                        height={20}
+                        alt="location icon"
+                      />
+                    </div>
                   </div>
                 </div>
 
