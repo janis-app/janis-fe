@@ -32,7 +32,7 @@ function DayPlan() {
   const [foodIndex, setFoodIndex] = useState(null);
   const { state, dispatch } = useContext(AppContext);
   const [weatherData, setWeatherData] = useState(null);
-  const [temp , setTemp] = useState()
+  const [loading, setLoading] = useState(false)
 
   const [favoriteActivities, setFavoriteActivities] = useState(null);
 
@@ -47,37 +47,34 @@ function DayPlan() {
   //   fetchData();
   // }, []);
 
- 
 
-  
-const api = {
-  key: "2319db5d5fab225d5c9d6cd5a01b577c",
-  lat: state?.user?.user?.information_gathering?.lat,
-  long: state?.user?.user?.information_gathering?.long,
-};
-// console.log(state?.user?.user?.information_gathering.lat)
-// console.log(state?.user?.user?.information_gathering?.long)
 
-const searchPressed = () => {
-  // console.log('lat',state?.user?.user?.information_gathering?.lat)
-  // console.log('long',api.long);
-  if(api.lat && api.long){
 
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${api.lat}&lon=${api.long}&appid=${api.key}&units=metric`)
-    .then((res) => res.json())
-    .then((result) => {
-      setWeatherData(result);
-      setTemp(parseInt(weatherData?.main?.temp))
-    });
-    // console.log("weather data =>", weatherData?.main?.temp)
-    // console.log("weather data =>", weatherData?.weather[0]?.main)
-    // console.log("temp is ", temp)
+  const api = {
+    key: "2319db5d5fab225d5c9d6cd5a01b577c",
+    lat: state?.user?.user?.information_gathering?.lat,
+    long: state?.user?.user?.information_gathering?.long,
   };
-}
 
-useEffect(()=>{
-  searchPressed()
-}, [state?.user?.user])
+
+  const searchPressed = () => {
+    
+    if (state?.user?.user?.information_gathering) {
+      setLoading(true)
+      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${api.lat}&lon=${api.long}&appid=${api.key}&units=metric`)
+        .then((res) => res.json())
+        .then((result) => {
+          setWeatherData(result);
+          console.log("waether detail is ", weatherData?.main?.temp)
+          setLoading(false)
+        });
+    };
+  }
+
+  useEffect(() => {
+    searchPressed()
+  }, [state?.user?.user])
+  console.log("outside function", weatherData?.main?.temp)
 
 
   // console.log("favoriteActivities: ", favoriteActivities);
@@ -167,9 +164,6 @@ useEffect(()=>{
                 state?.user?.user?.information_gathering?.location}
             </p>
           </div>
-          {/* <div className={styles.mdi_like}>
-            <Image src={mdi_like} width={24} height={24} alt="location icon" />
-          </div> */}
           <div className={styles.temp_div}>
             <div
               style={{
@@ -184,7 +178,19 @@ useEffect(()=>{
             >
               <Image src={sun} width={18} height={18} alt="sun image" />
             </div>
-            <p style={{ display: "flex", fontSize: 14, marginTop: -8 }}>{`${temp}°`}</p>
+            <p style={{ display: "flex", fontSize: 14, marginTop: -8 }}>
+              {
+                loading ? <>
+                  <div
+                    class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid  border-white border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                    role="status">
+                    <span
+                      class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                    >Loading...</span>
+                  </div>
+                </> : <>{parseInt(weatherData?.main?.temp)}°</>
+              }
+              </p>
             <p style={{ fontSize: 8, padding: 0, margin: 0, color: "#fff" }}>
               {weatherData?.weather[0]?.main}
             </p>
@@ -285,8 +291,8 @@ useEffect(()=>{
               <div className={styles.sidebar_circle}></div>
             </>
           ))}
-             <div className={styles.sidebar_line} style={{ height: 85 }}></div>
-              {/* <div className={styles.sidebar_circle}></div> */}
+          <div className={styles.sidebar_line} style={{ height: 85 }}></div>
+          {/* <div className={styles.sidebar_circle}></div> */}
           <div className={styles.sidebar_circle}></div>
           <div className={styles.sidebar_line} style={{ height: 32 }}></div>
         </div>
@@ -303,9 +309,8 @@ useEffect(()=>{
               <div
                 // onClick={() => accordionHandler(index)}
                 key={index}
-                className={`${
-                  index == updatedIndex ? "bg-[#DAF5FE]" : "bg-transparent"
-                } w-auto p-[15px] mt-[12px] rounded-[10px] border-2 border-[#DAF5FE]`}
+                className={`${index == updatedIndex ? "bg-[#DAF5FE]" : "bg-transparent"
+                  } w-auto p-[15px] mt-[12px] rounded-[10px] border-2 border-[#DAF5FE]`}
               >
                 <div className="flex justify-between items-start relative mb-2">
                   <p style={{ fontWize: 500, fontSize: 15 }} className="w-[70%]">{items.title}</p>
@@ -313,9 +318,8 @@ useEffect(()=>{
 
                   <div
                     onClick={() => updateFavouriteActivites(items.id)}
-                    className={`${styles.mdi_like} ${
-                      isActivityExist ? "bg-[#DAF5FE]" : "bg-[#FFF]"
-                    } `}
+                    className={`${styles.mdi_like} ${isActivityExist ? "bg-[#DAF5FE]" : "bg-[#FFF]"
+                      } `}
                   >
                     <Image
                       src={mdi_like}
