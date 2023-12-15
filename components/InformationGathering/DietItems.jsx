@@ -80,12 +80,32 @@ export default function DietItems({
 
   ]
 
+  // const cousinesHandler = (newCousine) => {
+  //   console.log("cuisine array length=>", cuisineType.length);
+  //   if (cuisineType.length < 5) {
+  //     setCuisineType([...cuisineType, newCousine]) 
+  //   }
+  // }
+
   const cousinesHandler = (newCousine) => {
-    console.log("cuisine array length=>", cuisineType.length);
-    if (cuisineType.length < 5) {
-      setCuisineType([...cuisineType, newCousine]) 
+    console.log("cuisine array length =>", cuisineType.length);
+  
+    // Check if the newCousine is already in the array
+    const isCuisineExist = cuisineType.includes(newCousine);
+  
+    if (isCuisineExist) {
+      // If the cuisine already exists, remove it from the array
+      const updatedCuisineType = cuisineType.filter(cuisine => cuisine !== newCousine);
+      setCuisineType(updatedCuisineType);
+    } else {
+      // If the cuisine does not exist and the array length is less than 5, add it to the array
+      if (cuisineType.length < 5) {
+        setCuisineType([...cuisineType, newCousine]);
+      }
     }
-  }
+  };
+  
+
 
   const colorHandler = (index) => {
     setCuisineindex([index, ...cuisineindex]);
