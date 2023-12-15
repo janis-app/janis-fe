@@ -14,11 +14,15 @@ import { AppContext } from "@/components/context/AppContext";
 import { useContext, useEffect } from "react";
 import { getTokenFromLocalCookie } from "@/lib/auth";
 import { getUserProfileDetails } from "@/utils/getUserProfileDetails";
-
+import { fetchUserProfile } from "@/lib/profile";
 
 function Home() {
-  const { state } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
   const router = useRouter();
+
+  useEffect(() => {
+    fetchUserProfile(dispatch);
+  }, []);
 
   return (
     <div className={styles.main_container}>
@@ -44,7 +48,7 @@ function Home() {
               }
               // width={32}
               // height={32}
-              style={{height:"32px",width:"32px"}}
+              style={{ height: "32px", width: "32px" }}
               alt="Profile image"
               className="rounded-2xl"
               onClick={() => router.push("/profile")}
