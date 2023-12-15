@@ -53,30 +53,24 @@ function DayPlan() {
   }, [state]);
 
  
-
+// console.log("state",state?.user?.user?.information_gathering)
   
 const api = {
   key: "2319db5d5fab225d5c9d6cd5a01b577c",
   lat: state?.user?.user?.information_gathering?.lat,
   long: state?.user?.user?.information_gathering?.long,
 };
-// console.log(state?.user?.user?.information_gathering.lat)
-// console.log(state?.user?.user?.information_gathering?.long)
 
 const searchPressed = () => {
-  // console.log('lat',state?.user?.user?.information_gathering?.lat)
-  // console.log('long',api.long);
   if(api.lat && api.long){
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${api.lat}&lon=${api.long}&appid=${api.key}&units=metric`)
     .then((res) => res.json())
     .then((result) => {
       setWeatherData(result);
-      setTemp(parseInt(weatherData?.main?.temp))
+      // setTemp(parseInt(weatherData?.main?.temp))
     });
     // console.log("weather data =>", weatherData?.main?.temp)
-    // console.log("weather data =>", weatherData?.weather[0]?.main)
-    // console.log("temp is ", temp)
   };
 }
 
@@ -158,18 +152,18 @@ useEffect(()=>{
 
       const formattedTotalTime = `${totalHours + totalMinutes / 60}h`;
       setTotalTime(formattedTotalTime);
-      console.log(`Total time: ${formattedTotalTime}`);
+      // console.log(`Total time: ${formattedTotalTime}`);
     }
   }, [data]);
 
   const updateFavoriteHandler = async (activityName) => {
     let payload;
-    console.log("data", data);
+    // console.log("data", data);
     // check if activity is already in favorites  list
     let ifExist = favoriteActivities?.find(
       (d) => d?.activity_name == activityName
     );
-    console.log("ifExist", ifExist);
+    // console.log("ifExist", ifExist);
     if (ifExist) {
       // if it already exists, remove from the favorites list
       const newArray = favoriteActivities?.filter(
@@ -179,7 +173,7 @@ useEffect(()=>{
     } else {
       payload = [...favoriteActivities, { activity_name: activityName }];
     }
-    console.log("payload", payload);
+    // console.log("payload", payload);
     // if it doesn't exist, add to the favorites list
     await updateUserFavorite(state, payload)
       .then((res) => {
@@ -256,7 +250,7 @@ useEffect(()=>{
             >
               <Image src={sun} width={18} height={18} alt="sun image" />
             </div>
-            <p style={{ display: "flex", fontSize: 14, marginTop: -8 }}>{`${temp}°`}</p>
+            <p style={{ display: "flex", fontSize: 14, marginTop: -8 }}>{parseInt(weatherData?.main?.temp)}°</p>
             <p style={{ fontSize: 8, padding: 0, margin: 0, color: "#fff" }}>
               {weatherData?.weather[0]?.main}
             </p>
@@ -369,7 +363,7 @@ useEffect(()=>{
               favoriteActivities?.attributes?.activities?.find(
                 (act) => act == items.id
               );
-            console.log("isActivityExist: ", isActivityExist);
+            // console.log("isActivityExist: ", isActivityExist);
 
             return (
               <div
