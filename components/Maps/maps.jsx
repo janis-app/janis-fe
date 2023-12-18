@@ -153,7 +153,7 @@ function Directions({state }) {
       });
 
     return () => directionsRenderer.setMap(null);
-  }, [directionsService, directionsRenderer]);
+  }, [directionsService, directionsRenderer, state]);
 
   // Update direction route
   useEffect(() => {
