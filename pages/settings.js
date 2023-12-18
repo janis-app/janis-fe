@@ -115,7 +115,9 @@ function Settings() {
               <RxCaretRight color="#C8C9CF" size={30} />
             </div>
           </div>
-          <div className="flex justify-between mb-[24px]" onClick={()=>{unsetToken(), router.push('/login');}}>
+          <div className="flex justify-between mb-[24px]" onClick={()=>{
+            dispatch({type: "SIGN_OUT"})
+            unsetToken(), router.push('/login');}}>
             <div className="flex items-center gap-[27px]">
               <span className="w-[40px] h-[40px] flex justify-center items-center bg-[#F4F8FC] rounded-full">
                 <Image src={logout} alt="web" />

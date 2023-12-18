@@ -8,6 +8,7 @@ export const generateDayPlan = async (userInfo) => {
       messages: [
         {
           role: "user",
+
           content: `Generate a JSON-formatted list of activities for my day plan. Consider the following criteria:
 
             - Personality: I am ${
