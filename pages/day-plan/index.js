@@ -29,6 +29,8 @@ import { AppContext } from "@/components/context/AppContext";
 import { updateUserFavorite } from "@/utils/updateUserFavorite";
 import { getUserProfileDetails } from "@/utils/getUserProfileDetails";
 import Maps from "@/components/Maps/maps";
+import { fromAddress } from "react-geocode";
+import Spinner from "@/lib/spinner";
 
 function DayPlan() {
   const [isTextVisible, setIsTextVisible] = useState(false);
@@ -42,7 +44,11 @@ function DayPlan() {
   const [favoriteActivities, setFavoriteActivities] = useState([]);
   const [totalTime, setTotalTime] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
-  const [temp , setTemp] = useState()
+  const [temp, setTemp] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [lat, setLat] = useState(0);
+  const [long, setLong] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const emojiRegex = /[\uD800-\uDBFF][\uDC00-\uDFFF]/;
 
@@ -52,32 +58,51 @@ function DayPlan() {
     );
   }, [state]);
 
- 
-// console.log("state",state?.user?.user?.information_gathering)
-  
-const api = {
-  key: "2319db5d5fab225d5c9d6cd5a01b577c",
-  lat: state?.user?.user?.information_gathering?.lat,
-  long: state?.user?.user?.information_gathering?.long,
-};
+  useEffect(() => {
+    if (state) {
+      setLoading(false);
+    }
+  }, state);
 
-const searchPressed = () => {
-  if(api.lat && api.long){
+  console.log("state", state?.user?.user?.information_gathering?.lat);
 
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${api.lat}&lon=${api.long}&appid=${api.key}&units=metric`)
-    .then((res) => res.json())
-    .then((result) => {
-      setWeatherData(result);
-      // setTemp(parseInt(weatherData?.main?.temp))
-    });
-    // console.log("weather data =>", weatherData?.main?.temp)
+  const api = {
+    key: "2319db5d5fab225d5c9d6cd5a01b577c",
+    lat: state?.user?.user?.information_gathering?.lat,
+    long: state?.user?.user?.information_gathering?.long,
   };
-}
+  const userLocation =
+    state?.user?.user?.information_gathering?.location ||
+    state?.user?.user?.information_gathering?.attributes?.location;
 
-useEffect(()=>{
-  searchPressed()
-}, [state?.user?.user])
+  const searchPressed = async () => {
+    setIsLoading(true);
+    try {
+      const { results } = await fromAddress(userLocation || "");
+      const { lat, lng } = results[0].geometry.location;
+      if (lat && lng) {
+        await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${api.key}&units=metric`
+        )
+          .then((res) => res.json())
+          .then((result) => {
+            setWeatherData(result);
+            setIsLoading(false);
 
+            // setTemp(parseInt(weatherData?.main?.temp))
+          });
+        // console.log("weather data =>", weatherData?.main?.temp)
+      }
+    } catch (error) {
+      setIsLoading(false);
+      // setLoading(false);
+      console.error("Error fetching user location:", error);
+    }
+  };
+
+  useEffect(() => {
+    searchPressed();
+  }, [state?.user?.user]);
 
   // console.log("favoriteActivities: ", favoriteActivities);
 
@@ -116,7 +141,7 @@ useEffect(()=>{
   const dayPlan = state?.dayPlan?.dayPlan;
   let parsedDayPlan = dayPlan && JSON.parse(dayPlan);
 
-  // console.log("parsedDayPlan", parsedDayPlan);
+  console.log("parsedDayPlan", parsedDayPlan);
   const data = parsedDayPlan?.activities;
   const foodLoactions = data?.filter((d) => d?.category?.includes("food"));
   const activityLoactions = data?.filter((d) =>
@@ -205,6 +230,15 @@ useEffect(()=>{
       img: cardImg4,
     },
   ];
+
+  if (loading) {
+    return (
+      <center className="h-screen flex flex-col justify-center items-center">
+        <Spinner colour="#000" /> <p>Loading your day plan screen...</p>
+      </center>
+    );
+  }
+
   return (
     <div className={styles.main_container}>
       {/* <div className="absolute left-[3rem] top-[6rem]">
@@ -214,7 +248,7 @@ useEffect(()=>{
         <Header progess={17} link="" profile={profile} />
       </div>
       <div className="absolute inset-0 top-0 h-[450px] z]">
-        <Maps />
+        <Maps state={state} />
       </div>
       <div className={styles.conatiner}>
         <div className="flex justify-between">
@@ -250,10 +284,20 @@ useEffect(()=>{
             >
               <Image src={sun} width={18} height={18} alt="sun image" />
             </div>
-            <p style={{ display: "flex", fontSize: 14, marginTop: -8 }}>{parseInt(weatherData?.main?.temp)}°</p>
-            <p style={{ fontSize: 8, padding: 0, margin: 0, color: "#fff" }}>
-              {weatherData?.weather[0]?.main}
-            </p>
+            {isLoading ? (
+              <Spinner colour="#DAF5FE" />
+            ) : (
+              <>
+                <p style={{ display: "flex", fontSize: 14, marginTop: -8 }}>
+                  {parseInt(weatherData?.main?.temp)}°
+                </p>
+                <p
+                  style={{ fontSize: 8, padding: 0, margin: 0, color: "#fff" }}
+                >
+                  {weatherData?.weather[0]?.main}
+                </p>
+              </>
+            )}
           </div>
         </div>
 
@@ -381,7 +425,9 @@ useEffect(()=>{
                     <p className="text-[12px]"> {items.description}</p>
                   </div>
                   <div>
-                    <p style={{ fontSize: 13 }} className="mb-2 font-[500]">{items.time}</p>
+                    <p style={{ fontSize: 13 }} className="mb-2 font-[500]">
+                      {items.time}
+                    </p>
                     <div
                       onClick={() => updateFavoriteHandler(items.title)}
                       className={`${styles.mdi_like} ${
