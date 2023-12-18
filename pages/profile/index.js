@@ -185,7 +185,7 @@ function Profile() {
                             alt="location icon"
                         />
                         {/* Las Palmas, Gran Canaria, Spain */}
-                        {state?.user?.user?.information_gathering?.location}
+                        {state?.user?.user?.information_gathering?.attributes?.location ? state?.user?.user?.information_gathering?.attributes?.location : state?.user?.user?.information_gathering?.location}
                     </p>
 
                     <div className='flex flex-col gap-[10px] items-center mt-[17px]'>
