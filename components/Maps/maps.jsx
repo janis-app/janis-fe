@@ -27,28 +27,35 @@ setDefaults({
   region: "es",
 });
 
-const Maps = () => {
+const Maps = ({state}) => {
   const [lat, setLat] = useState(0);
   const [long, setLong] = useState(0);
   const [Locations, setLocations] = useState([]);
-  const { state } = useContext(AppContext);
+  // const { state } = useContext(AppContext);
+  const userLocation =
+  state?.user?.user?.information_gathering?.location ||
+  state?.user?.user?.information_gathering?.attributes?.location;
   const dayPlan = state?.dayPlan?.dayPlan;
   let parsedDayPlan = dayPlan && JSON.parse(dayPlan);
-
-  // console.log("parsedDayPlan", parsedDayPlan);
   const data = parsedDayPlan?.activities;
   const dataLocations = data?.map((d) => d?.address);
   console.log("dataLocation", dataLocations);
   let activityLocations = [];
+
+  console.log("userLocation", userLocation);
   useEffect(() => {
-    fromAddress(state?.user?.user?.infomation_gathering?.location || "New York")
-      .then(({ results }) => {
+    console.log("userLocation", userLocation);
+    const fetchUserLocation = async () => {
+      try {
+        const { results } = await fromAddress(userLocation || "");
         const { lat, lng } = results[0].geometry.location;
-        // console.log(lat, lng);
+        console.log(lat, lng);
         setLat(lat);
         setLong(lng);
-      })
-      .catch(console.error);
+      } catch (error) {
+        console.error("Error fetching user location:", error);
+      }
+    };
     const promises = dataLocations?.map(async (location, index) => {
       try {
         const response = await fromAddress(location || "New York");
@@ -59,33 +66,36 @@ const Maps = () => {
         console.error(`Error fetching location for ${location}:`, error);
       }
     });
-
-    // Use Promise.all to wait for all promises to resolve
     Promise.all(promises)
       .then(() => {
         console.log("All locations fetched:", activityLocations);
-
-        // Now you can render your map component or perform other actions that depend on the populated activityLocations array
-        // For example, you can set the state in a React component to trigger a re-render.
         setLocations(activityLocations);
       })
       .catch((error) => {
         console.error("Error fetching locations:", error);
       });
+    fetchUserLocation();
+    // Use Promise.all to wait for all promises to resolve
   }, [state]);
+
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}>
       <div className="h-[450px]">
         <Map
           zoom={9}
           center={{ lat: lat ? lat : 0, lng: long ? long : 0 }}
-          // disableDefaultUI={true}
+          disableDefaultUI={true}
         >
-          <Marker position={{ lat: 40.711967, lng: -74.006076 }} />
+          <Marker position={{ lat: lat ? lat : 0, lng: long ? long : 0 }} />
           {Locations.map((location, index) => {
             return (
-              // eslint-disable-next-line react/jsx-key
-              <Marker position={{ lat: 40.711967, lng: -74.006076 }}>
+              <Marker
+                key={index}
+                position={{
+                  lat: parseInt(location?.lat),
+                  lng: parseInt(location?.long),
+                }}
+              >
                 <Pin
                   background={"#22ccff"}
                   borderColor={"#1e89a1"}
@@ -94,14 +104,15 @@ const Maps = () => {
               </Marker>
             );
           })}
-          <Directions dataLocations={dataLocations} />
+          <Directions dataLocations={dataLocations} state={state} />
         </Map>
       </div>
     </APIProvider>
   );
 };
 
-function Directions({dataLocations}) {
+
+function Directions({state }) {
   const map = useMap();
   const routesLibrary = useMapsLibrary("routes");
   const [directionsService, setDirectionsService] = useState();
@@ -110,7 +121,12 @@ function Directions({dataLocations}) {
   const [routeIndex, setRouteIndex] = useState(0);
   const selected = routes[routeIndex];
   const leg = selected?.legs[0];
-
+  
+  const dayPlan = state?.dayPlan?.dayPlan;
+  let parsedDayPlan = dayPlan && JSON.parse(dayPlan);
+  const data = parsedDayPlan?.activities;
+  const dataLocations = data?.map((d) => d?.address);
+  const waypoints = dataLocations?.slice(1, dataLocations.length - 1)?.map((location) => ({ location }));
   // Initialize directions service and renderer
   useEffect(() => {
     if (!routesLibrary || !map) return;
@@ -119,12 +135,14 @@ function Directions({dataLocations}) {
   }, [routesLibrary, map]);
 
   // Use directions service
+  console.log('1', directionsService);
+  console.log('2', directionsRenderer);
   useEffect(() => {
     if (!directionsService || !directionsRenderer) return;
-
     directionsService
       .route({
-        origin: dataLocations && dataLocations[0],
+        origin: dataLocations && dataLocations[1],
+        waypoints,
         destination: dataLocations && dataLocations[dataLocations?.length - 1],
         travelMode: google.maps.TravelMode.DRIVING,
         provideRouteAlternatives: true,
@@ -141,7 +159,7 @@ function Directions({dataLocations}) {
   useEffect(() => {
     if (!directionsRenderer) return;
     directionsRenderer.setRouteIndex(routeIndex);
-  }, [routeIndex, directionsRenderer]);
+  }, [routeIndex, directionsRenderer, state]);
 
   if (!leg) return null;
 
