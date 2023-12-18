@@ -336,9 +336,7 @@ function DayPlan() {
         <hr style={{ margin: "16px 0px", color: "#DDE3EA" }} />
 
         <p style={{ fontSize: 14, fontWeight: 400, color: "#B0B6BF" }}>
-          Embark on a day of volcanic vistas, serene reservoir retreats, and
-          sunsets on sandy shores in Las Palmas.Your camera and soul will thank
-          you!
+          {parsedDayPlan?.summary}
         </p>
       </div>
       <div className={styles.sub_container}>
