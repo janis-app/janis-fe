@@ -122,7 +122,7 @@ function Location() {
             onPlaceSelected={(place) => {
               handlePlaceSelected(place)
             }}
-            value={location}
+            // value={location}
             onChange={(e) => setLoacation(e.target.value)}
             className="w-[90%]"
             style={{ outline: 'none', pointerEvents: 'auto' }} // Add your custom styles here
