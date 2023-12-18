@@ -55,16 +55,15 @@ function DayPlan() {
  
 // console.log("state",state?.user?.user?.information_gathering)
   
-const api = {
-  key: "2319db5d5fab225d5c9d6cd5a01b577c",
-  lat: state?.user?.user?.information_gathering?.lat,
-  long: state?.user?.user?.information_gathering?.long,
-};
 
 const searchPressed = () => {
-  if(api.lat && api.long){
+  if(state?.user?.user?.information_gathering){
 
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${api.lat}&lon=${api.long}&appid=${api.key}&units=metric`)
+    const lat = state?.user?.user?.information_gathering?.attributes?.lat ? state?.user?.user?.information_gathering?.attributes?.lat : state?.user?.user?.information_gathering?.lat
+    const lon = state?.user?.user?.information_gathering?.attributes?.long ? state?.user?.user?.information_gathering?.attributes?.long : state?.user?.user?.information_gathering?.long
+    const key = "2319db5d5fab225d5c9d6cd5a01b577c"
+
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=metric`)
     .then((res) => res.json())
     .then((result) => {
       setWeatherData(result);
@@ -75,8 +74,10 @@ const searchPressed = () => {
 }
 
 useEffect(()=>{
+  console.log("Trigger UseEffect------------", state?.user?.user?.information_gathering);
   searchPressed()
 }, [state?.user?.user])
+console.log("user=>=>=>=>", state?.user?.user?.information_gathering)
 
 
   // console.log("favoriteActivities: ", favoriteActivities);
@@ -252,7 +253,7 @@ useEffect(()=>{
             </div>
             <p style={{ display: "flex", fontSize: 14, marginTop: -8 }}>{parseInt(weatherData?.main?.temp)}°</p>
             <p style={{ fontSize: 8, padding: 0, margin: 0, color: "#fff" }}>
-              {weatherData?.weather[0]?.main}
+              {weatherData?.weather && weatherData?.weather[0]?.main}
             </p>
           </div>
         </div>

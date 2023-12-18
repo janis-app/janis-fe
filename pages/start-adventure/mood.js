@@ -60,7 +60,7 @@ function Mood() {
         setLoading(false);
       });
   };
-
+console.log("user state", state?.user?.user?.information_gathering);
   return (
     <div className="mx-[24px]">
       <div className="px-[20px]">
