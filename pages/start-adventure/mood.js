@@ -26,7 +26,9 @@ function Mood() {
   useEffect(() => {
     setRadioValue(informations?.mood);
   }, [state]);
-
+  useEffect(() => {
+    setRadioValue("");
+  }, [state]);
   const handleBtnClick = async () => {
     setLoading(true);
     const token = getTokenFromLocalCookie();
