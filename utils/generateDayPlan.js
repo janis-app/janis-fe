@@ -8,8 +8,48 @@ export const generateDayPlan = async (userInfo) => {
       messages: [
         {
           role: "user",
-          content:
-            `Generate a list of activities with for my day plan based on the following criteria, I am ${userInfo?.personality == 100 ? "an Extrovert" : userInfo?.personality == 0 ? "an Introvert" : "neither an Introvert or Extrovert" }, i like activities such as ${userInfo?.Interests}, my location is ${userInfo?.location}, my preferred mode of movement is ${userInfo?.preferred_vehicle}ing, my diet type is ${userInfo?.diet_type} and i enjoy ${userInfo?.cuisine_type} cuisine. My budget is around ${userInfo?.budget} euros, i'll be going with my ${userInfo?.crew} and my mood is ${userInfo?.mood}, i ${userInfo?.lactose_intolerance ? "am" : "am not"} lactose intolerant,  i ${userInfo?.gluten_intolerance ? "am" : "am not"} gluten intolerant and  i ${userInfo?.fructose_intolerance ? "am" : "am not"} fructose intolerant. Assign a time slot between 9 am and 9 pm to each activity, consistently include one of the following categories (food, activities, break, viewpoints) for each activity, and present each activity as a JSON value. Ensure each activity begins with a title followed by a short description, a time, a address and then the category`,
+
+          content: `Generate a JSON-formatted list of activities for my day plan. Consider the following criteria:
+
+            - Personality: I am ${
+              userInfo?.personality == 100
+                ? "an Extrovert"
+                : userInfo?.personality == 0
+                ? "an Introvert"
+                : "neither an Introvert or Extrovert"
+            }.
+            - Interests: I like activities such as ${userInfo?.Interests}.
+            - Location: My current location is ${userInfo?.location}.
+            - Preferred mode of movement: I prefer ${
+              userInfo?.preferred_vehicle
+            }ing.
+            - Diet type: My diet type is ${userInfo?.diet_type}.
+            - Cuisine enjoyment: I enjoy ${userInfo?.cuisine_type} cuisine.
+            - Budget: My budget is around ${userInfo?.budget} euros.
+            - Crew: I'll be going with my ${userInfo?.crew}.
+            - Mood: My mood is ${userInfo?.mood}.
+            - Lactose intolerance: I ${
+              userInfo?.lactose_intolerance ? "am" : "am not"
+            } lactose intolerant.
+            - Gluten intolerance: I ${
+              userInfo?.gluten_intolerance ? "am" : "am not"
+            } gluten intolerant.
+            - Fructose intolerance: I ${
+              userInfo?.fructose_intolerance ? "am" : "am not"
+            } fructose intolerant.
+            
+            Assign a time slot between 9 am and 9 pm to each activity. Consistently include the following properties for each activity:
+            
+            - Title
+            - Description
+            - Time (in the format 9:00 AM)
+            - Address
+            - Category (food, activities, break, viewpoints)
+            
+            Ensure each activity follows the format: { "title": "...", "description": "...", "time": "...", "address": "...", "category": "..." }.
+
+            Then include in the json a summary with not more than 30 words of the day's activity .
+            `,
         },
       ],
       temperature: 0.7,
