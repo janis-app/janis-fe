@@ -18,6 +18,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         user: { ...state.user, information_gathering: action.payload },
       };
+    case "CLEAR_USER_STATE":
+      return {
+        ...state,
+        user: null,
+      };
     // Other cases related to the user
     default:
       return state;

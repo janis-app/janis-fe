@@ -21,6 +21,16 @@ function Settings() {
   const {state, dispatch} = useContext(AppContext)
 
   const router = useRouter();
+  const handleLogout = ()=>{
+    unsetToken();
+    dispatch({
+      type: "CLEAR_USER_STATE",
+    });
+    dispatch({
+      type: "CLEAR_DAY_PLAN",
+    });
+    router.push("/login")
+  }
   return (
     <div className="bg-[#A2DCF0]">
       <div className="relative z-[2] pt-[24px] flex justify-between items-center   pb-[29px] px-[20px] ">
@@ -115,7 +125,7 @@ function Settings() {
               <RxCaretRight color="#C8C9CF" size={30} />
             </div>
           </div>
-          <div className="flex justify-between mb-[24px]" onClick={()=>{unsetToken(), router.push('/login');}}>
+          <div className="flex justify-between mb-[24px]" onClick={handleLogout}>
             <div className="flex items-center gap-[27px]">
               <span className="w-[40px] h-[40px] flex justify-center items-center bg-[#F4F8FC] rounded-full">
                 <Image src={logout} alt="web" />
