@@ -18,6 +18,9 @@ const userReducer = (state = initialState, action) => {
         ...state,
         user: { ...state.user, information_gathering: action.payload },
       };
+      
+    case "SIGN_OUT":
+      return initialState
     // Other cases related to the user
     default:
       return state;
