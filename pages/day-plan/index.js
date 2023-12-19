@@ -55,23 +55,31 @@ function DayPlan() {
  
 // console.log("state",state?.user?.user?.information_gathering)
   
-
 const searchPressed = () => {
-  if(state?.user?.user?.information_gathering){
+  if (state?.user?.user?.information_gathering) {
+    const lat = state?.user?.user?.information_gathering?.attributes?.lat
+      ? state?.user?.user?.information_gathering?.attributes?.lat
+      : state?.user?.user?.information_gathering?.lat;
 
-    const lat = state?.user?.user?.information_gathering?.attributes?.lat ? state?.user?.user?.information_gathering?.attributes?.lat : state?.user?.user?.information_gathering?.lat
-    const lon = state?.user?.user?.information_gathering?.attributes?.long ? state?.user?.user?.information_gathering?.attributes?.long : state?.user?.user?.information_gathering?.long
-    const key = "2319db5d5fab225d5c9d6cd5a01b577c"
+    const lon = state?.user?.user?.information_gathering?.attributes?.long
+      ? state?.user?.user?.information_gathering?.attributes?.long
+      : state?.user?.user?.information_gathering?.long;
+
+    const key = "2319db5d5fab225d5c9d6cd5a01b577c";
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=metric`)
-    .then((res) => res.json())
-    .then((result) => {
-      setWeatherData(result);
-      // setTemp(parseInt(weatherData?.main?.temp))
-    });
-    // console.log("weather data =>", weatherData?.main?.temp)
-  };
-}
+      .then((res) => res.json())
+      .then((result) => {
+        setWeatherData(result);
+        // setTemp(parseInt(weatherData?.main?.temp))
+      })
+      .catch((error) => {
+        console.error("Error fetching weather data:", error);
+        // Handle the error as needed (e.g., display an error message)
+      });
+  }
+};
+
 
 useEffect(()=>{
   console.log("Trigger UseEffect------------", state?.user?.user?.information_gathering);
