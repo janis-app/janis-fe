@@ -58,7 +58,7 @@ function DayPlan() {
     if (state) {
       setLoading(false);
     }
-  }, state);
+  }, [state]);
 
 
   const api = {
