@@ -50,7 +50,7 @@ function DayPlan() {
 
   useEffect(() => {
     setFavoriteActivities(
-      state?.user?.user?.favorite_activity?.favourite_activities
+      state?.user?.user?.favorite_activity?.favourite_activities || []
     );
   }, [state]);
 

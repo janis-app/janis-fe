@@ -14,6 +14,7 @@ export const updateUserFavorite = async (state, data) => {
     data: {
       data: {
         favourite_activities:data,
+        user: state?.user?.user,
       },
     },
     headers: {
