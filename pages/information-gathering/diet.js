@@ -10,10 +10,15 @@ import { getTokenFromLocalCookie } from "@/lib/auth";
 
 import axios from "axios";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 
 function Diet() {
+  const searchParams = useSearchParams()
+ 
+  const query = searchParams.get('ref')
+  console.log("Search Param: ", query);
   const router = useRouter();
   const [dietType, setDietType] = useState("");
   const [cuisineType, setCuisineType] = useState([]);
@@ -58,6 +63,8 @@ function Diet() {
     })
       .then((res) => {
         setLoading(false);
+        query ? 
+        router.push("/profile") :
         router.push("/information-gathering/budget");
         dispatch({
           type: "UPDATE_USER_INFOMATION_GATHERING",
