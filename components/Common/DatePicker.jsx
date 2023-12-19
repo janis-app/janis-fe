@@ -6,7 +6,6 @@ const CustomDatePicker = ({ selectedDate, setSelectedDate, maxDate ,setValidatio
   const [initialDate, setInitialDate] = useState(new Date());
 
   useEffect(() => {
-    console.log("selected date is -----", selectedDate)
     if (selectedDate != null) {
       const dateParts = selectedDate.split("/"); // Split the string into an array of parts
       const year = parseInt(dateParts[0]); // Extract the year part and convert it to a number
@@ -15,7 +14,6 @@ const CustomDatePicker = ({ selectedDate, setSelectedDate, maxDate ,setValidatio
       const newDate = new Date(year, month, day); // Create a new Date object using the extracted values
       
       newDate == 'Invalid Date' ? setInitialDate(new Date()) : setInitialDate(newDate) 
-      console.log("new date is =>--------------",newDate)
       // setInitialDate(newDate);
     }
   }, []);
@@ -44,7 +42,6 @@ const CustomDatePicker = ({ selectedDate, setSelectedDate, maxDate ,setValidatio
     setInitialDate(date);
     setValidationErr({ type: '', err: '' });
   };
-console.log("setInitialDate=>=++++",initialDate)
   const monthMap = {
     1: "January",
     2: "Febuary",

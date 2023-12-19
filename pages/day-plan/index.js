@@ -37,10 +37,6 @@ function DayPlan() {
   const [updatedIndex, setUpdatedIndex] = useState(null);
   const [foodIndex, setFoodIndex] = useState(null);
   const { state, dispatch } = useContext(AppContext);
-  console.log(
-    "fgf",
-    state?.user?.user?.favorite_activity?.favourite_activities
-  );
   const [favoriteActivities, setFavoriteActivities] = useState([]);
   const [totalTime, setTotalTime] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
@@ -64,7 +60,6 @@ function DayPlan() {
     }
   }, state);
 
-  console.log("state", state?.user?.user?.information_gathering?.lat);
 
   const api = {
     key: "2319db5d5fab225d5c9d6cd5a01b577c",
@@ -91,7 +86,6 @@ function DayPlan() {
 
             // setTemp(parseInt(weatherData?.main?.temp))
           });
-        // console.log("weather data =>", weatherData?.main?.temp)
       }
     } catch (error) {
       setIsLoading(false);
@@ -104,7 +98,6 @@ function DayPlan() {
     searchPressed();
   }, [state?.user?.user]);
 
-  // console.log("favoriteActivities: ", favoriteActivities);
 
   const accordionHandler = (index) => {
     setIsTextVisible(!isTextVisible);
@@ -141,7 +134,6 @@ function DayPlan() {
   const dayPlan = state?.dayPlan?.dayPlan;
   let parsedDayPlan = dayPlan && JSON.parse(dayPlan);
 
-  console.log("parsedDayPlan", parsedDayPlan);
   const data = parsedDayPlan?.activities;
   const foodLoactions = data?.filter((d) => d?.category?.includes("food"));
   const activityLoactions = data?.filter((d) =>
@@ -177,18 +169,15 @@ function DayPlan() {
 
       const formattedTotalTime = `${totalHours + totalMinutes / 60}h`;
       setTotalTime(formattedTotalTime);
-      // console.log(`Total time: ${formattedTotalTime}`);
     }
   }, [data]);
 
   const updateFavoriteHandler = async (activityName) => {
     let payload;
-    // console.log("data", data);
     // check if activity is already in favorites  list
     let ifExist = favoriteActivities?.find(
       (d) => d?.activity_name == activityName
     );
-    // console.log("ifExist", ifExist);
     if (ifExist) {
       // if it already exists, remove from the favorites list
       const newArray = favoriteActivities?.filter(
@@ -198,7 +187,6 @@ function DayPlan() {
     } else {
       payload = [...favoriteActivities, { activity_name: activityName }];
     }
-    // console.log("payload", payload);
     // if it doesn't exist, add to the favorites list
     await updateUserFavorite(state, payload)
       .then((res) => {
@@ -405,7 +393,6 @@ function DayPlan() {
               favoriteActivities?.attributes?.activities?.find(
                 (act) => act == items.id
               );
-            // console.log("isActivityExist: ", isActivityExist);
 
             return (
               <div
@@ -444,6 +431,9 @@ function DayPlan() {
                       />
                     </div>
                   </div>
+                </div>
+                <div>
+                  <p className="text-[12px] mb-3 font-medium">Break Suggestion: <span className="font-normal">{items?.break || "No break suggestion"}</span></p>
                 </div>
 
                 {/* {isTextVisible && updatedIndex == index ? ( */}

@@ -57,7 +57,6 @@ function Personality() {
       //   }
       // )
       .then((res) => {
-        console.log("res", res);
         setLoading(false);
         dispatch({
           type: "UPDATE_USER_INFOMATION_GATHERING",

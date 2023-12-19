@@ -32,11 +32,6 @@ function Location() {
 
 
 
-  // console.log("user location from strapi =>", state?.user?.user?.information_gathering?.location)
-
-  // console.log("onchange user location =>", location)
-
-  // console.log("selectedPlace long", selectedPlace.lat, selectedPlace.lng);
   const handleBtnClick = async () => {
     setLoading(true);
     const token = getTokenFromLocalCookie();
@@ -72,13 +67,6 @@ function Location() {
         setLoading(false);
       });
   };
-  // console.log("Lat", selectedPlaceLat)
-
-  // console.log("Long", selectedPlaceLong)
-  
-  // console.log("user location from strapi=>", state?.user?.user?.information_gathering?.location)
-  console.log("user location from strapi  lat =>", state?.user?.user?.information_gathering?.lat)
-  console.log("user location from strapi long=>", state?.user?.user?.information_gathering?.long)
   const handlePlaceSelected = (place) => {
     const { geometry, formatted_address } = place;
     const { location } = geometry;

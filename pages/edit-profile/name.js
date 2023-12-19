@@ -21,8 +21,6 @@ function Name() {
         let data = { username: newName };
         updateUserAccounnt(data)
             .then((res) => {
-                // console.log("Res: ", res);
-                // console.log("status log is here",res)
                 if (res?.id) {
                     setErrMsg('')
                     dispatch({

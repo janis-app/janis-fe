@@ -15,20 +15,17 @@ function Interest() {
   const router = useRouter();
   const [selectedBtn, setSelectedBtn] = useState([]);
   const { state, dispatch } = useContext(AppContext);
-console.log('state', state);
   const [loading, setLoading] = useState(false);
 
   let interestValue =
     state?.user?.user?.information_gathering?.attributes?.Interests || state?.user?.user?.information_gathering?.Interests;
     interestValue = interestValue?.split(",")
-    console.log('interestValue', interestValue);
   useEffect(() => {
     setSelectedBtn(interestValue || []);
   }, [state]);
 
 
   const handleBtnClick = async () => {
-    console.log('ds', state?.user?.user?.information_gathering);
     setLoading(true);
     const token = getTokenFromLocalCookie();
     await axios({

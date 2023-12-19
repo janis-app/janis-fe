@@ -31,7 +31,6 @@ import { changeProfileImage } from '@/lib/profile';
 function Profile() {
     const { state, dispatch } = useContext(AppContext)
 
-    // console.log("State of user profile: ", state?.user);
 
     const [switch1, setSwitch1] = useState(false);
     const [switch2, setSwitch2] = useState(false);
@@ -56,7 +55,7 @@ function Profile() {
 
         const res = await changeProfileImage(file, null, null);
 
-        console.log("Res of the file: ", res);
+
 
         if (res?.success) {
             dispatch({

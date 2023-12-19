@@ -39,17 +39,13 @@ const Maps = ({state}) => {
   let parsedDayPlan = dayPlan && JSON.parse(dayPlan);
   const data = parsedDayPlan?.activities;
   const dataLocations = data?.map((d) => d?.address);
-  console.log("dataLocation", dataLocations);
   let activityLocations = [];
 
-  console.log("userLocation", userLocation);
   useEffect(() => {
-    console.log("userLocation", userLocation);
     const fetchUserLocation = async () => {
       try {
         const { results } = await fromAddress(userLocation || "");
         const { lat, lng } = results[0].geometry.location;
-        console.log(lat, lng);
         setLat(lat);
         setLong(lng);
       } catch (error) {
@@ -61,14 +57,12 @@ const Maps = ({state}) => {
         const response = await fromAddress(location || "New York");
         const { lat, lng } = response.results[0].geometry.location;
         activityLocations.push({ lat, lng });
-        // console.log(index, lat, lng);
       } catch (error) {
         console.error(`Error fetching location for ${location}:`, error);
       }
     });
     Promise.all(promises)
       .then(() => {
-        console.log("All locations fetched:", activityLocations);
         setLocations(activityLocations);
       })
       .catch((error) => {
@@ -135,13 +129,11 @@ function Directions({state }) {
   }, [routesLibrary, map]);
 
   // Use directions service
-  console.log('1', directionsService);
-  console.log('2', directionsRenderer);
   useEffect(() => {
     if (!directionsService || !directionsRenderer) return;
     directionsService
       .route({
-        origin: dataLocations && dataLocations[1],
+        origin: dataLocations && dataLocations[0],
         waypoints,
         destination: dataLocations && dataLocations[dataLocations?.length - 1],
         travelMode: google.maps.TravelMode.DRIVING,

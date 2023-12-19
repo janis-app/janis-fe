@@ -12,7 +12,6 @@ import { AppContext } from '@/components/context/AppContext';
 
 function EditProfile() {
     const {state, dispatch} = useContext(AppContext)
-    // console.log("state value for edit profile",state.user)
 
     return (
         <div className={styles.main_conatiner}>

@@ -34,7 +34,6 @@ export default function DietItems({
   const [cuisineindex, setCuisineindex] = useState([]);
   // const [selectedCousines, setSelectedCousines] = useState([]);
 
-  // console.log("selectedCousines: ", cuisineType);
 
   const cuisine = [
     {
@@ -81,14 +80,12 @@ export default function DietItems({
   ]
 
   // const cousinesHandler = (newCousine) => {
-  //   console.log("cuisine array length=>", cuisineType.length);
   //   if (cuisineType.length < 5) {
   //     setCuisineType([...cuisineType, newCousine]) 
   //   }
   // }
 
   const cousinesHandler = (newCousine) => {
-    console.log("cuisine array length =>", cuisineType.length);
   
     // Check if the newCousine is already in the array
     const isCuisineExist = cuisineType.includes(newCousine);
