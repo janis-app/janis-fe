@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { PiCaretLeftBold } from "react-icons/pi";
 import styles from "@/styles/profile/profile.module.css"
 import setting from '@/public/assets/setting.svg'
@@ -13,10 +13,6 @@ import diet from '@/public/assets/diet.svg'
 import budget from '@/public/assets/budget.svg'
 import crew from '@/public/assets/crew.svg'
 import pencil from '@/public/assets/pencil.svg'
-import it from '@/public/assets/it.svg'
-import vn from '@/public/assets/vn.svg'
-import ind from '@/public/assets/in.svg'
-import mx from '@/public/assets/mx.svg'
 import Switch from "react-switch";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -26,6 +22,64 @@ import profileIcon from '@/public/assets/profileIcon.jpg'
 import bg from "@/public/assets/profile-bg.png"
 import { FiEdit } from 'react-icons/fi';
 import { changeProfileImage } from '@/lib/profile';
+import jp from "@/public/assets/jp.svg";
+import it from "@/public/assets/it.svg";
+import vn from "@/public/assets/vn.svg";
+import es from "@/public/assets/es.svg";
+import cn from "@/public/assets/cn.svg";
+import ind from "@/public/assets/in.svg";
+import us from "@/public/assets/us.svg";
+import th from "@/public/assets/th.svg";
+import turkey from "@/public/assets/tr.svg";
+import mx from "@/public/assets/mx.svg";
+
+
+
+
+const cuisine = [
+    {
+        img: jp,
+        text: 'jp'
+    },
+    {
+        img: it,
+        text: 'it'
+    },
+    {
+        img: vn,
+        text: 'vn'
+    },
+    {
+        img: es,
+        text: 'es'
+    },
+    {
+        img: cn,
+        text: 'cn'
+    },
+    {
+        img: ind,
+        text: 'ind'
+    },
+    {
+        img: us,
+        text: 'us'
+    },
+    {
+        img: th,
+        text: 'th'
+    },
+    {
+        img: turkey,
+        text: 'turkey'
+    },
+    {
+        img: mx,
+        text: 'mx'
+    },
+
+]
+
 
 
 function Profile() {
@@ -37,6 +91,13 @@ function Profile() {
     const [switch3, setSwitch3] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const [validationErr, setValidationErr] = useState({ type: '', err: '' })
+    const [filterCuisine, setFilterCuisine] = useState([])
+
+
+    const userCuisines = state?.user?.user?.information_gathering?.attributes?.cuisine_type ? 
+    state?.user?.user?.information_gathering?.attributes?.cuisine_type : 
+    state?.user?.user?.information_gathering?.cuisine_type
+
 
 
     async function handleImageChange(e) {
@@ -67,6 +128,16 @@ function Profile() {
         }
     }
 
+
+
+    useEffect(() => {
+        if (userCuisines) {
+            const filteredCuisine = cuisine.filter(item => userCuisines.includes(item.text));
+            setFilterCuisine(filteredCuisine);  
+        }
+    }, [state?.user?.user?.information_gathering?.cuisine_type]);
+
+    
 
     const isValidFileType = (file) => {
         const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -282,7 +353,9 @@ function Profile() {
                     </div>
 
                     <div className={`mt-[28px] ${styles.personality}`}>
-                        <div className='flex gap-[6px] mb-[11px] '>
+                        <Link 
+                        href="/information-gathering/diet?ref=edit-cuisine"
+                        className='flex gap-[6px] mb-[11px] '>
                             <p className='text-[14px] font-[600] leading-[20px]'>Cuisine
                             </p>
                             {/* <Image
@@ -292,9 +365,9 @@ function Profile() {
                                 alt="vector icon"
                             /> */}
                             <FiEdit color="#d3d3d3" />
-                        </div>
-                        <div className='flex justify-between items-center '>
-                            {flag.map((items, Index) => {
+                        </Link>
+                        <div className='flex  items-center '>
+                            {filterCuisine?.map((items, Index) => {
                                 return (
                                     <div className={styles.radius_div} key={Index}>
                                         <Image
