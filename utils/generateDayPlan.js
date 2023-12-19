@@ -50,6 +50,7 @@ export const generateDayPlan = async (userInfo) => {
             Ensure each activity follows the format: { "title": "...", "description": "...", "time": "...", "address": "...", "category": "...", "break": "..." }.
 
             Then include in the json a summary with not more than 30 words of the day's activity .
+            Additionally, provide break suggestions for at least 3-4 activities.
             `,
         },
       ],
