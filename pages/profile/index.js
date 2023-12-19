@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { PiCaretLeftBold } from "react-icons/pi";
 import styles from "@/styles/profile/profile.module.css"
 import setting from '@/public/assets/setting.svg'
@@ -92,12 +92,22 @@ function Profile() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [validationErr, setValidationErr] = useState({ type: '', err: '' })
     const [filterCuisine, setFilterCuisine] = useState([])
+    const [filterInterest, setFilterInterest] = useState([])
+
+    const userCuisines = useMemo(() => {
+        return state?.user?.user?.information_gathering?.attributes?.cuisine_type ?
+            state?.user?.user?.information_gathering?.attributes?.cuisine_type :
+            state?.user?.user?.information_gathering?.cuisine_type;
+    }, [state?.user?.user?.information_gathering?.attributes?.cuisine_type, state?.user?.user?.information_gathering?.cuisine_type]);
 
 
-    const userCuisines = state?.user?.user?.information_gathering?.attributes?.cuisine_type ? 
-    state?.user?.user?.information_gathering?.attributes?.cuisine_type : 
-    state?.user?.user?.information_gathering?.cuisine_type
+    const userInterest = useMemo(() => {
+        return state?.user?.user?.information_gathering?.attributes?.Interests ?
+            state?.user?.user?.information_gathering?.attributes?.Interests :
+            state?.user?.user?.information_gathering?.Interests;
+    }, [state?.user?.user?.information_gathering?.attributes?.Interests, state?.user?.user?.information_gathering?.Interests]);
 
+    
 
 
     async function handleImageChange(e) {
@@ -133,11 +143,19 @@ function Profile() {
     useEffect(() => {
         if (userCuisines) {
             const filteredCuisine = cuisine.filter(item => userCuisines.includes(item.text));
-            setFilterCuisine(filteredCuisine);  
+            setFilterCuisine(filteredCuisine);
         }
     }, [state?.user?.user?.information_gathering?.cuisine_type]);
 
-    
+    useEffect(() => {
+        if (userInterest) {
+            const interestsArray = userInterest.split(',');
+            const trimmedInterestsArray = interestsArray.map(item => item.trim());
+            // console.log("trimmedInterestsArray", trimmedInterestsArray)
+            setFilterInterest(trimmedInterestsArray)
+        }
+    }, [state?.user?.user?.information_gathering?.cuisine_type]);
+
 
     const isValidFileType = (file) => {
         const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -328,7 +346,9 @@ function Profile() {
                         </div>
                     </div>
                     <div className='mt-[16px] h-auto'>
-                        <div className='flex items-center gap-[6px] '>
+                        <Link
+                            href="/information-gathering/interests?ref=edit-interest"
+                            className='flex items-center gap-[6px] '>
                             <p className='text-[16px] font-[600] leading-[20px]'>Interests
                             </p>
                             {/* <Image
@@ -338,24 +358,30 @@ function Profile() {
                                 alt="vector icon"
                             /> */}
                             <FiEdit color="#d3d3d3" />
-                        </div>
+                        </Link>
                         <div className='mt-[16px]'>
-                            <button className={styles.btn}>
-                                🏞️ Hiking
-                            </button>
-                            <button className={styles.btn}>
+                            {
+                                filterInterest?.map((item, index) => {
+                                    return (
+                                        <button key={index} className={styles.btn}>
+                                            {item}
+                                        </button>
+                                    )
+                                })
+                            }
+                            {/* <button className={styles.btn}>
                                 🏖️ Beaches
                             </button>
                             <button className={styles.btn}>
                                 🎵 Music
-                            </button>
+                            </button> */}
                         </div>
                     </div>
 
                     <div className={`mt-[28px] ${styles.personality}`}>
-                        <Link 
-                        href="/information-gathering/diet?ref=edit-cuisine"
-                        className='flex gap-[6px] mb-[11px] '>
+                        <Link
+                            href="/information-gathering/diet?ref=edit-cuisine"
+                            className='flex gap-[6px] mb-[11px] '>
                             <p className='text-[14px] font-[600] leading-[20px]'>Cuisine
                             </p>
                             {/* <Image
