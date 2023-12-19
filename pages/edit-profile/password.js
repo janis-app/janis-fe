@@ -43,7 +43,6 @@ function Password() {
             .then((res) => {
 
                 if (res?.user?.id) {
-                    // console.log("print inside the if-----+++");
                     // setSuccMsg('Password changed successfully');
 
                     setShowModal(true)

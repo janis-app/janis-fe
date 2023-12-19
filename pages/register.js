@@ -34,8 +34,6 @@ function RegisterPage() {
 
   const [showPassword, setShowPassword] = useState(false)
 
-  // console.log("Form Values: ", formValues);
-  // console.log("selectedDate: ", selectedDate);
 
   const router = useRouter();
 
@@ -67,7 +65,6 @@ function RegisterPage() {
 
     const file = e.target.files?.[0]
 
-    console.log('this is the file', file);
 
     if (file) {
       if (!isValidFileType(file)) {
@@ -84,8 +81,6 @@ function RegisterPage() {
     }
   }
 
-  console.log("Validation Message: ", validationMessage);
-  console.log("Err Messages: ", validationErr);
 
   const isEmailVerified = async (e) => {
 
@@ -93,7 +88,6 @@ function RegisterPage() {
       email: formValues?.emailAddress
     }
 
-    console.log("data recieve========", data);
 
     const response = await fetcher(
       // 'http://localhost:1337/api/verify-email',
@@ -111,7 +105,6 @@ function RegisterPage() {
     if (!response?.status) {
       setStep((prev) => prev + 1)
     }
-    console.log("Res of the Email Verification: ", response);
 
   }
 
@@ -169,11 +162,9 @@ function RegisterPage() {
       }
       setLoading(false)
 
-      console.log("response data: ", responseData);
     }
   }
 
-  console.log("Err:", err);
 
   return (
     <div className="relative login_container">

@@ -11,7 +11,6 @@ const withAuthProtection = (WrappedComponent) => {
         useLayoutEffect(() => {
             const getUserId = async () => {
                 const userID = await getIdFromLocalCookie();
-                console.log("UserId: ", userID);
 
                 if (userID == null || userID == undefined) {
                     router.push('/login');

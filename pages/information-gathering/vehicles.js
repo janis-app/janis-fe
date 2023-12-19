@@ -20,7 +20,6 @@ function Vehicle() {
 
   let vehicleValue =
   state?.user?.user?.information_gathering?.attributes?.preferred_vehicle;
-  console.log('vehicleValue', vehicleValue);
 useEffect(() => {
   setValue(vehicleValue || "");
 }, [state]);
