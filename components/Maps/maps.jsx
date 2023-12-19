@@ -27,14 +27,12 @@ setDefaults({
   region: "es",
 });
 
-const Maps = ({state}) => {
+const Maps = ({ state }) => {
   const [lat, setLat] = useState(0);
   const [long, setLong] = useState(0);
   const [Locations, setLocations] = useState([]);
   // const { state } = useContext(AppContext);
-  const userLocation =
-  state?.user?.user?.information_gathering?.location ||
-  state?.user?.user?.information_gathering?.attributes?.location;
+
   const dayPlan = state?.dayPlan?.dayPlan;
   let parsedDayPlan = dayPlan && JSON.parse(dayPlan);
   const data = parsedDayPlan?.activities;
@@ -43,6 +41,9 @@ const Maps = ({state}) => {
 
   useEffect(() => {
     const fetchUserLocation = async () => {
+      const userLocation =
+        state?.user?.user?.information_gathering?.location ||
+        state?.user?.user?.information_gathering?.attributes?.location;
       try {
         const { results } = await fromAddress(userLocation || "");
         const { lat, lng } = results[0].geometry.location;
@@ -105,8 +106,7 @@ const Maps = ({state}) => {
   );
 };
 
-
-function Directions({state }) {
+function Directions({ state }) {
   const map = useMap();
   const routesLibrary = useMapsLibrary("routes");
   const [directionsService, setDirectionsService] = useState();
@@ -115,12 +115,14 @@ function Directions({state }) {
   const [routeIndex, setRouteIndex] = useState(0);
   const selected = routes[routeIndex];
   const leg = selected?.legs[0];
-  
+
   const dayPlan = state?.dayPlan?.dayPlan;
   let parsedDayPlan = dayPlan && JSON.parse(dayPlan);
   const data = parsedDayPlan?.activities;
   const dataLocations = data?.map((d) => d?.address);
-  const waypoints = dataLocations?.slice(1, dataLocations.length - 1)?.map((location) => ({ location }));
+  const waypoints = dataLocations
+    ?.slice(1, dataLocations.length - 1)
+    ?.map((location) => ({ location }));
   // Initialize directions service and renderer
   useEffect(() => {
     if (!routesLibrary || !map) return;
