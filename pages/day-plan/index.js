@@ -445,6 +445,9 @@ function DayPlan() {
                     </div>
                   </div>
                 </div>
+                <div>
+                  <p className="text-[12px] mb-3 font-medium">Break Suggestion: <span className="font-normal">{items?.break || "No break suggestion"}</span></p>
+                </div>
 
                 {/* {isTextVisible && updatedIndex == index ? ( */}
                 <>

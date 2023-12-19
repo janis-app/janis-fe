@@ -141,7 +141,7 @@ function Directions({state }) {
     if (!directionsService || !directionsRenderer) return;
     directionsService
       .route({
-        origin: dataLocations && dataLocations[1],
+        origin: dataLocations && dataLocations[0],
         waypoints,
         destination: dataLocations && dataLocations[dataLocations?.length - 1],
         travelMode: google.maps.TravelMode.DRIVING,
